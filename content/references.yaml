@@ -1337,3 +1337,131 @@ references:
     measured in an ice core, which extends the pre-industrial range of carbon dioxide concentrations during
     the late quaternary by about 10 p.p.m.v. to 172-300 p.p.m.v.
   abstract_source: europepmc
+- id: S-DEBUNK-2020
+  type: web
+  url: https://skepticalscience.com/docs/DebunkingHandbook2020.pdf
+  citation: Lewandowsky, S., Cook, J., Ecker, U. K. H., et al. (2020). The Debunking Handbook 2020. 22인
+    공동저자의 합의 문서.
+  topic: methodology
+  used_for:
+  - C001
+  note: FACT-MYTH-FALLACY-FACT 구조의 출처. 우리 대본 구조의 근거 → docs/14-debunking-method.md
+  manual_checked: true
+- id: S-ECKER-2019
+  type: article
+  doi: 10.1111/bjop.12383
+  topic: methodology
+  used_for:
+  - C001
+  note: 짧은 형식 논박의 효과. 쇼츠 포맷이 논박에 적합하다는 직접 근거
+  verified:
+    authors: Ecker 외 3인
+    author_count: 4
+    title: The effectiveness of short‐format refutational fact‐checks
+    container: British J of Psychology
+    year: 2019
+    volume: '111'
+    page: 36-54
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+  abstract: fact‐checking has become an important feature of the modern media landscape. however, it is
+    unclear what the most effective format of fact‐checks is. some have argued that simple retractions
+    that repeat a false claim and tag it as false may backfire because they boost the claim's familiarity.
+    more detailed refutations may provide a more promising approach, but may not be feasible under the
+    severe space constraints associated with social‐media communication. in two experiments, we tested
+    whether (1) simple 'false‐tag' retractions can indeed be ineffective or harmful; and (2) short‐format
+    (140‐character) refutations are more effective than simple retractions. regarding (1), simple retractions
+    reduced belief in false claims, and we found no evidence for a familiarity‐driven backfire effect.
+    regarding (2), short‐format refutations were found to be more effective than simple retractions after
+    a 1‐week delay but not a one‐day delay. at both delays, however, they were associated with reduced
+    misinformation‐congruent reasoning.
+  abstract_source: crossref
+- id: S-PAYNTER-2019
+  type: article
+  doi: 10.1371/journal.pone.0210746
+  topic: methodology
+  used_for:
+  - C001
+  note: 논박 템플릿의 실세계 효과 검증
+  verified:
+    authors: Paynter 외 9인
+    author_count: 10
+    title: Evaluation of a template for countering misinformation—Real-world Autism treatment myth debunking
+    container: PLoS ONE
+    year: 2019
+    volume: '14'
+    page: e0210746
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+  abstract: misinformation poses significant challenges to evidence-based practice. in the public health
+    domain specifically, treatment misinformation can lead to opportunity costs or direct harm. alas,
+    attempts to debunk misinformation have proven sub-optimal, and have even been shown to "backfire",
+    including increasing misperceptions. thus, optimized debunking strategies have been developed to more
+    effectively combat misinformation. the aim of this study was to test these strategies in a real-world
+    setting, targeting misinformation about autism interventions. in the context of professional development
+    training, we randomly assigned participants to an "optimized-debunking" or a "treatment-as-usual"
+    training condition and compared support for non-empirically-supported treatments before, after, and
+    six weeks following completion of online training. results demonstrated greater benefits of optimized
+    debunking immediately after training; thus, the implemented strategies can serve as a general and
+    flexible debunking template. however, the effect was not sustained at follow-up, highlighting the
+    need for further research into strategies for sustained change.
+  abstract_source: europepmc
+- id: S-SWIRE-2021
+  type: article
+  doi: 10.1186/s41235-021-00346-6
+  topic: methodology
+  used_for:
+  - C001
+  note: ★ 반대 증거 — 정정의 형식이 미치는 영향은 제한적이라는 결과. 구조를 과신하지 말 것. 편집 정책 §2 3단계에 따라 함께 읽어야 함
+  verified:
+    authors: Swire-Thompson 외 5인
+    author_count: 6
+    title: Correction format has a limited role when debunking misinformation
+    container: Cogn. Research
+    year: 2021
+    volume: '6'
+    page: null
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+  abstract: abstract given that being misinformed can have negative ramifications, finding optimal corrective
+    techniques has become a key focus of research. in recent years, several divergent correction formats
+    have been proposed as superior based on distinct theoretical frameworks. however, these correction
+    formats have not been compared in controlled settings, so the suggested superiority of each format
+    remains speculative. across four experiments, the current paper investigated how altering the format
+    of corrections influences people's subsequent reliance on misinformation. we examined whether myth-first,
+    fact-first, fact-only, or myth-only correction formats were most effective, using a range of different
+    materials and participant pools. experiments 1 and 2 focused on climate change misconceptions; participants
+    were qualtrics online panel members and students taking part in a massive open online course, respectively.
+    experiments 3 and 4 used misconceptions from a diverse set of topics, with amazon mechanical turk
+    crowdworkers and university student participants. we found that the impact of a correction on beliefs
+    and inferential reasoning was largely independent of the specific format used. the clearest evidence
+    for any potential relative superiority emerged in experiment 4, which found that the myth-first format
+    was more effective at myth correction than the fact-first format after a delayed retention interval.
+    however, in general it appeared that as long as the key ingredients of a correction were presented,
+    format did not make a considerable difference. this suggests that simply providing corrective information,
+    regardless of format, is far more important than how the correction is presented.
+  abstract_source: crossref
+- id: S-VANDERLINDEN-2024
+  type: article
+  doi: 10.1001/jama.2024.5026
+  topic: methodology
+  used_for:
+  - C001
+  note: 접종(prebunking) 이론. 논박보다 선제 대응이 1차 방어선
+  verified:
+    authors: van der Linden, Roozenbeek
+    author_count: 2
+    title: “Inoculation” to Resist Misinformation
+    container: JAMA
+    year: 2024
+    volume: '331'
+    page: '1961'
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+  abstract: this jama insights in the communicating medicine series explores the concept of "prebunking,"
+    a psychological inoculation technique that could help prevent the spread of misinformation.
+  abstract_source: crossref

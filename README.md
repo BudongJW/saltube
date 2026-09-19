@@ -91,3 +91,4 @@ python3 tools/attest.py check               # 인용이 실제 출처에 존재�
 | [11 대결 포맷](docs/11-format-confrontation.md) | 실명 공격 포맷 사양 — 인용 규칙, 법적 방어선 |
 | [12 파이프라인](docs/12-pipeline.md) | 자료 수집 자동화 + 제작 파이프라인 |
 | [13 외부 도구](docs/13-external-tools.md) | 외부 프로젝트 조사 — 무엇을 쓰고 무엇을 안 쓰는가 |
+| [14 논박 방법](docs/14-debunking-method.md) | 연구 기반 대본 구조 — FACT·MYTH·FALLACY·FACT |

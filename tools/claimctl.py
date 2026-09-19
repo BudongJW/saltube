@@ -113,10 +113,9 @@ def estimate_seconds(narration: str) -> float:
 # ────────────────────────────── validate ──────────────────────────────
 
 def cmd_validate(args) -> int:
-    claims = load_claims()
-    claim_ids = {c["id"] for c in claims["claims"]}
-    logic_only_claims = {c["id"] for c in claims["claims"]
-                         if str(c.get("note", "")).find("logic_only") >= 0}
+    claims_doc = load_claims()
+    claims = {c["id"]: c for c in claims_doc["claims"]}
+    claim_ids = set(claims)
     source_ids = load_source_ids()
 
     errors: list[str] = []
@@ -198,7 +197,28 @@ def cmd_validate(args) -> int:
                 (err if fm.get("named_target") else warn)(
                     f"동기 추정 표현: {msg} (대결 포맷 §2)")
 
-        # 7. 실명 대상 편 — 대결 포맷 §4 자료 수집 프로토콜 강제
+        # 7. 논박 구조 — docs/14-debunking-method.md (Debunking Handbook 2020)
+        # 구조를 강제하지 않고 경고만 합니다. Swire-Thompson(2021)이 형식의 효과는
+        # 제한적이라고 보고했고, 구조를 맞추려다 사실을 비트는 것이 더 큰 손실이므로.
+        head = body.split("\n---\n")[0]
+        if fm["pillar"] in ("A", "B", "C"):
+            if "## 오류" not in head and "오류" not in narration:
+                warn("오류의 이름을 부르지 않음 — 논법 비판은 다른 주장에도 전이됩니다 "
+                     "(논박 방법 §3)")
+            # 인과적 대안 — "왜 그 오해가 생겼는가 / 실제로는 무엇인가"가 어디든 있어야 함.
+            # 없으면 단순 부정("틀렸습니다")으로 끝나는 것이고, 설명에 뚫린 구멍을
+            # 시청자가 원래 믿던 것으로 다시 메웁니다 (논박 방법 §2).
+            causal = ("오해", "실제로는", "왜 그", "생깁니다", "생기는", "대신",
+                      "진짜", "사실은", "때문입니다", "이유는")
+            if not any(k in narration for k in causal):
+                warn("인과적 대안이 보이지 않음 — 단순 부정으로 끝나면 효과가 떨어집니다 "
+                     "(논박 방법 §2)")
+            claim_row = claims.get(fm["claim_id"]) or {}
+            if claim_row.get("fallacy") and "오류" not in head:
+                warn(f"claims.yaml 에 오류명이 있는데 대본에 반영 안 됨: "
+                     f"{str(claim_row['fallacy'])[:40]}…")
+
+        # 8. 실명 대상 편 — 대결 포맷 §4 자료 수집 프로토콜 강제
         target = fm.get("named_target")
         if target:
             quotes = fm.get("quotes")
@@ -225,7 +245,7 @@ def cmd_validate(args) -> int:
                 warn("실명 대상 편인데 confidence: active — "
                      "확정되지 않은 근거로 실명 비판 시 위험 (대결 포맷 §6)")
 
-        # 8. 반대 심문 — 편집 정책 §2 3단계
+        # 9. 반대 심문 — 편집 정책 §2 3단계
         if "예상 재반박" not in body:
             warn("'예상 재반박' 섹션 없음 — 편집 정책 §2 3단계 미수행 (§2)")
 

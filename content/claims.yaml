@@ -18,6 +18,7 @@ claims:
     difficulty: 1
     virality: high
     confidence: settled
+    fallacy: "다의어 오류 — 일상어 '이론(추측)'과 과학 용어 '이론(검증된 설명틀)'을 바꿔치기"
     rebuttal: >-
       일상어 '이론(=추측)'과 과학 용어 '이론(=검증된 설명 틀)'의 혼동.
       과학에서 이론은 가설의 상위 개념이며, 사실(관측)을 설명하는 구조다.
@@ -38,6 +39,7 @@ claims:
     difficulty: 2
     virality: high
     confidence: settled
+    fallacy: "조건 생략 인용 — 법칙의 전제인 '고립계'를 빼고 인용"
     rebuttal: >-
       제2법칙은 '고립계'의 전체 엔트로피에 대한 진술이다. 지구는 고립계가 아니라
       태양으로부터 지속적으로 에너지를 받는 열린 계다. 국소적 질서 증가는
@@ -59,6 +61,7 @@ claims:
     difficulty: 2
     virality: high
     confidence: settled
+    fallacy: "무한 후퇴 요구 — 빈틈을 메우면 빈틈이 둘로 늘어나 어떤 증거로도 충족 불가"
     rebuttal: >-
       존재할 뿐 아니라, 어디서 나올지 예측하고 찾아낸 사례가 있다.
       틱타알릭은 '어류와 사지류 사이 형태는 데본기 후기 지층에 있어야 한다'는 예측에 따라
@@ -80,6 +83,7 @@ claims:
     difficulty: 3
     virality: high
     confidence: settled
+    fallacy: "특수 사례 일반화 — 유효 범위 밖에 적용한 측정 실패를 방법 전체의 실패로 확대"
     rebuttal: >-
       서로 독립적인 붕괴계(U-Pb, K-Ar/Ar-Ar, Rb-Sr, Sm-Nd)가 같은 시료에서 일치하는 값을 낸다.
       등시선(isochron)법은 초기 딸핵종 양을 가정하지 않고 데이터로부터 구한다.
@@ -102,6 +106,7 @@ claims:
     difficulty: 2
     virality: high
     confidence: settled
+    fallacy: "선택적 증거 — 수렴하는 독립 증거들을 무시하고 개별 반례만 제시"
     rebuttal: >-
       단일 증거가 아니라 서로 무관한 분야가 전부 훨씬 큰 값으로 수렴한다.
       천문학 하나만으로도 끝난다 — 1987년 초신성까지의 거리는 약 16만 8천 광년이고,
@@ -124,6 +129,7 @@ claims:
     difficulty: 3
     virality: high
     confidence: settled
+    fallacy: "개인적 불신에 호소 — '상상이 안 된다'를 '불가능하다'로 전환"
     rebuttal: >-
       중간 단계가 '쓸모없어서 불가능하다'는 전제가 틀렸다. 모든 중간 단계가
       지금 살아있는 생물에게서 실제로 관찰된다. 빛을 어렴풋이 느끼는 눈은
@@ -145,6 +151,7 @@ claims:
     difficulty: 4
     virality: mid
     confidence: strong
+    fallacy: "환원 불가능성 가정 — 부품이 다른 기능을 가질 수 있다는 가능성을 배제한 전제"
     rebuttal: >-
       편모 부품의 부분집합이 독자적으로 기능하는 완전한 기계로 존재한다.
       제3형 분비장치(T3SS)는 편모 기저체와 상동인 단백질들로 이루어져 있고,
@@ -165,6 +172,7 @@ claims:
     difficulty: 3
     virality: high
     confidence: settled
+    fallacy: "임시방편 가설 — 반례가 나올 때마다 설명을 덧붙여 반증 불가능하게 만듦"
     rebuttal: >-
       한 번의 홍수로는 만들 수 없는 층들이 지층 중간에 끼어 있다.
       두꺼운 증발암층은 물이 '증발'해야 생기고, 화석화된 사막 모래언덕은
@@ -187,6 +195,7 @@ claims:
     difficulty: 3
     virality: high
     confidence: settled
+    fallacy: "예측 무시 — 가설이 맞혔다는 증거를 반례로 오독"
     rebuttal: >-
       이건 반박 소재가 아니라 진화론이 맞혔다는 증거다. 공통조상이 사실이라면
       인간 염색체 어딘가에 '두 개가 합쳐진 흔적'이 있어야 한다는 예측이 가능하고,
@@ -208,6 +217,7 @@ claims:
     difficulty: 4
     virality: mid
     confidence: settled
+    fallacy: "대안 설명 미검증 — '공통 설계'는 어떤 관찰도 사후 설명하지만 예측은 못 함"
     rebuttal: >-
       '잘 만든 부품의 재사용'이라면 설계 가설로 설명할 수 있다. 그런데 인간과 침팬지가
       공유하는 것 중에는 고장 난 바이러스 잔해가 있다. 인간 게놈의 약 8%가 과거에
@@ -229,6 +239,7 @@ claims:
     difficulty: 2
     virality: high
     confidence: settled
+    fallacy: "전칭 명제의 반례 무시 — '항상'이라는 주장에 반례 하나면 충분"
     rebuttal: >-
       대부분의 돌연변이가 중립이거나 해로운 것은 맞다. 그러나 '항상'은 틀렸고,
       진화에 필요한 건 '항상'이 아니라 '가끔'이다. 유익한 돌연변이는 이름과 위치까지 특정돼 있다.
@@ -250,6 +261,7 @@ claims:
     difficulty: 3
     virality: high
     confidence: strong
+    fallacy: "경계 미정의 — 넘을 수 없다는 '종류'의 조작적 정의를 제시하지 않음"
     rebuttal: >-
       종분화는 관찰됐다. 게다가 '소진화'와 '대진화'는 다른 과정이 아니라
       같은 과정에 걸린 시간의 차이다. 경계를 넘을 수 없다고 주장하려면
@@ -272,6 +284,7 @@ claims:
     difficulty: 4
     virality: mid
     confidence: strong
+    fallacy: "규모 오독 — 2천만 년을 '갑작스러움'으로 제시. 보존 편향도 무시"
     rebuttal: >-
       '폭발'은 지질학적 표현이고, 실제 기간은 약 2천만~2천5백만 년이다.
       인류 계통 전체가 갈라져 나온 시간보다 훨씬 길다. 또한 그 앞에
@@ -293,6 +306,7 @@ claims:
     difficulty: 2
     virality: high
     confidence: settled
+    fallacy: "거짓 균형 — 검증된 지식과 미검증 주장에 동등한 지위 요구"
     rebuttal: >-
       과학인지 아닌지는 결론이 아니라 방법으로 판정한다. 창조과학은
       반증 조건을 제시하지 않고, 검증 가능한 새 예측을 내놓지 않으며,
@@ -315,6 +329,7 @@ claims:
     difficulty: 2
     virality: mid
     confidence: settled
+    fallacy: "범주 오류 — 자연발생설(며칠)과 화학진화(수억 년)를 같은 주장으로 취급"
     rebuttal: >-
       범주 오류다. 파스퇴르가 반박한 건 '썩은 고기에서 구더기가, 곡물 더미에서 쥐가
       며칠 만에 저절로 생긴다'는 당대의 자연발생설이다. 화학진화 가설은
@@ -336,6 +351,7 @@ claims:
     difficulty: 1
     virality: high
     confidence: settled
+    fallacy: "발생론적 오류 — 발견자의 말년 심경으로 이론의 타당성을 판정"
     rebuttal: >-
       이른바 '레이디 호프 이야기'는 다윈 사후 수십 년 뒤에 퍼진 것이고,
       다윈의 딸 헨리에타가 공개적으로 부인했다. 그리고 설령 사실이라 해도
@@ -356,6 +372,7 @@ claims:
     difficulty: 3
     virality: high
     confidence: settled
+    fallacy: "발생론적 오류 + 자연주의적 오류 — 악용 사례로 참·거짓을 판정하고, 사실에서 당위를 도출"
     rebuttal: >-
       이건 과학적 반박이 아니라 도덕적 연좌제다. 어떤 이론이 악용됐다는 사실은
       그 이론의 참·거짓과 무관하다(발생론적 오류). 또한 '자연에서 이렇다'에서
@@ -378,6 +395,7 @@ claims:
     difficulty: 1
     virality: high
     confidence: settled
+    fallacy: "순환 사례 선택 — 인간이 개량한 작물을 설계의 증거로 제시"
     rebuttal: >-
       우리가 먹는 바나나는 수천 년에 걸친 인간의 인공선택 결과물이다.
       야생 바나나는 단단한 씨가 가득 차 있어 먹기 매우 어렵다.
@@ -399,6 +417,7 @@ claims:
     difficulty: 4
     virality: low
     confidence: strong
+    fallacy: "부당한 외삽 — 현재 비율이 일정했다는, 자기가 비판하던 것보다 강한 가정"
     rebuttal: >-
       현재 후퇴율(연 3.8cm)을 과거로 단순 외삽한 계산이다. 조석 소산율은
       대륙 배치와 해양 분지의 형상에 따라 크게 달라지며, 현재는 대서양의 형상 때문에
@@ -419,6 +438,7 @@ claims:
     difficulty: 3
     virality: mid
     confidence: settled
+    fallacy: "예측 성공을 반례로 오독 — 공급원 예측이 관측으로 확인된 사례"
     rebuttal: >-
       단주기 혜성의 수명이 짧은 건 사실이다. 그래서 천문학자들은 '공급원이 있어야 한다'고
       예측했고, 그 예측대로 카이퍼 벨트가 발견됐다. 반박 소재가 아니라
@@ -440,6 +460,7 @@ claims:
     difficulty: 3
     virality: mid
     confidence: settled
+    fallacy: "정의 바꿔치기 — vestigial(원래 기능 상실)을 '기능 전무'로 재정의한 뒤 반박"
     rebuttal: >-
       흔적기관의 정의를 잘못 알고 있다. vestigial은 '아무 기능이 없다'가 아니라
       '조상에서 수행하던 원래 기능을 잃었거나 크게 축소됐다'는 뜻이다.
@@ -462,6 +483,7 @@ claims:
     difficulty: 2
     virality: mid
     confidence: settled
+    fallacy: "철회된 증거 사용 — 상대 진영에서도 사용 중단을 권고한 자료"
     rebuttal: >-
       텍사스 팔럭시 강의 '사람 발자국'은 침식으로 형태가 뭉개진 수각류 공룡 발자국이며,
       일부는 대공황기에 관광용으로 조각된 위조품이다.
@@ -483,6 +505,7 @@ claims:
     difficulty: 4
     virality: mid
     confidence: settled
+    fallacy: "반증 불가능한 정의 — '정보'를 정의하지 않아 어떤 관찰도 인정되지 않음"
     rebuttal: >-
       '정보'를 정의하지 않은 채 쓰는 주장이다. 측정 가능한 정의(염기쌍 수, 유전자 수,
       기능 수)를 적용하면 증가 사례가 실제로 관찰된다. 핵심 메커니즘은
@@ -504,6 +527,7 @@ claims:
     difficulty: 1
     virality: high
     confidence: settled
+    fallacy: "권위에 호소 + 표본 왜곡 — 실제로 세어보면 반대"
     rebuttal: >-
       숫자를 실제로 세어보면 반대다. 미국 국립과학교육센터는 이를 유머로 증명했다 —
       '스티브'라는 이름을 가진 과학자만 모아 진화론 지지 서명을 받았는데,
@@ -524,6 +548,7 @@ claims:
     difficulty: 5
     virality: mid
     confidence: active
+    fallacy: "표본 1개의 확률 진술 + 관측 선택 효과 무시"
     rebuttal: >-
       이 편은 조심해서 다뤄야 한다. 미세조정 자체는 물리학계에서도 열린 문제이고,
       우리가 반박하는 것은 '조정되어 보인다'는 관찰이 아니라 거기서 설계로 넘어가는 추론 단계다.
