@@ -37,7 +37,9 @@ content/scripts/             쇼츠 대본 (YAML front matter + 본문)
 tools/claimctl.py            대본 검수 / 발행 캘린더 / 플랫폼 메타데이터
 tools/refcheck.py            Crossref DOI 검증 / 레퍼런스 검색 / sources.md 생성
 tools/harvest.py             신규 레퍼런스 정기 수집 (월 1회 자동 PR)
+tools/attest.py              근거 대조 — 인용이 실제 출처에 존재하는지
 tools/produce.py             검증된 대본 → 제작 패키지 (build/)
+tools/ttscheck.py            TTS 발음 시험 목록 생성
 ```
 
 ## 빠른 시작
@@ -56,7 +58,15 @@ python3 tools/refcheck.py render            # sources.md 재생성
 python3 tools/harvest.py run                # Crossref에서 신규 후보 수집
 python3 tools/harvest.py inbox              # 미처리 후보 확인
 python3 tools/produce.py --all              # 제작 패키지 빌드 → build/
+
+python3 tools/attest.py fetch               # 초록 캐시 (Crossref→EuropePMC→S2)
+python3 tools/attest.py init EP001          # 근거 항목 뼈대 생성
+python3 tools/attest.py check               # 인용이 실제 출처에 존재하는지 대조
 ```
+
+**인용한 논문이 실제로 그 말을 하는지 검사합니다.** 실재하는 논문을 인용하면서
+그 논문이 하지 않은 말을 하는 것 — 우리가 비판하는 quote mining을 우리가 하면
+채널은 끝납니다. `attest check`가 초록 대조로 이를 막습니다.
 
 **서지 메타데이터는 손으로 적지 않습니다.** `references.yaml`에 DOI만 넣으면
 `refcheck verify`가 Crossref에서 저자·제목·저널·연도를 받아 채웁니다.

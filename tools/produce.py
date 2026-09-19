@@ -17,8 +17,12 @@
 from __future__ import annotations
 
 import argparse
+import json
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 import yaml
@@ -241,12 +245,107 @@ def build_one(ep_id: str, quiet: bool = False) -> int:
     return 0
 
 
+# ────────────────────── WhisperX 실측 정렬 (Phase 1) ──────────────────────
+
+# 한국어는 WhisperX 기본 정렬 모델 목록(en, fr, de, es, it)에 없습니다.
+# HuggingFace 의 한국어 wav2vec2 모델을 지정해야 합니다.
+# → docs/13-external-tools.md §3
+KO_ALIGN_MODEL = "kresnik/wav2vec2-large-xlsr-korean"
+
+
+def align_with_whisperx(ep_id: str, audio: Path, model: str) -> int:
+    """녹음 파일로 실측 자막 타이밍을 만듭니다.
+
+    기본 SRT 는 한글 음절 수 기반 **추정치**라 실제 녹음과 어긋납니다.
+    이 함수는 추정 SRT 를 지우지 않고 `<EP>.aligned.srt` 를 따로 만들어
+    둘의 차이(드리프트)를 보고합니다 — 추정 계수를 보정하는 데 씁니다.
+    """
+    if not shutil.which("whisperx"):
+        print("whisperx 가 설치되어 있지 않습니다.\n"
+              "  pip install whisperx\n"
+              "설치 후 다시 실행하세요. → docs/13-external-tools.md §3", file=sys.stderr)
+        return 1
+    if not audio.exists():
+        print(f"오디오 파일 없음: {audio}", file=sys.stderr)
+        return 1
+
+    out = BUILD / ep_id
+    if not (out / f"{ep_id}.srt").exists():
+        print(f"먼저 `produce.py {ep_id}` 로 제작 패키지를 만드세요", file=sys.stderr)
+        return 1
+
+    with tempfile.TemporaryDirectory() as tmp:
+        cmd = ["whisperx", str(audio), "--language", "ko",
+               "--align_model", model, "--output_format", "json", "--output_dir", tmp]
+        print(f"  실행: {' '.join(cmd)}")
+        if subprocess.run(cmd).returncode != 0:
+            print("whisperx 실행 실패", file=sys.stderr)
+            return 1
+        files = list(Path(tmp).glob("*.json"))
+        if not files:
+            print("whisperx 출력을 찾을 수 없습니다", file=sys.stderr)
+            return 1
+        data = json.loads(files[0].read_text(encoding="utf-8"))
+
+    words = [w for seg in data.get("segments", []) for w in seg.get("words", [])
+             if w.get("start") is not None]
+    if not words:
+        print("단어 단위 타임스탬프가 없습니다 — 정렬 모델이 한국어를 지원하는지 확인하세요\n"
+              f"  현재 모델: {model}", file=sys.stderr)
+        return 1
+
+    # 추정 SRT 의 큐 텍스트를 실측 단어열에 순서대로 매칭
+    est = (out / f"{ep_id}.srt").read_text(encoding="utf-8").strip().split("\n\n")
+    cue_texts = [b.split("\n", 2)[2] for b in est if len(b.split("\n", 2)) > 2]
+
+    def squash(s: str) -> str:
+        return re.sub(r"[^가-힣0-9a-zA-Z]", "", s)
+
+    lines, idx, drift = [], 0, []
+    for n, text in enumerate(cue_texts, 1):
+        target = squash(text)
+        if not target or idx >= len(words):
+            continue
+        start = words[idx]["start"]
+        acc = ""
+        while idx < len(words) and len(acc) < len(target):
+            acc += squash(words[idx].get("word", ""))
+            idx += 1
+        end = words[min(idx, len(words)) - 1].get("end", start)
+        lines += [str(n), f"{srt_time(start)} --> {srt_time(end)}", text, ""]
+        est_start = float(est[n - 1].split("\n")[1].split(" --> ")[0]
+                          .replace(",", ".").split(":")[-1]) if n <= len(est) else 0
+        drift.append(abs(start - est_start))
+
+    (out / f"{ep_id}.aligned.srt").write_text("\n".join(lines), encoding="utf-8")
+    total_est = estimate_seconds(" ".join(cue_texts))
+    total_real = words[-1].get("end", 0)
+    ratio = total_real / total_est if total_est else 0
+    print(f"\n  {ep_id}.aligned.srt 생성 — 큐 {len(lines)//4}개")
+    print(f"  추정 {total_est:.1f}초 vs 실측 {total_real:.1f}초  (비율 {ratio:.3f})")
+    if abs(ratio - 1) > 0.08:
+        suggested = round(355 / ratio)
+        print(f"\n  ⚠ 추정과 실측이 {abs(ratio-1)*100:.0f}% 어긋납니다.")
+        print(f"    tools/claimctl.py 의 SYLLABLES_PER_MIN 을 355 → {suggested} 로 보정하세요.")
+        print(f"    이 값 하나가 길이 검수와 SRT 타이밍 전체를 좌우합니다.")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("episode", nargs="?", help="예: EP001")
     ap.add_argument("--all", action="store_true", help="전체 대본 빌드")
+    ap.add_argument("--align", metavar="AUDIO",
+                    help="녹음 파일로 실측 자막 타이밍 생성 (WhisperX 필요)")
+    ap.add_argument("--align-model", default=KO_ALIGN_MODEL,
+                    help=f"한국어 정렬 모델 (기본 {KO_ALIGN_MODEL})")
     args = ap.parse_args()
+
+    if args.align:
+        if not args.episode:
+            ap.error("--align 은 episode 지정이 필요합니다")
+        return align_with_whisperx(args.episode, Path(args.align), args.align_model)
 
     if args.all:
         eps = sorted({p.name.split("-")[0] for p in SCRIPTS.glob("EP*.md")})

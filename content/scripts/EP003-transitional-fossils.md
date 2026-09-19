@@ -10,6 +10,19 @@ logic_only: false
 status: drafted
 platforms: [youtube_shorts, tiktok]
 hashtags: ["#틱타알릭", "#화석", "#진화", "#고생물학"]
+attest:
+  - source: S-TIKTAALIK-2006
+    supports: "데본기 후기 지층에서 어류와 사지류의 중간 형태가 발견됨"
+    quote: "represents an intermediate between fish with fins and tetrapods with limbs"
+    locator: abstract
+    checked_by: "Crossref/EuropePMC 초록 대조"
+    checked: 2026-09-19
+  - source: S-THEWISSEN-2009
+    supports: "고래의 육상 조상에서 수생으로의 전이 계열"
+    quote: "TODO — 원문에서 해당 문장을 그대로 옮길 것"
+    locator: p.272
+    checked_by: ""      # 원문을 확인한 사람이 적을 것
+    checked: 2026-09-19
 corrections: []
 ---
 

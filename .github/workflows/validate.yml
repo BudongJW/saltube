@@ -31,6 +31,9 @@ jobs:
       - name: 백로그 현황
         run: python3 tools/claimctl.py backlog
 
+      - name: 근거 대조 (인용이 실제 출처에 존재하는지)
+        run: python3 tools/attest.py check
+
       - name: 레퍼런스 현황
         run: python3 tools/refcheck.py status
 

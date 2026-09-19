@@ -134,12 +134,23 @@ RAG 평가 쪽에는 **grounded generation / faithfulness**라는 개념이 정�
 ## 6. 실행 순서
 
 ```
-지금        아무것도 도입하지 않음. 대본은 계속 사람이 씀
-Phase 1     EP001 녹음 후 WhisperX 한국어 정렬 시험 → 되면 produce.py 에 연결
-Phase 1     MeloTTS 를 과학 용어로 시험 → 발음 통과하면 채택
-Phase 2+    청구 단위 검증을 자체 구현 (외부 프레임워크 도입 아님)
+✅ 완료     청구 단위 검증 자체 구현 → tools/attest.py
+✅ 완료     WhisperX 연결부 → produce.py --align (녹음 생기면 바로 사용)
+✅ 완료     TTS 발음 시험 목록 → tools/ttscheck.py
+Phase 1     EP001 녹음 → --align 로 한국어 정렬 품질 시험, SYLLABLES_PER_MIN 보정
+Phase 1     MeloTTS 에 build/tts-test.txt 를 넣어 발음 판정
 영구        대본 생성기는 도입하지 않음
 ```
+
+### 자체 구현 결과
+
+`tools/attest.py` 가 대본의 모든 `[S-XXX]` 마커에 근거 항목을 요구하고,
+초록을 받을 수 있는 출처는 **인용문이 실제로 존재하는지 대조**합니다.
+초록 확보율은 Crossref 단독 43% → **Crossref→EuropePMC→Semantic Scholar 폴백으로 87%**.
+
+도입 과정에서 실제 인용 오류 1건이 발견됐습니다 — 빙하코어 "80만 년"을
+EPICA 2004 논문으로 인용하고 있었으나 그 논문의 값은 74만 년이었습니다.
+→ [편집 정책](03-editorial-policy.md) §2 2단계
 
 ## 7. 한 줄 요약
 

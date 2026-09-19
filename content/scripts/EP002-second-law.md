@@ -10,6 +10,13 @@ logic_only: false
 status: drafted
 platforms: [youtube_shorts, tiktok]
 hashtags: ["#열역학", "#엔트로피", "#진화", "#창조과학"]
+attest:
+  - source: S-NASA-SOLAR
+    supports: "지구가 태양으로부터 받는 복사 에너지량"
+    quote: "TODO — 원문에서 해당 문장을 그대로 옮길 것"
+    locator: 웹페이지
+    checked_by: ""      # 원문을 확인한 사람이 적을 것
+    checked: 2026-09-19
 corrections: []
 ---
 

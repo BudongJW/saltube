@@ -33,7 +33,10 @@ python3 tools/claimctl.py validate
 
 **오류가 하나라도 있으면 녹음하지 않습니다.** 녹음 후 발견하면 재녹음 비용이 발생합니다.
 
-## ⑤ 게이트 2 — 원문 대조 (사람)
+## ⑤ 게이트 2 — 원문 대조 (기계 + 사람)
+```bash
+python3 tools/attest.py init EP0XX && python3 tools/attest.py check
+```
 → [편집 정책](03-editorial-policy.md) §2 2단계
 - 인용문을 원문에서 확인. 2차 인용 금지
 - 숫자의 단위·오차범위 확인

@@ -7,7 +7,7 @@
 > python3 tools/refcheck.py render   # 이 파일 재생성
 > ```
 
-생성 시각: 2026-09-19 · 총 55건 · **Crossref 검증 완료 39건** · 사람 확인 필요 16건
+생성 시각: 2026-09-19 · 총 57건 · **Crossref 검증 완료 41건** · 사람 확인 필요 16건
 
 ## 검증 수준
 
@@ -78,6 +78,8 @@
 |---|---|---|---|---|
 | ☐ | `S-DALRYMPLE-2004` | Dalrymple, G. B. (2004). Ancient Earth, Ancient Skies: The Age of Earth and its Cosmic Surroundings. Stanford University Press. | ISBN 978-0804749336 | C004 |
 | ✅ | `S-EPICA-2004` | EPICA Community Members (2004). "Eight glacial cycles from an Antarctic ice core". *Nature* 429, 623-628. | doi:10.1038/nature02599 | C004, C005 |
+| ✅ | `S-JOUZEL-2007` | Jouzel 외 31인 (2007). "Orbital and Millennial Antarctic Climate Variability over the Past 800,000 Years". *Science* 317, 793-796. | doi:10.1126/science.1141038 | C004, C005 |
+| ✅ | `S-LUTHI-2008` | Lüthi 외 10인 (2008). "High-resolution carbon dioxide concentration record 650,000–800,000 years before present". *Nature* 453, 379-382. | doi:10.1038/nature06949 | C005 |
 | ✅ | `S-PATTERSON-1956` | Patterson (1956). "Age of meteorites and the earth". *Geochimica et Cosmochimica Acta* 10, 230-237. | doi:10.1016/0016-7037(56)90036-9 | C004, C005 |
 | ✅ | `S-SUIGETSU-2012` | Bronk Ramsey 외 17인 (2012). "A Complete Terrestrial Radiocarbon Record for 11.2 to 52.8 kyr B.P.". *Science* 338, 370-374. | doi:10.1126/science.1226660 | C004, C005 |
 | ☐ | `S-USGS-AGE` | U.S. Geological Survey — Age of the Earth. | https://www.usgs.gov/ | C005 |
@@ -88,6 +90,8 @@
 - **`S-SUIGETSU-2012`** — 스이게쓰호 연층 52,800년. 방사성 측정과 독립 교차검증
 - **`S-EPICA-2004`** — 남극 빙하코어 80만 년
 - **`S-USGS-AGE`** — 인용 전 현재 URL 확인 필요. 가능하면 S-PATTERSON-1956을 1차 출처로 쓸 것
+- **`S-JOUZEL-2007`** — EPICA Dome C 80만 년 기록. attest 대조에서 EPICA 2004(74만 년)를 80만 년 근거로 잘못 인용하고 있던 것이 발견되어 추가됨
+- **`S-LUTHI-2008`** — 65만~80만 년 전 CO2 기록. 80만 년 구간의 보조 근거
 
 </details>
 
@@ -257,8 +261,8 @@
 | `C001` | 진화는 '이론'일 뿐이다 | `S-NAS-2008` |
 | `C002` | 열역학 제2법칙이 진화를 반증한다 | `S-NASA-SOLAR` |
 | `C003` | 중간 화석(전이 화석)이 존재하지 않는다 | `S-POLAND-TRACKS-2010`, `S-THEWISSEN-2001`, `S-THEWISSEN-2009`, `S-TIKTAALIK-2006`, `S-TIKTAALIK-FIN-2006`, `S-TIKTAALIK-PELVIS-2014` |
-| `C004` | 방사성 연대측정은 가정에 의존하므로 믿을 수 없다 | `S-DALRYMPLE-2004`, `S-EPICA-2004`, `S-PATTERSON-1956`, `S-SUIGETSU-2012` |
-| `C005` | 지구는 6,000년~10,000년 되었다 | `S-EPICA-2004`, `S-PANAGIA-1991`, `S-PATTERSON-1956`, `S-SUIGETSU-2012`, `S-USGS-AGE` |
+| `C004` | 방사성 연대측정은 가정에 의존하므로 믿을 수 없다 | `S-DALRYMPLE-2004`, `S-EPICA-2004`, `S-JOUZEL-2007`, `S-PATTERSON-1956`, `S-SUIGETSU-2012` |
+| `C005` | 지구는 6,000년~10,000년 되었다 | `S-EPICA-2004`, `S-JOUZEL-2007`, `S-LUTHI-2008`, `S-PANAGIA-1991`, `S-PATTERSON-1956`, `S-SUIGETSU-2012`, `S-USGS-AGE` |
 | `C006` | 눈처럼 복잡한 기관은 점진적으로 생길 수 없다 (환원 불가능… | `S-LAND-2012`, `S-NILSSON-1994` |
 | `C007` | 세균 편모는 부품 하나만 빠져도 작동하지 않으므로 설계된 것… | `S-KITZMILLER-2005`, `S-PALLEN-2006` |
 | `C008` | 지층과 화석은 노아의 대홍수로 한 번에 만들어졌다 | `S-JOGGINS`, `S-PROTHERO-2017` |

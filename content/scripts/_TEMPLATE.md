@@ -10,6 +10,17 @@ logic_only: false          # true면 출처 없이도 validate 통과 (순수 �
 status: drafted            # drafted / recorded / published
 platforms: [youtube_shorts, tiktok]
 hashtags: ["#진화", "#창조과학", "#과학"]
+# ── 근거 대조 — 본문의 모든 [S-XXX] 마커에 항목이 있어야 함 ──
+# `python3 tools/attest.py init EP0XX` 로 뼈대 생성.
+# quote 는 반드시 원문 그대로. 요약하면 attest check 에서 실패합니다.
+attest:
+  - source: S-XXX
+    supports: "이 출처가 뒷받침하는 내용 (한국어)"
+    quote: "원문 그대로의 문장"
+    locator: abstract        # abstract(기계 대조) | p.123 | fig.2 (사람 서명 필요)
+    checked_by: ""           # 초록 대조 불가 시 원문 확인한 사람
+    checked: 2026-01-01
+
 corrections: []            # 정정 시 추가: [{date: "2026-01-01", what: "...", episode: "EP0XX"}]
 
 # ── 실명 대상 편에만 사용 — docs/11-format-confrontation.md ──

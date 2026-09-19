@@ -5,11 +5,30 @@ title: "방사성 연대측정을 믿을 수 없다면, 나이테도 믿을 수 
 pillar: A
 confidence: settled
 duration_target: 60
-sources: [S-DALRYMPLE-2004, S-SUIGETSU-2012, S-EPICA-2004]
+sources: [S-DALRYMPLE-2004, S-SUIGETSU-2012, S-JOUZEL-2007]
 logic_only: false
 status: drafted
 platforms: [youtube_shorts, tiktok]
 hashtags: ["#연대측정", "#지구나이", "#빙하코어", "#창조과학"]
+attest:
+  - source: S-SUIGETSU-2012
+    supports: "스이게쓰호 연층에서 5만 2800년까지의 직접적 대기 방사성탄소 기록"
+    quote: "a direct record of atmospheric radiocarbon for the entire measurable interval up to 52.8 thousand years ago"
+    locator: abstract
+    checked_by: "Crossref/EuropePMC 초록 대조"
+    checked: 2026-09-19
+  - source: S-JOUZEL-2007
+    supports: "EPICA Dome C 빙하코어가 약 80만 년 전까지 기록을 담고 있음"
+    quote: "extending this climate record back to marine isotope stage 20.2"
+    locator: abstract
+    checked_by: "Crossref/EuropePMC 초록 대조"
+    checked: 2026-09-19
+  - source: S-DALRYMPLE-2004
+    supports: "서로 다른 붕괴계가 같은 시료에서 일치하는 연대를 냄"
+    quote: "TODO — 원문에서 해당 문장을 그대로 옮길 것"
+    locator: p.???
+    checked_by: ""      # 원문을 확인한 사람이 적을 것
+    checked: 2026-09-19
 corrections: []
 ---
 
@@ -42,7 +61,7 @@ corrections: []
 > 화면: 남극 빙하 코어
 
 **빙하 코어.** 눈이 해마다 한 층씩.
-남극 EPICA 코어는 **약 80만 년치** [S-EPICA-2004].
+남극 EPICA 코어는 **약 80만 년치** [S-JOUZEL-2007].
 
 > 화면: 스이게쓰호 연층 계수 vs 탄소-14 결과 일치 그래프
 
@@ -85,8 +104,8 @@ corrections: []
 [S-SUIGETSU-2012] Bronk Ramsey et al., "A Complete Terrestrial Radiocarbon Record
 for 11.2 to 52.8 kyr B.P.", Science 338 (2012) 370-374. doi:10.1126/science.1226660
 
-[S-EPICA-2004] EPICA Community Members, "Eight glacial cycles from an Antarctic
-ice core", Nature 429 (2004) 623-628. doi:10.1038/nature02599
+[S-JOUZEL-2007] Jouzel et al., "Orbital and Millennial Antarctic Climate Variability
+over the Past 800,000 Years", Science 317 (2007) 793-796. doi:10.1126/science.1141038
 
 [S-DALRYMPLE-2004] G. Brent Dalrymple, 《Ancient Earth, Ancient Skies》,
 Stanford University Press. ISBN 978-0804749336

@@ -19,6 +19,17 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: the relationship of limbed vertebrates (tetrapods) to lobe-finned fish (sarcopterygians) is
+    well established, but the origin of major tetrapod features has remained obscure for lack of fossils
+    that document the sequence of evolutionary changes. here we report the discovery of a well-preserved
+    species of fossil sarcopterygian fish from the late devonian of arctic canada that represents an intermediate
+    between fish with fins and tetrapods with limbs, and provides unique insights into how and in what
+    order important tetrapod characters arose. although the body scales, fin rays, lower jaw and palate
+    are comparable to those in more primitive sarcopterygians, the new species also has a shortened skull
+    roof, a modified ear region, a mobile neck, a functional wrist joint, and other features that presage
+    tetrapod conditions. the morphological features and geological setting of this new animal are suggestive
+    of life in shallow-water, marginal and subaerial habitats.
+  abstract_source: europepmc
 - id: S-TIKTAALIK-FIN-2006
   type: article
   doi: 10.1038/nature04637
@@ -37,6 +48,15 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: wrists, ankles and digits distinguish tetrapod limbs from fins, but direct evidence on the
+    origin of these features has been unavailable. here we describe the pectoral appendage of a member
+    of the sister group of tetrapods, tiktaalik roseae, which is morphologically and functionally transitional
+    between a fin and a limb. the expanded array of distal endochondral bones and synovial joints in the
+    fin of tiktaalik is similar to the distal limb pattern of basal tetrapods. the fin of tiktaalik was
+    capable of a range of postures, including a limb-like substrate-supported stance in which the shoulder
+    and elbow were flexed and the distal skeleton extended. the origin of limbs probably involved the
+    elaboration and proliferation of features already present in the fins of fish such as tiktaalik.
+  abstract_source: europepmc
 - id: S-TIKTAALIK-PELVIS-2014
   type: article
   doi: 10.1073/pnas.1322559111
@@ -55,6 +75,15 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: 'significance the earliest tetrapods have robust limbs, particularly hind limbs that are enlarged
+    and supported by a number of modifications to the pelvic girdle. in contrast, the closest relatives
+    of tetrapods maintain small and weakly ossified pelvic appendages as compared with the pectorals.
+    this observation has led to the "front wheel drive" hypothesis that held that the closest relatives
+    of tetrapods emphasized pectoral support and locomotion whereas significant pelvic support and locomotion
+    was a tetrapod innovation. the discovery of pelvic girdle and fin material of the tetrapodomorph tiktaalik
+    roseae reveals a transitional stage in the origin of the pelvic girdle and appendage: although retaining
+    primitive skeletal architecture, these elements are enhanced in size and robusticity much like tetrapods.'
+  abstract_source: crossref
 - id: S-POLAND-TRACKS-2010
   type: article
   doi: 10.1038/nature08623
@@ -73,6 +102,17 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: the fossil record of the earliest tetrapods (vertebrates with limbs rather than paired fins)
+    consists of body fossils and trackways. the earliest body fossils of tetrapods date to the late devonian
+    period (late frasnian stage) and are preceded by transitional elpistostegids such as panderichthys
+    and tiktaalik that still have paired fins. claims of tetrapod trackways predating these body fossils
+    have remained controversial with regard to both age and the identity of the track makers. here we
+    present well-preserved and securely dated tetrapod tracks from polish marine tidal flat sediments
+    of early middle devonian (eifelian stage) age that are approximately 18 million years older than the
+    earliest tetrapod body fossils and 10 million years earlier than the oldest elpistostegids. they force
+    a radical reassessment of the timing, ecology and environmental setting of the fish-tetrapod transition,
+    as well as the completeness of the body fossil record.
+  abstract_source: europepmc
 - id: S-THEWISSEN-2001
   type: article
   doi: 10.1038/35095005
@@ -91,6 +131,20 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: modern members of the mammalian order cetacea (whales, dolphins and porpoises) are obligate
+    aquatic swimmers that are highly distinctive in morphology, lacking hair and hind limbs, and having
+    flippers, flukes, and a streamlined body. eocene fossils document much of cetaceans' land-to-water
+    transition, but, until now, the most primitive representative for which a skeleton was known was clearly
+    amphibious and lived in coastal environments. here we report on the skeletons of two early eocene
+    pakicetid cetaceans, the fox-sized ichthyolestes pinfoldi, and the wolf-sized pakicetus attocki. their
+    skeletons also elucidate the relationships of cetaceans to other mammals. morphological cladistic
+    analyses have shown cetaceans to be most closely related to one or more mesonychians, a group of extinct,
+    archaic ungulates, but molecular analyses have indicated that they are the sister group to hippopotamids.
+    our cladistic analysis indicates that cetaceans are more closely related to artiodactyls than to any
+    mesonychian. cetaceans are not the sister group to (any) mesonychians, nor to hippopotamids. our analysis
+    stops short of identifying any particular artiodactyl family as the cetacean sister group and supports
+    monophyly of artiodactyls.
+  abstract_source: europepmc
 - id: S-THEWISSEN-2009
   type: article
   doi: 10.1007/s12052-009-0135-2
@@ -109,6 +163,7 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract_available: false
 - id: S-BEJDER-2002
   type: article
   doi: 10.1046/j.1525-142x.2002.02033.x
@@ -128,6 +183,32 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: 'summary we address the developmental and evolutionary mechanisms underlying fore‐ and hindlimb
+    development and progressive hindlimb reduction and skeletal loss in whales and evaluate whether the
+    genetic, developmental, and evolutionary mechanisms thought to be responsible for limb loss in snakes
+    "explain" loss of the hindlimbs in whales. limb loss and concurrent morphological and physiological
+    changes associated with the transition from land to water are discussed within the context of the
+    current whale phylogeny. emphasis is placed on fore‐ and hindlimb development, how the forelimbs transformed
+    into flippers, and how the hindlimbs regressed, leaving either no elements or vestigial skeletal elements.
+    hindlimbs likely began to regress only after the ancestors of whales entered the aquatic environment:
+    hindlimb function was co‐opted by the undulatory vertical axial locomotion made possible by the newly
+    evolved caudal flukes. loss of the hindlimbs was associated with elongation of the body during the
+    transition from land to water. limblessness in most snakes is also associated with adoption of a new
+    (burrowing) lifestyle and was driven by developmental changes associated with elongation of the body.
+    parallels between adaptation to burrowing or to the aquatic environment reflect structural and functional
+    changes associated with the switch to axial locomotion. because they are more fully studied and to
+    determine whether hindlimb loss in lineages that are not closely related could result from similar
+    genetically controlled developmental pathways, we discuss developmental (cellular and genetic) processes
+    that may have driven limb loss in snakes and leg‐less lizards and compare these processes to the loss
+    of hindlimbs in whales. in neither group does ontogenetic or phylogenetic limb reduction result from
+    failure to initiate limb development. in both groups limb loss results from arrested development at
+    the limb bud stage, as a result of inability to maintain necessary inductive tissue interactions and
+    enhanced cell death over that seen in limbed tetrapods. an evolutionary change in hox gene expression-as
+    occurs in snakes-or in hox gene regulation-as occurs in some limb‐less mutants-is unlikely to have
+    initiated loss of the hindlimbs in cetaceans. selective pressures acting on a wide range of developmental
+    processes and adult traits other than the limbs are likely to have driven the loss of hindlimbs in
+    whales.'
+  abstract_source: crossref
 - id: S-DINES-2014
   type: article
   doi: 10.1111/evo.12516
@@ -146,6 +227,20 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: 'male genitalia evolve rapidly, probably as a result of sexual selection. whether this pattern
+    extends to the internal infrastructure that influences genital movements remains unknown. cetaceans
+    (whales and dolphins) offer a unique opportunity to test this hypothesis: since evolving from land-dwelling
+    ancestors, they lost external hind limbs and evolved a highly reduced pelvis that seems to serve no
+    other function except to anchor muscles that maneuver the penis. here, we create a novel morphometric
+    pipeline to analyze the size and shape evolution of pelvic bones from 130 individuals (29 species)
+    in the context of inferred mating system. we present two main findings: (1) males from species with
+    relatively intense sexual selection (inferred by relative testes size) tend to evolve larger penises
+    and pelvic bones compared to their body length, and (2) pelvic bone shape has diverged more in species
+    pairs that have diverged in inferred mating system. neither pattern was observed in the anterior-most
+    pair of vertebral ribs, which served as a negative control. this study provides evidence that sexual
+    selection can affect internal anatomy that controls male genitalia. these important functions may
+    explain why cetacean pelvic bones have not been lost through evolutionary time.'
+  abstract_source: europepmc
 - id: S-ERWIN-2011
   type: article
   doi: 10.1126/science.1206375
@@ -165,6 +260,9 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: major animal clades evolved tens of millions of years before the widespread appearance of
+    animal fossils.
+  abstract_source: crossref
 - id: S-NARBONNE-2005
   type: article
   doi: 10.1146/annurev.earth.33.092203.122519
@@ -183,6 +281,19 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: ▪ abstract the ediacara biota (575-542 ma) marks the first appearance of large, architecturally
+    complex organisms in earth history. present evidence suggests that the ediacara biota included a mixture
+    of stem- and crown-group radial animals, stem-group bilaterian animals, "failed experiments" in animal
+    evolution, and perhaps representatives of other eukaryotic kingdoms. these soft-bodied organisms were
+    preserved under (or rarely within) event beds of sand or volcanic ash, and four distinct preservational
+    styles (flinders-, fermeuse-, conception-, and nama-style) profoundly affected the types of organisms
+    and features that could be preserved. even the earliest ediacaran communities (575-565 ma) show vertical
+    and lateral niche subdivision of the sessile, benthic, filter-feeding organisms, which is strikingly
+    like that of phanerozoic and modern communities. later biological and ecological innovations include
+    mobility (&gt;555 ma), calcification (550 ma), and predation (&lt;549 ma). the ediacara biota abruptly
+    disappeared 542 million years ago, probably as a consequence of mass extinction andor biological interactions
+    with the rapidly evolving animals of the cambrian explosion.
+  abstract_source: crossref
 - id: S-PATTERSON-1956
   type: article
   doi: 10.1016/0016-7037(56)90036-9
@@ -202,6 +313,7 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract_available: false
 - id: S-SUIGETSU-2012
   type: article
   doi: 10.1126/science.1226660
@@ -221,6 +333,18 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: dating carbon radiocarbon dating is the best way to determine the age of samples that contain
+    carbon and that are younger than ∼50,000 years, the limit of precision for the method. there are several
+    factors that complicate such age determinations, however, some of the most important of which include
+    variability of the 14 c production in the atmosphere (which affects organic samples whose radiocarbon
+    inventories are derived from atmospheric co 2 ), surface ocean reservoir effects (which affect marine
+    samples that acquire their radiocarbon signatures from seawater), and variable dead carbon fraction
+    effects (which affect speleothems that derive their carbon from groundwaters). bronk ramsey et al.
+    (p. 370 ; see the perspective by reimer ) avoid the need to make such assumptions, reporting the 14
+    c results of sediments from lake suigetsu, japan. analysis of terrestrial plant macrofossils in annually
+    layered datable sediments yielded a direct record of atmospheric radiocarbon for the entire measurable
+    interval up to 52.8 thousand years ago.
+  abstract_source: crossref
 - id: S-EPICA-2004
   type: article
   doi: 10.1038/nature02599
@@ -241,6 +365,22 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: the antarctic vostok ice core provided compelling evidence of the nature of climate, and of
+    climate feedbacks, over the past 420,000 years. marine records suggest that the amplitude of climate
+    variability was smaller before that time, but such records are often poorly resolved. moreover, it
+    is not possible to infer the abundance of greenhouse gases in the atmosphere from marine records.
+    here we report the recovery of a deep ice core from dome c, antarctica, that provides a climate record
+    for the past 740,000 years. for the four most recent glacial cycles, the data agree well with the
+    record from vostok. the earlier period, between 740,000 and 430,000 years ago, was characterized by
+    less pronounced warmth in interglacial periods in antarctica, but a higher proportion of each cycle
+    was spent in the warm mode. the transition from glacial to interglacial conditions about 430,000 years
+    ago (termination v) resembles the transition into the present interglacial period in terms of the
+    magnitude of change in temperatures and greenhouse gases, but there are significant differences in
+    the patterns of change. the interglacial stage following termination v was exceptionally long--28,000
+    years compared to, for example, the 12,000 years recorded so far in the present interglacial period.
+    given the similarities between this earlier warm period and today, our results may imply that without
+    human intervention, a climate similar to the present one would extend well into the future.
+  abstract_source: europepmc
 - id: S-IJDO-1991
   type: article
   doi: 10.1073/pnas.88.20.9051
@@ -259,6 +399,15 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: we have identified two allelic genomic cosmids from human chromosome 2, c8.1 and c29b, each
+    containing two inverted arrays of the vertebrate telomeric repeat in a head-to-head arrangement, 5'(ttaggg)n-(ccctaa)m3'.
+    sequences flanking this telomeric repeat are characteristic of present-day human pretelomeres. bal-31
+    nuclease experiments with yeast artificial chromosome clones of human telomeres and fluorescence in
+    situ hybridization reveal that sequences flanking these inverted repeats hybridize both to band 2q13
+    and to different, but overlapping, subsets of human chromosome ends. we conclude that the locus cloned
+    in cosmids c8.1 and c29b is the relic of an ancient telomere-telomere fusion and marks the point at
+    which two ancestral ape chromosomes fused to give rise to human chromosome 2.
+  abstract_source: crossref
 - id: S-CHIMP-GENOME-2005
   type: article
   doi: 10.1038/nature04072
@@ -279,6 +428,17 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: here we present a draft genome sequence of the common chimpanzee (pan troglodytes). through
+    comparison with the human genome, we have generated a largely complete catalogue of the genetic differences
+    that have accumulated since the human and chimpanzee species diverged from our common ancestor, constituting
+    approximately thirty-five million single-nucleotide changes, five million insertion/deletion events,
+    and various chromosomal rearrangements. we use this catalogue to explore the magnitude and regional
+    variation of mutational forces shaping these two genomes, and the strength of positive and negative
+    selection acting on their genes. in particular, we find that the patterns of evolution in human and
+    chimpanzee protein-coding genes are highly correlated and dominated by the fixation of neutral and
+    slightly deleterious alleles. we also use the chimpanzee genome as an outgroup to investigate human
+    population genetics and identify signatures of selective sweeps in recent human evolution.
+  abstract_source: europepmc
 - id: S-HUMAN-GENOME-2001
   type: article
   doi: 10.1038/35057062
@@ -297,6 +457,11 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: the human genome holds an extraordinary trove of information about human development, physiology,
+    medicine and evolution. here we report the results of an international collaboration to produce and
+    make freely available a draft sequence of the human genome. we also present an initial analysis of
+    the data, describing some of the insights that can be gleaned from the sequence.
+  abstract_source: europepmc
 - id: S-SYNCYTIN-2000
   type: article
   doi: 10.1038/35001608
@@ -315,6 +480,18 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: 'many mammalian viruses have acquired genes from their hosts during their evolution. the rationale
+    for these acquisitions is usually quite clear: the captured genes are subverted to provide a selective
+    advantage to the virus. here we describe the opposite situation, where a viral gene has been sequestered
+    to serve an important function in the physiology of a mammalian host. this gene, encoding a protein
+    that we have called syncytin, is the envelope gene of a recently identified human endogenous defective
+    retrovirus, herv-w. we find that the major sites of syncytin expression are placental syncytiotrophoblasts,
+    multinucleated cells that originate from fetal trophoblasts. we show that expression of recombinant
+    syncytin in a wide variety of cell types induces the formation of giant syncytia, and that fusion
+    of a human trophoblastic cell line expressing endogenous syncytin can be inhibited by an anti-syncytin
+    antiserum. our data indicate that syncytin may mediate placental cytotrophoblast fusion in vivo, and
+    thus may be important in human placental morphogenesis.'
+  abstract_source: europepmc
 - id: S-NISHIKIMI-1994
   type: article
   doi: 10.1016/s0021-9258(17)36884-9
@@ -334,6 +511,21 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: man is among the exceptional higher animals that are unable to synthesize l-ascorbic acid
+    because of their deficiency in l-gulono-gamma-lactone oxidase, the enzyme catalyzing the terminal
+    step in l-ascorbic acid biosynthesis. in the present study, we isolated a segment of the nonfunctional
+    l-gulono-gamma-lactone oxidase gene from a human genomic library, and mapped it on chromosome 8p21.1
+    by spot blot hybridization using flow-sorted human chromosomes and fluorescence in situ hybridization.
+    sequencing analysis indicated that the isolated segment represented a 3'-part of the gene, where the
+    regions corresponding to exons vii, ix, x, and xii of the rat l-gulono-gamma-lactone oxidase gene
+    remain with probable deletion of the regions corresponding to exons viii and xi. in the identified
+    exon regions were found various anomalous nucleotide changes, such as deletion and insertion of nucleotide(s)
+    and nonconformance to the gt/ag rule at intron/exon boundaries. when the conceptual amino acid sequences
+    deduced from the four exon sequences were compared with the corresponding rat sequences, there were
+    a large number of nonconservative substitutions and also two stop codons. these findings indicate
+    that the human nonfunctional l-gulono-gamma-lactone oxidase gene has accumulated a large number of
+    mutations without selective pressure since it ceased to function during evolution.
+  abstract_source: europepmc
 - id: S-LENSKI-2008
   type: article
   doi: 10.1073/pnas.0803151105
@@ -354,6 +546,25 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: the role of historical contingency in evolution has been much debated, but rarely tested.
+    twelve initially identical populations of escherichia coli were founded in 1988 to investigate this
+    issue. they have since evolved in a glucose-limited medium that also contains citrate, which e. coli
+    cannot use as a carbon source under oxic conditions. no population evolved the capacity to exploit
+    citrate for &gt;30,000 generations, although each population tested billions of mutations. a citrate-using
+    (cit + ) variant finally evolved in one population by 31,500 generations, causing an increase in population
+    size and diversity. the long-delayed and unique evolution of this function might indicate the involvement
+    of some extremely rare mutation. alternately, it may involve an ordinary mutation, but one whose physical
+    occurrence or phenotypic expression is contingent on prior mutations in that population. we tested
+    these hypotheses in experiments that "replayed" evolution from different points in that population's
+    history. we observed no cit + mutants among 8.4 × 10 12 ancestral cells, nor among 9 × 10 12 cells
+    from 60 clones sampled in the first 15,000 generations. however, we observed a significantly greater
+    tendency for later clones to evolve cit + , indicating that some potentiating mutation arose by 20,000
+    generations. this potentiating change increased the mutation rate to cit + but did not cause generalized
+    hypermutability. thus, the evolution of this phenotype was contingent on the particular history of
+    that population. more generally, we suggest that historical contingency is especially important when
+    it facilitates the evolution of key innovations that are not easily evolved by gradual, cumulative
+    selection.
+  abstract_source: crossref
 - id: S-CHEN-1997
   type: article
   doi: 10.1073/pnas.94.8.3811
@@ -374,6 +585,24 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: freezing avoidance conferred by different types of antifreeze proteins in various polar and
+    subpolar fishes represents a remarkable example of cold adaptation, but how these unique proteins
+    arose is unknown. we have found that the antifreeze glycoproteins (afgps) of the predominant antarctic
+    fish taxon, the notothenioids, evolved from a pancreatic trypsinogen. we have determined the likely
+    evolutionary process by which this occurred through characterization and analyses of notothenioid
+    afgp and trypsinogen genes. the primordial afgp gene apparently arose through recruitment of the 5′
+    and 3′ ends of an ancestral trypsinogen gene, which provided the secretory signal and the 3′ untranslated
+    region, respectively, plus de novo amplification of a 9-nt thr-ala-ala coding element from the trypsinogen
+    progenitor to create a new protein coding region for the repetitive tripeptide backbone of the antifreeze
+    protein. the small sequence divergence (4-7%) between notothenioid afgp and trypsinogen genes indicates
+    that the transformation of the proteinase gene into the novel ice-binding protein gene occurred quite
+    recently, about 5-14 million years ago (mya), which is highly consistent with the estimated times
+    of the freezing of the antarctic ocean at 10-14 mya, and of the main phyletic divergence of the afgp-bearing
+    notothenioid families at 7-15 mya. the notothenioid trypsinogen to afgp conversion is the first clear
+    example of how an old protein gene spawned a new gene for an entirely new protein with a new function.
+    it also represents a rare instance in which protein evolution, organismal adaptation, and environmental
+    conditions can be linked directly.
+  abstract_source: crossref
 - id: S-TISHKOFF-2006
   type: article
   doi: 10.1038/ng1946
@@ -392,6 +621,17 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: a snp in the gene encoding lactase (lct) (c/t-13910) is associated with the ability to digest
+    milk as adults (lactase persistence) in europeans, but the genetic basis of lactase persistence in
+    africans was previously unknown. we conducted a genotype-phenotype association study in 470 tanzanians,
+    kenyans and sudanese and identified three snps (g/c-14010, t/g-13915 and c/g-13907) that are associated
+    with lactase persistence and that have derived alleles that significantly enhance transcription from
+    the lct promoter in vitro. these snps originated on different haplotype backgrounds from the european
+    c/t-13910 snp and from each other. genotyping across a 3-mb region demonstrated haplotype homozygosity
+    extending >2.0 mb on chromosomes carrying c-14010, consistent with a selective sweep over the past
+    approximately 7,000 years. these data provide a marked example of convergent evolution due to strong
+    selective pressure resulting from shared cultural traits-animal domestication and adult milk consumption.
+  abstract_source: europepmc
 - id: S-BERSAGLIERI-2004
   type: article
   doi: 10.1086/421051
@@ -410,6 +650,24 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: 'in most human populations, the ability to digest lactose contained in milk usually disappears
+    in childhood, but in european-derived populations, lactase activity frequently persists into adulthood
+    (scrimshaw and murray 1988). it has been suggested (cavalli-sforza 1973; hollox et al. 2001; enattah
+    et al. 2002; poulter et al. 2003) that a selective advantage based on additional nutrition from dairy
+    explains these genetically determined population differences (simoons 1970; kretchmer 1971; scrimshaw
+    and murray 1988; enattah et al. 2002), but formal population-genetics-based evidence of selection
+    has not yet been provided. to assess the population-genetics evidence for selection, we typed 101
+    single-nucleotide polymorphisms covering 3.2 mb around the lactase gene. in northern european-derived
+    populations, two alleles that are tightly associated with lactase persistence (enattah et al. 2002)
+    uniquely mark a common (~77%) haplotype that extends largely undisrupted for >1 mb. we provide two
+    new lines of genetic evidence that this long, common haplotype arose rapidly due to recent selection:
+    (1) by use of the traditional f(st) measure and a novel test based on p(excess), we demonstrate large
+    frequency differences among populations for the persistence-associated markers and for flanking markers
+    throughout the haplotype, and (2) we show that the haplotype is unusually long, given its high frequency--a
+    hallmark of recent selection. we estimate that strong selection occurred within the past 5,000-10,000
+    years, consistent with an advantage to lactase persistence in the setting of dairy farming; the signals
+    of selection we observe are among the strongest yet seen for any gene in the genome.'
+  abstract_source: europepmc
 - id: S-YI-2010
   type: article
   doi: 10.1126/science.1190371
@@ -428,6 +686,17 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: no genetic vertigo peoples living in high altitudes have adapted to their situation (see the
+    perspective by storz ). to identify gene regions that might have contributed to high-altitude adaptation
+    in tibetans, simonson et al. (p. 72 , published online 13 may) conducted a genome scan of nucleotide
+    polymorphism comparing tibetans, han chinese, and japanese, while yi et al. (p. 75 ) performed comparable
+    analyses on the coding regions of all genes-their exomes. both studies converged on a gene, endothelial
+    per-arnt-sim domain protein 1 (also known as hypoxia-inducible factor 2 α), which has been linked
+    to the regulation of red blood cell production. other genes identified that were potentially under
+    selection included adult and fetal hemoglobin and two functional candidate loci that were correlated
+    with low hemoglobin concentration in tibetans. future detailed functional studies will now be required
+    to examine the mechanistic underpinnings of physiological adaptation to high altitudes.
+  abstract_source: crossref
 - id: S-LAMICHHANEY-2018
   type: article
   doi: 10.1126/science.aao4593
@@ -446,6 +715,16 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: rapid hybrid speciation in darwin's finches galapagos finches have driven hypotheses of how
+    speciation occurs. most commonly, it is assumed that natural selection separates species originating
+    from a single population on the basis of variation in traits that confer advantages for survival and
+    reproduction. lamichhaney et al. document a case where cross-species hybridization established a reproductively
+    isolated lineage, which demonstrates a process known as homoploid hybrid speciation in action (see
+    the perspective by wagner). the authors used genetic markers and phenotypic analyses to create a pedigree
+    that revealed how a cross-island migrant bred with a native species to form a self-perpetuating hybrid
+    population that was reproductively isolated from both parental species. science , this issue p. 224
+    ; see also p. 157
+  abstract_source: crossref
 - id: S-BYRNE-1999
   type: article
   doi: 10.1038/sj.hdy.6884120
@@ -465,6 +744,19 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: genetic variation was quantified between surface-dwelling populations of culex pipiens and
+    the so-called molestus form found in the london underground (the underground) railway system. the
+    molestus form is a commercially important biting nuisance and in the southern part of its range is
+    also a disease vector. the surface and subterranean populations were genetically distinct, with no
+    evidence of gene flow between closely adjacent populations of the different forms, whereas there was
+    little differentiation between the different populations of each form. the substantially reduced heterozygosity
+    in the underground populations and the allelic composition suggest that colonization of the underground
+    has occurred once or very few times. breeding experiments show compatibility between the underground
+    populations but not with those breeding above ground. there is evidence of greater gene flow and a
+    mixing of molestus and pipiens traits in the south of the species range. this paper considers the
+    processes that may allow establishment of reproductive isolation in the north of the species range
+    but not in the south.
+  abstract_source: europepmc
 - id: S-FEDER-1988
   type: article
   doi: 10.1038/336061a0
@@ -483,6 +775,7 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract_available: false
 - id: S-HERREL-2008
   type: article
   doi: 10.1073/pnas.0711998105
@@ -502,6 +795,17 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: although rapid adaptive changes in morphology on ecological time scales are now well documented
+    in natural populations, the effects of such changes on whole-organism performance capacity and the
+    consequences on ecological dynamics at the population level are often unclear. here we show how lizards
+    have rapidly evolved differences in head morphology, bite strength, and digestive tract structure
+    after experimental introduction into a novel environment. despite the short time scale (≈36 years)
+    since this introduction, these changes in morphology and performance parallel those typically documented
+    among species and even families of lizards in both the type and extent of their specialization. moreover,
+    these changes have occurred side-by-side with dramatic changes in population density and social structure,
+    providing a compelling example of how the invasion of a novel habitat can evolutionarily drive multiple
+    aspects of the phenotype.
+  abstract_source: crossref
 - id: S-NILSSON-1994
   type: article
   doi: 10.1098/rspb.1994.0048
@@ -521,6 +825,13 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: 'theoretical considerations of eye design allow us to find routes along which the optical
+    structures of eyes may have evolved. if selection constantly favours an increase in the amount of
+    detectable spatial information, a light-sensitive patch will gradually turn into a focused lens eye
+    through continuous small improvements of design. an upper limit for the number of generations required
+    for the complete transformation can be calculated with a minimum of assumptions. even with a consistently
+    pessimistic approach the time required becomes amazingly short: only a few hundred thousand years.'
+  abstract_source: europepmc
 - id: S-PALLEN-2006
   type: article
   doi: 10.1038/nrmicro1493
@@ -539,6 +850,13 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: in the recent dover trial, and elsewhere, the 'intelligent design' movement has championed
+    the bacterial flagellum as an irreducibly complex system that, it is claimed, could not have evolved
+    through natural selection. here we explore the arguments in favour of viewing bacterial flagella as
+    evolved, rather than designed, entities. we dismiss the need for any great conceptual leaps in creating
+    a model of flagellar evolution and speculate as to how an experimental programme focused on this topic
+    might look.
+  abstract_source: europepmc
 - id: S-LEAL-2016
   type: article
   doi: 10.1016/j.cub.2016.09.020
@@ -557,6 +875,21 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: limb reduction and loss are hallmarks of snake evolution. although advanced snakes are completely
+    limbless, basal and intermediate snakes retain pelvic girdles and small rudiments of the femur. moreover,
+    legs may have re-emerged in extinct snake lineages [1-5], suggesting that the mechanisms of limb development
+    were not completely lost in snakes. here we report that hindlimb development arrests in python embryos
+    as a result of mutations that abolish essential transcription factor binding sites in the limb-specific
+    enhancer of sonic hedgehog (shh). consequently, shh transcription is weak and transient in python
+    hindlimb buds, leading to early termination of a genetic circuit that drives limb outgrowth. our results
+    suggest that degenerate evolution of the shh limb enhancer played a role in reduction of hindlimbs
+    during snake evolution. by contrast, hoxd digit enhancers are conserved in pythons, and hoxd gene
+    expression in the hindlimb buds progresses to the distal phase, forming an autopodial (digit) domain.
+    python hindlimb buds then develop transitory pre-chondrogenic condensations of the tibia, fibula,
+    and footplate, raising the possibility that re-emergence of hindlimbs during snake evolution did not
+    require de novo re-evolution of lost structures but instead could have resulted from persistence of
+    embryonic legs. video abstract.
+  abstract_source: europepmc
 - id: S-PROTAS-2005
   type: article
   doi: 10.1038/ng1700
@@ -575,6 +908,16 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: the genetic basis of vertebrate morphological evolution has traditionally been very difficult
+    to examine in naturally occurring populations. here we describe the generation of a genome-wide linkage
+    map to allow quantitative trait analysis of evolutionarily derived morphologies in the mexican cave
+    tetra, a species that has, in a series of independent caves, repeatedly evolved specialized characteristics
+    adapted to a unique and well-studied ecological environment. we focused on the trait of albinism and
+    discovered that it is linked to oca2, a known pigmentation gene, in two cave populations. we found
+    different deletions in oca2 in each population and, using a cell-based assay, showed that both cause
+    loss of function of the corresponding protein, oca2. thus, the two cave populations evolved albinism
+    independently, through similar mutational events.
+  abstract_source: europepmc
 - id: S-MUSA-DOMEST-2011
   type: article
   doi: 10.1073/pnas.1102001108
@@ -593,6 +936,13 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: original multidisciplinary research hereby clarifies the complex geodomestication pathways
+    that generated the vast range of banana cultivars (cvs). genetic analyses identify the wild ancestors
+    of modern-day cvs and elucidate several key stages of domestication for different cv groups. archaeology
+    and linguistics shed light on the historical roles of people in the movement and cultivation of bananas
+    from new guinea to west africa during the holocene. the historical reconstruction of domestication
+    processes is essential for breeding programs seeking to diversify and improve banana cvs for the future.
+  abstract_source: crossref
 - id: S-PANAGIA-1991
   type: article
   doi: 10.1086/186164
@@ -611,6 +961,7 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract_available: false
 - id: S-WILLIAMS-2000
   type: article
   doi: 10.1029/1999RG900016
@@ -629,6 +980,33 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: over the past decade the analysis of sedimentary cyclic rhythmites of tidal origin, i.e.,
+    stacked thin beds or laminae usually of sandstone, siltstone, and mudstone that display periodic variations
+    in thickness reflecting a strong tidal influence on sedimentation, has provided information on earth's
+    paleorotation and the evolving lunar orbit for precambrian time (before 540 ma). depositional environments
+    of tidal rhythmites range from estuarine to tidal delta, with a wave‐protected, distal ebb tidal delta
+    setting being particularly favorable for the deposition and preservation of long, detailed rhythmite
+    records. the potential sediment load of nearshore tidal currents and the effectiveness of the tide
+    as an agent of sediment entrainment and deposition are related directly to tidal range (or maximum
+    tidal height) and consequent current speed. hence the thickness of successive laminae deposited by
+    tidal currents can be a proxy tidal record, with paleotidal and paleorotational values being determined
+    by analysis of measured records of lamina and cycle thickness. the validity of the findings can be
+    investigated by testing the primary, observed values for internal self‐consistency through application
+    of the laws of celestial mechanics. paleotidal and paleorotational values provided by late neoproterozoic
+    (∼620 ma) tidal rhythmites in south australia are validated by these tests and indicate 13.1±0.1 synodic
+    (lunar) months/yr, 400±7 solar days/yr, a length of day of 21.9±0.4 h, and a relative earth‐moon distance
+    a/a 0 of 0.965±0.005. the mean rate of lunar recession since that time is 2.17±0.31 cm/yr, which is
+    little more than half the present rate of lunar recession of 3.82±0.07 cm/yr obtained by lunar laser
+    ranging. the late neoproterozoic data militate against significant overall change in earth's moment
+    of inertia and radius at least since 620 ma. cyclicity displayed by paleoproterozoic (2450 ma) banded
+    iron formation in western australia may record tidal influences on the discharge and/or dispersal
+    of submarine hydrothermal plumes and suggests 14.5±0.5 synodic months/yr and a/a 0 = 0.906±0.029.
+    the combined rhythmite data give a mean rate of lunar recession of 1.24±0.71 cm/yr during most of
+    the proterozoic (2450-620 ma), suggesting that a close approach of the moon did not occur during earlier
+    time. concentrated study of precambrian tidal rhythmites promises to illuminate the evolving dynamics
+    of the early earth‐moon system and may permit the lunar orbit to be traced back to near the time of
+    the moon's origin.
+  abstract_source: crossref
 - id: S-DICKEY-1994
   type: article
   doi: 10.1126/science.265.5171.482
@@ -647,6 +1025,17 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: on 21 july 1969, during the first manned lunar mission, apollo 11, the first retroreflector
+    array was placed on the moon, enabling highly accurate measurements of the earthmoon separation by
+    means of laser ranging. lunar laser ranging (llr) turns the earthmoon system into a laboratory for
+    a broad range of investigations, including astronomy, lunar science, gravitational physics, geodesy,
+    and geodynamics. contributions from llr include the three-orders-of-magnitude improvement in accuracy
+    in the lunar ephemeris, a several-orders-of-magnitude improvement in the measurement of the variations
+    in the moon's rotation, and the verification of the principle of equivalence for massive bodies with
+    unprecedented accuracy. lunar laser ranging analysis has provided measurements of the earth's precession,
+    the moon's tidal acceleration, and lunar rotational dissipation. these scientific results, current
+    technological developments, and prospects for the future are discussed here.
+  abstract_source: crossref
 - id: S-NEWHORIZONS-2019
   type: article
   doi: 10.1126/science.aaw9771
@@ -665,6 +1054,14 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: new horizons flies past mu 69 after flying past pluto in 2015, the new horizons spacecraft
+    shifted course to encounter (486958) 2014 mu 69 , a much smaller body about 30 kilometers in diameter.
+    mu 69 is part of the kuiper belt, a collection of small icy bodies orbiting in the outer solar system.
+    stern et al. present the initial results from the new horizons flyby of mu 69 on 1 january 2019. mu
+    69 consists of two lobes that appear to have merged at low speed, producing a contact binary. this
+    type of kuiper belt object is mostly undisturbed since the formation of the solar system and so will
+    preserve clues about that process. science , this issue p. eaaw9771
+  abstract_source: crossref
 - id: S-PROTHERO-2017
   type: book
   isbn: 978-0231180641
@@ -823,6 +1220,14 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: historians disagree about whether nazis embraced darwinian evolution. by examining hitler's
+    ideology, the official biology curriculum, the writings of nazi anthropologists, and nazi periodicals,
+    we find that nazi racial theorists did indeed embrace human and racial evolution. they not only taught
+    that humans had evolved from primates, but they believed the aryan or nordic race had evolved to a
+    higher level than other races because of the harsh climatic conditions that influenced natural selection.
+    they also claimed that darwinism underpinned specific elements of nazi racial ideology, including
+    racial inequality, the necessity of the racial struggle for existence, and collectivism.
+  abstract_source: crossref
 - id: S-LEONARD-2005
   type: article
   doi: 10.1215/00182702-37-suppl_1-200
@@ -842,6 +1247,7 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract_available: false
 - id: S-ERV-PRIMATE-2025
   type: article
   doi: 10.1126/sciadv.ads9164
@@ -860,3 +1266,74 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: current approaches for classifying and annotating endogenous retroviruses (ervs) and their
+    long terminal repeats (ltrs) have limited resolution and are inaccurate. here, we developed an annotation
+    approach based on phylogenetic analysis and cross-species conservation. focusing on the evolutionarily
+    young ltr subfamilies known as mer11a/b/c, we revealed the presence of four "new subfamilies," suggesting
+    a new annotation for 412 (19.8%) of these repeat elements. we then validated their regulatory potential
+    using a massively parallel reporter assay. we further identified motifs associated with their differential
+    activities including an ape-specific gain of sox-related motifs through a single-nucleotide deletion.
+    by applying our approach across 53 simian-enriched ltr subfamilies, we defined 75 new subfamilies
+    and found a novel annotation for a total of 3807 (30.0%) instances from 26 subfamilies. with this
+    refined annotation of simian-enriched ltrs, it will be possible to better understand the evolution
+    in primate genomes and potentially identify critical roles for ervs and their ltrs in the hosts.
+  abstract_source: crossref
+- id: S-JOUZEL-2007
+  type: article
+  doi: 10.1126/science.1141038
+  topic: geochronology
+  used_for:
+  - C004
+  - C005
+  note: EPICA Dome C 80만 년 기록. attest 대조에서 EPICA 2004(74만 년)를 80만 년 근거로 잘못 인용하고 있던 것이 발견되어 추가됨
+  verified:
+    authors: Jouzel 외 31인
+    author_count: 32
+    title: Orbital and Millennial Antarctic Climate Variability over the Past 800,000 Years
+    container: Science
+    year: 2007
+    volume: '317'
+    page: 793-796
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+  abstract: "a high-resolution deuterium profile is now available along the entire european project for\
+    \ ice coring in antarctica dome c ice core, extending this climate record back to marine isotope stage\
+    \ 20.2, â\x88¼800,000 years ago. experiments performed with an atmospheric general circulation model\
+    \ including water isotopes support its temperature interpretation. we assessed the general correspondence\
+    \ between dansgaard-oeschger events and their smoothed antarctic counterparts for this dome c record,\
+    \ which reveals the presence of such features with similar amplitudes during previous glacial periods.\
+    \ we suggest that the interplay between obliquity and precession accounts for the variable intensity\
+    \ of interglacial periods in ice core records."
+  abstract_source: crossref
+- id: S-LUTHI-2008
+  type: article
+  doi: 10.1038/nature06949
+  topic: geochronology
+  used_for:
+  - C005
+  note: 65만~80만 년 전 CO2 기록. 80만 년 구간의 보조 근거
+  verified:
+    authors: Lüthi 외 10인
+    author_count: 11
+    title: High-resolution carbon dioxide concentration record 650,000–800,000 years before present
+    container: Nature
+    year: 2008
+    volume: '453'
+    page: 379-382
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+  abstract: changes in past atmospheric carbon dioxide concentrations can be determined by measuring the
+    composition of air trapped in ice cores from antarctica. so far, the antarctic vostok and epica dome
+    c ice cores have provided a composite record of atmospheric carbon dioxide levels over the past 650,000
+    years. here we present results of the lowest 200 m of the dome c ice core, extending the record of
+    atmospheric carbon dioxide concentration by two complete glacial cycles to 800,000 yr before present.
+    from previously published data and the present work, we find that atmospheric carbon dioxide is strongly
+    correlated with antarctic temperature throughout eight glacial cycles but with significantly lower
+    concentrations between 650,000 and 750,000 yr before present. carbon dioxide levels are below 180
+    parts per million by volume (p.p.m.v.) for a period of 3,000 yr during marine isotope stage 16, possibly
+    reflecting more pronounced oceanic carbon storage. we report the lowest carbon dioxide concentration
+    measured in an ice core, which extends the pre-industrial range of carbon dioxide concentrations during
+    the late quaternary by about 10 p.p.m.v. to 172-300 p.p.m.v.
+  abstract_source: europepmc

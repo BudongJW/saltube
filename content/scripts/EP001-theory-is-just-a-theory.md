@@ -10,6 +10,13 @@ logic_only: false
 status: drafted
 platforms: [youtube_shorts, tiktok]
 hashtags: ["#진화", "#과학이론", "#창조과학", "#과학"]
+attest:
+  - source: S-NAS-2008
+    supports: "과학적 이론의 정의 — 충분히 입증된 설명"
+    quote: "TODO — 원문에서 해당 문장을 그대로 옮길 것"
+    locator: p.???
+    checked_by: ""      # 원문을 확인한 사람이 적을 것
+    checked: 2026-09-19
 corrections: []
 ---
 
