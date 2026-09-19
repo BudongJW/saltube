@@ -4,7 +4,7 @@ claim_id: C001
 title: "\"진화는 이론일 뿐\"이라는 말의 함정"
 pillar: C
 confidence: settled
-duration_target: 50
+duration_target: 48
 sources: [S-NAS-2008]
 logic_only: false
 status: drafted

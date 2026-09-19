@@ -83,7 +83,7 @@ claims:
     difficulty: 3
     virality: high
     confidence: settled
-    fallacy: "특수 사례 일반화 — 유효 범위 밖에 적용한 측정 실패를 방법 전체의 실패로 확대"
+    fallacy: "선택적 회의 — 한 방법에만 들이대는 증명 요구. 정작 자기 논증(달 후퇴율 외삽)에는 훨씬 강한 가정을 쓴다. 하위 논증인 세인트헬렌스 사례는 특수 사례 일반화"
     rebuttal: >-
       서로 독립적인 붕괴계(U-Pb, K-Ar/Ar-Ar, Rb-Sr, Sm-Nd)가 같은 시료에서 일치하는 값을 낸다.
       등시선(isochron)법은 초기 딸핵종 양을 가정하지 않고 데이터로부터 구한다.
