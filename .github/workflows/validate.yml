@@ -1,0 +1,29 @@
+name: validate
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  scripts:
+    name: 대본 검수
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: PyYAML 설치
+        run: pip install --quiet pyyaml
+
+      - name: claims.yaml 파싱 확인
+        run: python3 -c "import yaml; yaml.safe_load(open('content/claims.yaml'))"
+
+      - name: 대본 검수 (출처·길이·톤)
+        run: python3 tools/claimctl.py validate
+
+      - name: 백로그 현황
+        run: python3 tools/claimctl.py backlog
