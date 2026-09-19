@@ -28,10 +28,12 @@
 
 ```
 docs/                 전략·정책·운영 문서 (읽는 순서대로 번호)
-content/claims.yaml   창조론 주장 데이터베이스 = 에피소드 백로그
-content/scripts/      쇼츠 대본 (YAML front matter + 본문)
-content/sources.md    인용 출처 마스터 목록
-tools/claimctl.py     대본 검수 / 발행 캘린더 / 플랫폼 메타데이터 생성 CLI
+content/claims.yaml     창조론 주장 데이터베이스 = 에피소드 백로그
+content/references.yaml 레퍼런스 원장 (Source of Truth)
+content/sources.md      ↑에서 자동 생성 — 직접 편집 금지
+content/scripts/        쇼츠 대본 (YAML front matter + 본문)
+tools/claimctl.py       대본 검수 / 발행 캘린더 / 플랫폼 메타데이터
+tools/refcheck.py       Crossref DOI 검증 / 레퍼런스 검색 / sources.md 생성
 ```
 
 ## 빠른 시작
@@ -41,7 +43,16 @@ python3 tools/claimctl.py validate          # 대본 형식·길이·출처 검�
 python3 tools/claimctl.py backlog           # 주장 DB 현황 (우선순위/난이도)
 python3 tools/claimctl.py calendar --weeks 8 --start 2026-10-05
 python3 tools/claimctl.py meta EP001        # 유튜브/틱톡 업로드 메타데이터
+
+python3 tools/refcheck.py status            # 레퍼런스 검증 현황
+python3 tools/refcheck.py search "질의"      # Crossref에서 새 레퍼런스 찾기
+python3 tools/refcheck.py verify            # DOI를 Crossref로 검증
+python3 tools/refcheck.py render            # sources.md 재생성
 ```
+
+**서지 메타데이터는 손으로 적지 않습니다.** `references.yaml`에 DOI만 넣으면
+`refcheck verify`가 Crossref에서 저자·제목·저널·연도를 받아 채웁니다.
+기억에서 적은 DOI는 틀리고, 틀린 인용은 이 채널이 가장 크게 잃는 실수입니다.
 
 `validate`는 CI에서도 돌아갑니다. **출처 없는 주장이 들어간 대본은 머지되지 않습니다.**
 

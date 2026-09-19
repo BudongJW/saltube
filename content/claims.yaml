@@ -365,8 +365,8 @@ claims:
       - "우생학은 인공선택 발상이며, 자연선택은 오히려 유전적 다양성의 가치를 설명한다"
       - "화학이 독가스에 쓰였다고 해서 원자론이 틀린 것이 되지 않는다"
     counter: "역공(‘종교도 전쟁을 일으켰다’)은 쓰지 말 것. 같은 오류를 반복하는 것이며 채널 톤을 망친다. 논리 구조만 지적하고 끝낸다."
-    sources: []
-    note: "출처 마커 없이도 성립하는 논리 분석 편. front matter에서 sources 비워도 validate 통과하도록 logic_only: true 사용"
+    sources: [S-WEIKART-2013, S-LEONARD-2005]
+    note: "논리 분석 편이지만 역사적 주장을 다루므로 사료가 필요하다. S-WEIKART-2013은 상대편의 가장 강한 학술 논변이므로 반드시 먼저 읽고 정확히 대변한 뒤 반박할 것 — 편집 정책 §2 3단계"
     status: backlog
     episode: null
 

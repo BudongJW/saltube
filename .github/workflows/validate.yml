@@ -4,6 +4,9 @@ on:
   push:
     branches: ["**"]
   pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 3 1 * *"   # 매월 1일 — DOI 철회·변경 감시
 
 jobs:
   scripts:
@@ -27,3 +30,27 @@ jobs:
 
       - name: 백로그 현황
         run: python3 tools/claimctl.py backlog
+
+      - name: 레퍼런스 현황
+        run: python3 tools/refcheck.py status
+
+      - name: sources.md 가 references.yaml 과 동기화되어 있는지
+        run: |
+          python3 tools/refcheck.py render
+          git diff --exit-code content/sources.md \
+            || { echo "::error::sources.md 가 최신이 아닙니다. 'python3 tools/refcheck.py render' 후 커밋하세요"; exit 1; }
+
+  references:
+    name: 레퍼런스 DOI 검증 (Crossref)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install --quiet pyyaml
+      # 외부 API 의존이라 push 마다 돌리지 않고 수동/주간 실행.
+      # DOI 가 철회·변경되는 경우를 잡기 위함.
+      - name: 전체 DOI 재검증
+        if: github.event_name == 'workflow_dispatch' || github.event_name == 'schedule'
+        run: python3 tools/refcheck.py verify --force

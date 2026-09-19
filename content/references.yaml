@@ -1,0 +1,844 @@
+version: 1
+updated: 2026-09-19
+references:
+- id: S-TIKTAALIK-2006
+  type: article
+  doi: 10.1038/nature04639
+  topic: paleontology
+  used_for:
+  - C003
+  note: 예측한 지층에서 발견한 사례. 전이화석 편의 핵심 근거
+  verified:
+    authors: Daeschler, Shubin, Jenkins
+    author_count: 3
+    title: A Devonian tetrapod-like fish and the evolution of the tetrapod body plan
+    container: Nature
+    year: 2006
+    volume: '440'
+    page: 757-763
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-TIKTAALIK-FIN-2006
+  type: article
+  doi: 10.1038/nature04637
+  topic: paleontology
+  used_for:
+  - C003
+  note: 틱타알릭 가슴지느러미 구조 — 사지 기원. 위 논문의 동반 논문
+  verified:
+    authors: Shubin, Daeschler, Jenkins
+    author_count: 3
+    title: The pectoral fin of Tiktaalik roseae and the origin of the tetrapod limb
+    container: Nature
+    year: 2006
+    volume: '440'
+    page: 764-771
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-TIKTAALIK-PELVIS-2014
+  type: article
+  doi: 10.1073/pnas.1322559111
+  topic: paleontology
+  used_for:
+  - C003
+  note: 골반 구조. 뒷지느러미도 강화되어 있었다는 후속 발견
+  verified:
+    authors: Shubin, Daeschler, Jenkins
+    author_count: 3
+    title: Pelvic girdle and fin of Tiktaalik roseae
+    container: Proc. Natl. Acad. Sci. U.S.A.
+    year: 2014
+    volume: '111'
+    page: 893-899
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-POLAND-TRACKS-2010
+  type: article
+  doi: 10.1038/nature08623
+  topic: paleontology
+  used_for:
+  - C003
+  note: 틱타알릭보다 이른 사지류 발자국. EP003에서 선제적으로 언급할 것 — 숨기면 신뢰 손실
+  verified:
+    authors: Niedźwiedzki 외 4인
+    author_count: 5
+    title: Tetrapod trackways from the early Middle Devonian period of Poland
+    container: Nature
+    year: 2010
+    volume: '463'
+    page: 43-48
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-THEWISSEN-2001
+  type: article
+  doi: 10.1038/35095005
+  topic: paleontology
+  used_for:
+  - C003
+  note: 육상 고래류 골격. 고래-우제류 관계
+  verified:
+    authors: Thewissen 외 3인
+    author_count: 4
+    title: Skeletons of terrestrial cetaceans and the relationship of whales to artiodactyls
+    container: Nature
+    year: 2001
+    volume: '413'
+    page: 277-281
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-THEWISSEN-2009
+  type: article
+  doi: 10.1007/s12052-009-0135-2
+  topic: paleontology
+  used_for:
+  - C003
+  note: 고래 진화 계열 개괄. 교육용 리뷰라 인용하기 좋음
+  verified:
+    authors: Thewissen 외 3인
+    author_count: 4
+    title: 'From Land to Water: the Origin of Whales, Dolphins, and Porpoises'
+    container: Evo Edu Outreach
+    year: 2009
+    volume: '2'
+    page: 272-288
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-BEJDER-2002
+  type: article
+  doi: 10.1046/j.1525-142x.2002.02033.x
+  topic: paleontology
+  used_for:
+  - C021
+  note: 고래의 사지 흔적 구조
+  verified:
+    authors: Bejder, Hall
+    author_count: 2
+    title: 'Limbs in whales and limblessness in other vertebrates: mechanisms of evolutionary and developmental
+      transformation and loss'
+    container: Evolution and Development
+    year: 2002
+    volume: '4'
+    page: 445-458
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-DINES-2014
+  type: article
+  doi: 10.1111/evo.12516
+  topic: biology
+  used_for:
+  - C021
+  note: 고래 골반뼈가 성선택 기능을 함 — '흔적기관에 기능이 있다' 반박에 정확히 대응
+  verified:
+    authors: Dines 외 6인
+    author_count: 7
+    title: Sexual selection targets cetacean pelvic bones
+    container: Evolution
+    year: 2014
+    volume: '68'
+    page: 3296-3306
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-ERWIN-2011
+  type: article
+  doi: 10.1126/science.1206375
+  topic: paleontology
+  used_for:
+  - C013
+  note: 캄브리아기 문제 종합 리뷰
+  verified:
+    authors: Erwin 외 5인
+    author_count: 6
+    title: 'The Cambrian Conundrum: Early Divergence and Later Ecological Success in the Early History
+      of Animals'
+    container: Science
+    year: 2011
+    volume: '334'
+    page: 1091-1097
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-NARBONNE-2005
+  type: article
+  doi: 10.1146/annurev.earth.33.092203.122519
+  topic: paleontology
+  used_for:
+  - C013
+  note: 에디아카라 생물군 — 캄브리아기 '갑작스러움' 반박의 핵심
+  verified:
+    authors: Narbonne
+    author_count: 1
+    title: 'THE EDIACARA BIOTA: Neoproterozoic Origin of Animals and Their Ecosystems'
+    container: Annu. Rev. Earth Planet. Sci.
+    year: 2005
+    volume: '33'
+    page: 421-442
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-PATTERSON-1956
+  type: article
+  doi: 10.1016/0016-7037(56)90036-9
+  topic: geochronology
+  used_for:
+  - C004
+  - C005
+  note: 지구 나이 45.5억 년 최초 확정. 운석-지구 납 동위원소 일치
+  verified:
+    authors: Patterson
+    author_count: 1
+    title: Age of meteorites and the earth
+    container: Geochimica et Cosmochimica Acta
+    year: 1956
+    volume: '10'
+    page: 230-237
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-SUIGETSU-2012
+  type: article
+  doi: 10.1126/science.1226660
+  topic: geochronology
+  used_for:
+  - C004
+  - C005
+  note: 스이게쓰호 연층 52,800년. 방사성 측정과 독립 교차검증
+  verified:
+    authors: Bronk Ramsey 외 17인
+    author_count: 18
+    title: A Complete Terrestrial Radiocarbon Record for 11.2 to 52.8 kyr B.P.
+    container: Science
+    year: 2012
+    volume: '338'
+    page: 370-374
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-EPICA-2004
+  type: article
+  doi: 10.1038/nature02599
+  topic: geochronology
+  used_for:
+  - C004
+  - C005
+  note: 남극 빙하코어 80만 년
+  authors_override: EPICA Community Members
+  verified:
+    authors: EPICA Community Members
+    author_count: 0
+    title: Eight glacial cycles from an Antarctic ice core
+    container: Nature
+    year: 2004
+    volume: '429'
+    page: 623-628
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-IJDO-1991
+  type: article
+  doi: 10.1073/pnas.88.20.9051
+  topic: genetics
+  used_for:
+  - C009
+  note: 인간 2번 염색체 융합 — 텔로미어 잔재. 진화 예측의 성공 사례
+  verified:
+    authors: IJdo 외 4인
+    author_count: 5
+    title: 'Origin of human chromosome 2: an ancestral telomere-telomere fusion.'
+    container: Proc. Natl. Acad. Sci. U.S.A.
+    year: 1991
+    volume: '88'
+    page: 9051-9055
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-CHIMP-GENOME-2005
+  type: article
+  doi: 10.1038/nature04072
+  topic: genetics
+  used_for:
+  - C009
+  - C010
+  note: 침팬지 게놈 초안. 인간-침팬지 비교 수치의 1차 출처
+  authors_override: The Chimpanzee Sequencing and Analysis Consortium
+  verified:
+    authors: The Chimpanzee Sequencing and Analysis Consortium
+    author_count: 0
+    title: Initial sequence of the chimpanzee genome and comparison with the human genome
+    container: Nature
+    year: 2005
+    volume: '437'
+    page: 69-87
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-HUMAN-GENOME-2001
+  type: article
+  doi: 10.1038/35057062
+  topic: genetics
+  used_for:
+  - C010
+  note: 인간 게놈 초안. ERV 비중 수치 출처
+  verified:
+    authors: Lander 외 248인
+    author_count: 249
+    title: Initial sequencing and analysis of the human genome
+    container: Nature
+    year: 2001
+    volume: '409'
+    page: 860-921
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-SYNCYTIN-2000
+  type: article
+  doi: 10.1038/35001608
+  topic: genetics
+  used_for:
+  - C010
+  note: ERV 유래 유전자가 태반 형성에 쓰임. '고장난 잔해일 뿐이냐' 재반박 대응
+  verified:
+    authors: Mi 외 11인
+    author_count: 12
+    title: Syncytin is a captive retroviral envelope protein involved in human placental morphogenesis
+    container: Nature
+    year: 2000
+    volume: '403'
+    page: 785-789
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-NISHIKIMI-1994
+  type: article
+  doi: 10.1016/s0021-9258(17)36884-9
+  topic: genetics
+  used_for:
+  - C010
+  note: GULO 위유전자. 최초 초안에 잘못된 DOI를 적었던 항목 — verify로 교정됨
+  verified:
+    authors: Nishikimi 외 4인
+    author_count: 5
+    title: Cloning and chromosomal mapping of the human nonfunctional gene for L-gulono-gamma-lactone
+      oxidase, the enzyme for L-ascorbic acid biosynthesis missing in man.
+    container: Journal of Biological Chemistry
+    year: 1994
+    volume: '269'
+    page: 13685-13688
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-LENSKI-2008
+  type: article
+  doi: 10.1073/pnas.0803151105
+  topic: genetics
+  used_for:
+  - C011
+  - C023
+  note: 대장균 Cit+ 형질 출현. 새 기능 획득의 실험적 관찰
+  verified:
+    authors: Blount, Borland, Lenski
+    author_count: 3
+    title: Historical contingency and the evolution of a key innovation in an experimental population
+      of Escherichia coli
+    container: Proc. Natl. Acad. Sci. U.S.A.
+    year: 2008
+    volume: '105'
+    page: 7899-7906
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-CHEN-1997
+  type: article
+  doi: 10.1073/pnas.94.8.3811
+  topic: genetics
+  used_for:
+  - C011
+  - C023
+  note: 항동결 단백질이 소화효소 유전자에서 유래. '새 정보 불가' 반박의 정면 반례
+  verified:
+    authors: Chen, DeVries, Cheng
+    author_count: 3
+    title: Evolution of antifreeze glycoprotein gene from a trypsinogen gene in Antarctic notothenioid
+      fish
+    container: Proc. Natl. Acad. Sci. U.S.A.
+    year: 1997
+    volume: '94'
+    page: 3811-3816
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-TISHKOFF-2006
+  type: article
+  doi: 10.1038/ng1946
+  topic: genetics
+  used_for:
+  - C011
+  note: 락타아제 지속성의 아프리카-유럽 수렴 진화. ID는 2007이었으나 Crossref 발행연도는 2006
+  verified:
+    authors: Tishkoff 외 18인
+    author_count: 19
+    title: Convergent adaptation of human lactase persistence in Africa and Europe
+    container: Nat Genet
+    year: 2006
+    volume: '39'
+    page: 31-40
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-BERSAGLIERI-2004
+  type: article
+  doi: 10.1086/421051
+  topic: genetics
+  used_for:
+  - C011
+  note: 유럽 락타아제 유전자 양성선택 신호
+  verified:
+    authors: Bersaglieri 외 8인
+    author_count: 9
+    title: Genetic Signatures of Strong Recent Positive Selection at the Lactase Gene
+    container: The American Journal of Human Genetics
+    year: 2004
+    volume: '74'
+    page: 1111-1120
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-YI-2010
+  type: article
+  doi: 10.1126/science.1190371
+  topic: genetics
+  used_for:
+  - C011
+  note: 티베트인 EPAS1 고지대 적응
+  verified:
+    authors: Yi 외 69인
+    author_count: 70
+    title: Sequencing of 50 Human Exomes Reveals Adaptation to High Altitude
+    container: Science
+    year: 2010
+    volume: '329'
+    page: 75-78
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-LAMICHHANEY-2018
+  type: article
+  doi: 10.1126/science.aao4593
+  topic: evolution
+  used_for:
+  - C012
+  note: 갈라파고스 Big Bird 계통 — 관찰된 종분화
+  verified:
+    authors: Lamichhaney 외 5인
+    author_count: 6
+    title: Rapid hybrid speciation in Darwin’s finches
+    container: Science
+    year: 2018
+    volume: '359'
+    page: 224-228
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-BYRNE-1999
+  type: article
+  doi: 10.1038/sj.hdy.6884120
+  topic: evolution
+  used_for:
+  - C012
+  note: 런던 지하철 모기 개체군 분화
+  verified:
+    authors: Byrne, Nichols
+    author_count: 2
+    title: 'Culex pipiens in London Underground tunnels: differentiation between surface and subterranean
+      populations'
+    container: Heredity
+    year: 1999
+    volume: '82'
+    page: 7-15
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-FEDER-1988
+  type: article
+  doi: 10.1038/336061a0
+  topic: evolution
+  used_for:
+  - C012
+  note: 사과실파리 동소적 기주 종족 분화
+  verified:
+    authors: Feder, Chilcote, Bush
+    author_count: 3
+    title: Genetic differentiation between sympatric host races of the apple maggot fly Rhagoletis pomonella
+    container: Nature
+    year: 1988
+    volume: '336'
+    page: 61-64
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-HERREL-2008
+  type: article
+  doi: 10.1073/pnas.0711998105
+  topic: evolution
+  used_for:
+  - C012
+  note: 이탈리아 도마뱀 36년 급속 형태 변화. 종분화가 아니라 급속 적응 — 정확히 표현할 것
+  verified:
+    authors: Herrel 외 7인
+    author_count: 8
+    title: Rapid large-scale evolutionary divergence in morphology and performance associated with exploitation
+      of a different dietary resource
+    container: Proc. Natl. Acad. Sci. U.S.A.
+    year: 2008
+    volume: '105'
+    page: 4792-4795
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-NILSSON-1994
+  type: article
+  doi: 10.1098/rspb.1994.0048
+  topic: evolution
+  used_for:
+  - C006
+  note: 눈 진화 소요 세대 보수적 추정
+  authors_override: Nilsson, Pelger
+  verified:
+    authors: Nilsson, Pelger
+    author_count: 0
+    title: A pessimistic estimate of the time required for an eye to evolve
+    container: Proc. R. Soc. Lond. B
+    year: 1994
+    volume: '256'
+    page: 53-58
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-PALLEN-2006
+  type: article
+  doi: 10.1038/nrmicro1493
+  topic: evolution
+  used_for:
+  - C007
+  note: 세균 편모 기원. 환원불가능 복잡성 반박
+  verified:
+    authors: Pallen, Matzke
+    author_count: 2
+    title: From The Origin of Species to the origin of bacterial flagella
+    container: Nat Rev Microbiol
+    year: 2006
+    volume: '4'
+    page: 784-790
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-LEAL-2016
+  type: article
+  doi: 10.1016/j.cub.2016.09.020
+  topic: evolution
+  used_for:
+  - C021
+  note: 뱀의 다리 상실과 Shh 조절 인자. 흔적 구조의 발생학적 근거
+  verified:
+    authors: Leal, Cohn
+    author_count: 2
+    title: Loss and Re-emergence of Legs in Snakes by Modular Evolution of Sonic hedgehog and HOXD Enhancers
+    container: Current Biology
+    year: 2016
+    volume: '26'
+    page: 2966-2973
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-PROTAS-2005
+  type: article
+  doi: 10.1038/ng1700
+  topic: evolution
+  used_for:
+  - C021
+  note: 동굴어 색소·눈 퇴화의 분자적 수렴
+  verified:
+    authors: Protas 외 8인
+    author_count: 9
+    title: Genetic analysis of cavefish reveals molecular convergence in the evolution of albinism
+    container: Nat Genet
+    year: 2005
+    volume: '38'
+    page: 107-111
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-MUSA-DOMEST-2011
+  type: article
+  doi: 10.1073/pnas.1102001108
+  topic: evolution
+  used_for:
+  - C018
+  note: 바나나 작물화. 재배종이 인공선택 산물임
+  verified:
+    authors: Perrier 외 17인
+    author_count: 18
+    title: Multidisciplinary perspectives on banana ( Musa spp.) domestication
+    container: Proc. Natl. Acad. Sci. U.S.A.
+    year: 2011
+    volume: '108'
+    page: 11311-11318
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-PANAGIA-1991
+  type: article
+  doi: 10.1086/186164
+  topic: astronomy
+  used_for:
+  - C005
+  note: SN 1987A 거리 — 빛 메아리 고리 기하학. 젊은지구론 반박의 단일 최강 근거
+  verified:
+    authors: Panagia 외 4인
+    author_count: 5
+    title: Properties of the SN 1987A circumstellar ring and the distance to the Large Magellanic Cloud
+    container: The Astrophysical Journal
+    year: 1991
+    volume: '380'
+    page: L23
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-WILLIAMS-2000
+  type: article
+  doi: 10.1029/1999RG900016
+  topic: astronomy
+  used_for:
+  - C019
+  note: 조석 리듬암으로 복원한 과거 지구 자전·달 궤도
+  verified:
+    authors: Williams
+    author_count: 1
+    title: Geological constraints on the Precambrian history of Earth's rotation and the Moon's orbit
+    container: Reviews of Geophysics
+    year: 2000
+    volume: '38'
+    page: 37-59
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-DICKEY-1994
+  type: article
+  doi: 10.1126/science.265.5171.482
+  topic: astronomy
+  used_for:
+  - C019
+  note: 달 레이저 거리측정. 현재 후퇴율 수치의 1차 출처
+  verified:
+    authors: Dickey 외 11인
+    author_count: 12
+    title: 'Lunar Laser Ranging: A Continuing Legacy of the Apollo Program'
+    container: Science
+    year: 1994
+    volume: '265'
+    page: 482-490
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-NEWHORIZONS-2019
+  type: article
+  doi: 10.1126/science.aaw9771
+  topic: astronomy
+  used_for:
+  - C020
+  note: 카이퍼 벨트 천체 아로코스 근접 관측. 예측이 관측으로 확인된 사례
+  verified:
+    authors: Stern 외 204인
+    author_count: 205
+    title: Initial results from the New Horizons exploration of 2014 MU 69 , a small Kuiper Belt object
+    container: Science
+    year: 2019
+    volume: '364'
+    page: null
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-PROTHERO-2017
+  type: book
+  isbn: 978-0231180641
+  citation: 'Prothero, D. R. (2017). Evolution: What the Fossils Say and Why It Matters, 2nd ed. Columbia
+    University Press.'
+  topic: paleontology
+  used_for:
+  - C008
+  manual_checked: false
+- id: S-DALRYMPLE-2004
+  type: book
+  isbn: 978-0804749336
+  citation: 'Dalrymple, G. B. (2004). Ancient Earth, Ancient Skies: The Age of Earth and its Cosmic Surroundings.
+    Stanford University Press.'
+  topic: geochronology
+  used_for:
+  - C004
+  manual_checked: false
+- id: S-LAND-2012
+  type: book
+  isbn: 978-0199581153
+  citation: Land, M. F., & Nilsson, D.-E. (2012). Animal Eyes, 2nd ed. Oxford University Press.
+  topic: evolution
+  used_for:
+  - C006
+  manual_checked: false
+- id: S-OHNO-1970
+  type: book
+  isbn: 978-3642866616
+  citation: Ohno, S. (1970). Evolution by Gene Duplication. Springer.
+  topic: genetics
+  used_for:
+  - C023
+  manual_checked: false
+- id: S-NAS-2008
+  type: book
+  isbn: 978-0309105866
+  citation: National Academy of Sciences & Institute of Medicine (2008). Science, Evolution, and Creationism,
+    3rd ed. National Academies Press.
+  topic: methodology
+  used_for:
+  - C001
+  note: 전문이 NAP 사이트에서 무료 공개. 과학적 '이론' 정의의 표준 인용처
+  manual_checked: false
+- id: S-STENGER-2011
+  type: book
+  isbn: 978-1616144432
+  citation: Stenger, V. J. (2011). The Fallacy of Fine-Tuning. Prometheus Books.
+  topic: cosmology
+  used_for:
+  - C025
+  note: 논쟁적 2차 문헌. C025는 confidence:active — 이 출처 하나에 의존하지 말 것
+  manual_checked: false
+- id: S-LADYHOPE
+  type: book
+  isbn: 978-0801062629
+  citation: Moore, J. (1994). The Darwin Legend. Baker Books.
+  topic: history
+  used_for:
+  - C016
+  manual_checked: false
+- id: S-KITZMILLER-2005
+  type: legal
+  citation: Kitzmiller v. Dover Area School District, 400 F. Supp. 2d 707 (M.D. Pa. 2005). 사건번호 04cv2688.
+  topic: legal
+  used_for:
+  - C007
+  - C014
+  note: 판결문 전문 공개. 드라마 연재 《도버 재판》의 1차 사료 — docs/10
+  manual_checked: false
+- id: S-EDWARDS-1987
+  type: legal
+  citation: Edwards v. Aguillard, 482 U.S. 578 (1987). 미국 연방대법원.
+  topic: legal
+  used_for:
+  - C014
+  manual_checked: false
+- id: S-MCLEAN-1982
+  type: legal
+  citation: McLean v. Arkansas Board of Education, 529 F. Supp. 1255 (E.D. Ark. 1982).
+  topic: legal
+  used_for:
+  - C014
+  note: '''과학이란 무엇인가''를 법원이 판시한 최초 사례'
+  manual_checked: false
+- id: S-USGS-AGE
+  type: web
+  url: https://www.usgs.gov/
+  citation: U.S. Geological Survey — Age of the Earth.
+  topic: geochronology
+  used_for:
+  - C005
+  note: 인용 전 현재 URL 확인 필요. 가능하면 S-PATTERSON-1956을 1차 출처로 쓸 것
+  manual_checked: false
+- id: S-NASA-SOLAR
+  type: web
+  url: https://earthobservatory.nasa.gov/features/EnergyBalance
+  citation: NASA Earth Observatory — Climate and Earth's Energy Budget.
+  topic: physics
+  used_for:
+  - C002
+  manual_checked: false
+- id: S-PROJECTSTEVE
+  type: web
+  url: https://ncse.ngo/project-steve
+  citation: National Center for Science Education — Project Steve.
+  topic: methodology
+  used_for:
+  - C024
+  note: 서명자 수는 계속 증가. 인용 시 접근 날짜와 당시 숫자를 함께 기록할 것
+  manual_checked: false
+- id: S-JOGGINS
+  type: web
+  url: https://whc.unesco.org/en/list/1285
+  citation: UNESCO World Heritage Centre — Joggins Fossil Cliffs.
+  topic: geology
+  used_for:
+  - C008
+  note: polystrate 화석 반박용. 각 나무가 서로 다른 층준에서 매몰된 사례
+  manual_checked: false
+- id: S-KUBAN-1989
+  type: book
+  isbn: 978-0521361613
+  citation: 'Kuban, G. J. (1989). Elongate Dinosaur Tracks. In: Gillette & Lockley (eds.), Dinosaur Tracks
+    and Traces. Cambridge University Press.'
+  topic: paleontology
+  used_for:
+  - C022
+  note: 팔럭시 강 '사람 발자국' 현장 조사
+  manual_checked: false
+- id: S-PASTEUR-HIST
+  type: pmid
+  pmid: '4618119'
+  citation: 'Farley, J., & Geison, G. L. (1974). Science, politics and spontaneous generation in nineteenth-century
+    France: the Pasteur-Pouchet debate. Bulletin of the History of Medicine, 48(2), 161-198.'
+  topic: history
+  used_for:
+  - C015
+  manual_checked: false
+- id: S-WEIKART-2013
+  type: article
+  doi: 10.1353/gsr.2013.0106
+  topic: history
+  used_for:
+  - C017
+  note: 다윈주의와 나치 인종사상의 연결을 주장하는 쪽의 가장 진지한 학술 문헌. 편집 정책 §2 3단계('상대 주장의 가장 강한 버전을 반박한다')에 따라 반드시 이 논문을 읽고
+    그 논지를 정확히 대변한 뒤 반박할 것. 약한 버전을 때리면 역공당한다
+  verified:
+    authors: Weikart
+    author_count: 1
+    title: The Role of Darwinism in Nazi Racial Thought
+    container: German Studies Review
+    year: 2013
+    volume: '36'
+    page: 537-556
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
+- id: S-LEONARD-2005
+  type: article
+  doi: 10.1215/00182702-37-suppl_1-200
+  topic: history
+  used_for:
+  - C017
+  note: 우생학과 사회다윈주의는 별개라는 역사학적 논변. C017의 주 근거
+  verified:
+    authors: Leonard
+    author_count: 1
+    title: 'Mistaking Eugenics for Social Darwinism: Why Eugenics Is Missing from the History of American
+      Economics'
+    container: History of Political Economy
+    year: 2005
+    volume: '37'
+    page: 200-233
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'
