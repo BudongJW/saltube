@@ -59,3 +59,4 @@ python3 tools/claimctl.py meta EP001        # 유튜브/틱톡 업로드 메타�
 | [08 지표](docs/08-metrics.md) | KPI, 판단 기준, 피봇 트리거 |
 | [09 리스크](docs/09-risk-and-compliance.md) | 저작권, 명예훼손, 플랫폼 정지 대응 |
 | [10 포맷 검토](docs/10-format-review-ai-drama.md) | AI 인물 드라마 연재 검토 — 판정과 대안 |
+| [11 대결 포맷](docs/11-format-confrontation.md) | 실명 공격 포맷 사양 — 인용 규칙, 법적 방어선 |

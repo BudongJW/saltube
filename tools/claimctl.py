@@ -52,6 +52,14 @@ SELF_OWN_LINT = [
     (re.compile(r"진화[는은].*(진보|발전|우월)"), "진화는 방향성이 없음 — 진보가 아님 (§4)"),
     (re.compile(r"빅뱅.*진화[의]?\s*(시작|출발)"), "우주론과 생물 진화는 별개 이론 (§4)"),
 ]
+# 대결 포맷 §2 — 동기 추정은 '비방할 목적' 구성요건 입증에 쓰일 수 있음.
+MOTIVE_LINT = [
+    (re.compile(r"알면서(도)?\s*(속|숨|감추)"), "고의 추정 — 입증 책임이 우리에게 옴"),
+    (re.compile(r"돈\s*(때문|벌려고|받고)"), "동기 추정"),
+    (re.compile(r"지어낸\s*(숫자|말|자료)"), "단정 불가 — '출처를 찾을 수 없습니다'로"),
+    (re.compile(r"사기(꾼|극)"), "인신 공격"),
+    (re.compile(r"(속이|기만하)[고는려]"), "고의 추정"),
+]
 # docs/03-editorial-policy.md §1 — 레드라인.
 REDLINE_LINT = [
     (re.compile(r"(무지|멍청|한심|어리석)[한하]"), "인신·집단 비하 표현 (레드라인 §1)"),
@@ -185,8 +193,39 @@ def cmd_validate(args) -> int:
         for pattern, msg in REDLINE_LINT:
             if pattern.search(narration):
                 err(f"레드라인 위반 가능성: {msg}")
+        for pattern, msg in MOTIVE_LINT:
+            if pattern.search(narration):
+                (err if fm.get("named_target") else warn)(
+                    f"동기 추정 표현: {msg} (대결 포맷 §2)")
 
-        # 7. 반대 심문 — 편집 정책 §2 3단계
+        # 7. 실명 대상 편 — 대결 포맷 §4 자료 수집 프로토콜 강제
+        target = fm.get("named_target")
+        if target:
+            quotes = fm.get("quotes")
+            if not quotes:
+                err(f"named_target('{target}') 편에 quotes 블록이 없음 — "
+                    "실명 편은 원문 인용 없이 발행 불가 (레드라인 §7)")
+            else:
+                for i, q in enumerate(quotes, 1):
+                    if not isinstance(q, dict):
+                        err(f"quotes[{i}] 형식 오류 — text/source/archived/context_saved 필요")
+                        continue
+                    for field, why in (
+                        ("text", "원문 그대로의 인용문"),
+                        ("source", "출처(URL 또는 서지사항)와 접근 날짜"),
+                        ("archived", "아카이브 주소 — 원문 삭제 대비"),
+                        ("context_saved", "앞뒤 문맥 보관 여부 — 맥락 왜곡 반박 대비"),
+                    ):
+                        if not q.get(field):
+                            err(f"quotes[{i}]에 '{field}' 없음 ({why}) — 대결 포맷 §4")
+                    if q.get("context_saved") is False:
+                        err(f"quotes[{i}]: 앞뒤 문맥 미보관 — "
+                            "'앞뒤 잘랐다' 반박에 대응 불가 (대결 포맷 §4)")
+            if fm["confidence"] == "active":
+                warn("실명 대상 편인데 confidence: active — "
+                     "확정되지 않은 근거로 실명 비판 시 위험 (대결 포맷 §6)")
+
+        # 8. 반대 심문 — 편집 정책 §2 3단계
         if "예상 재반박" not in body:
             warn("'예상 재반박' 섹션 없음 — 편집 정책 §2 3단계 미수행 (§2)")
 

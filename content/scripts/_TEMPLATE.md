@@ -11,6 +11,17 @@ status: drafted            # drafted / recorded / published
 platforms: [youtube_shorts, tiktok]
 hashtags: ["#진화", "#창조과학", "#과학"]
 corrections: []            # 정정 시 추가: [{date: "2026-01-01", what: "...", episode: "EP0XX"}]
+
+# ── 실명 대상 편에만 사용 — docs/11-format-confrontation.md ──
+# named_target 을 쓰면 quotes 블록이 필수가 되고, 각 항목의
+# text/source/archived/context_saved 가 없으면 validate 에서 차단됩니다.
+#
+# named_target: "한국창조과학회"
+# quotes:
+#   - text: "원문 그대로. 요약 금지."
+#     source: "URL 또는 서지사항 (YYYY-MM-DD 접근)"
+#     archived: "archive.today 주소 — 원문 삭제 대비"
+#     context_saved: true      # 앞뒤 문단 보관 완료 여부
 ---
 
 ## HOOK (0~3초)
