@@ -56,10 +56,19 @@ python3 tools/claimctl.py validate
 - 번인 자막 56px 이상, 안전영역 준수
 - 음량 -14 LUFS
 
+## ⑧.5 제작 패키지 빌드
+```bash
+python3 tools/produce.py EP0XX
+```
+`build/EP0XX/` 에 낭독 원고·SRT 자막·샷 리스트·메타데이터·고정 댓글·체크리스트가 생성됩니다.
+**⑦ 녹음 전에 빌드하세요** — `narration.txt` 가 녹음 원고이고,
+`shotlist.md` 가 편집 작업 문서입니다. → [12 파이프라인](12-pipeline.md) §B
+
 ## ⑨ 게이트 4 — 최종 검수
 ```bash
 python3 tools/claimctl.py meta EP0XX   # 체크리스트 출력
 ```
+또는 `build/EP0XX/checklist.md` 사용 (미검증 출처 경고 포함)
 체크리스트 전 항목 확인. 특히:
 - 음소거로 한 번 재생해 보세요. **소리 없이 이해되면 통과.**
 - 아무 프레임이나 캡처해서, 맥락 없이 돌아다녀도 오해 없을지 확인

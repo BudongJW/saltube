@@ -1,0 +1,268 @@
+#!/usr/bin/env python3
+"""produce — 검증된 대본을 영상 제작 패키지로 빌드.
+
+    python3 tools/produce.py EP001        build/EP001/ 생성
+    python3 tools/produce.py --all
+
+생성물:
+    narration.txt      TTS/녹음용 낭독 원고 (큐 번호 + 예상 시각)
+    <EP>.srt           번인 자막 타이밍 초안
+    shotlist.md        화면 지시 + 컷별 출처 자막 (편집자용)
+    metadata.md        유튜브/틱톡 업로드 메타데이터
+    pinned_comment.txt 고정 댓글 (출처 전문)
+    checklist.md       발행 전 확인 목록
+
+빌드 전 `claimctl validate` 를 통과해야 합니다. 검수 안 된 대본은 빌드되지 않습니다.
+"""
+from __future__ import annotations
+
+import argparse
+import re
+import sys
+from pathlib import Path
+
+import yaml
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from claimctl import (ROOT, SCRIPTS, estimate_seconds, load_claims,  # noqa: E402
+                      narration_of, parse_script)
+
+BUILD = ROOT / "build"
+SECTION = re.compile(r"^##\s+(.+?)\s*(?:\((.+?)\))?\s*$")
+
+
+def srt_time(sec: float) -> str:
+    ms = int(round(sec * 1000))
+    h, ms = divmod(ms, 3600000)
+    m, ms = divmod(ms, 60000)
+    s, ms = divmod(ms, 1000)
+    return f"{h:02d}:{m:02d}:{s:02d},{ms:03d}"
+
+
+def walk(body: str):
+    """대본 본문을 (종류, 내용, 섹션) 흐름으로 분해.
+
+    종류: 'cue'(낭독) | 'screen'(화면 지시). 제작 메모('---' 이후)는 제외.
+    """
+    section = "?"
+    for line in body.split("\n"):
+        s = line.strip()
+        if s.startswith("---"):
+            return
+        if not s:
+            continue
+        if m := SECTION.match(s):
+            section = m.group(1)
+            continue
+        if s.startswith(">"):
+            yield "screen", re.sub(r"^화면\s*[:：]\s*", "", s.lstrip("> ").strip()), section
+            continue
+        if s.startswith(("#", "```", "|")):
+            continue
+        yield "cue", s, section
+
+
+def strip_md(s: str) -> str:
+    """낭독 원고에서 마크다운 강조와 출처 마커를 제거."""
+    s = re.sub(r"\[S-[A-Z0-9\-]+\]", "", s)
+    s = re.sub(r"\*\*(.+?)\*\*", r"\1", s)
+    s = re.sub(r"\*(.+?)\*", r"\1", s)
+    s = re.sub(r"`(.+?)`", r"\1", s)
+    return re.sub(r"\s+", " ", s).strip()
+
+
+def build_one(ep_id: str, quiet: bool = False) -> int:
+    matches = [p for p in SCRIPTS.glob(f"{ep_id}*.md") if not p.name.startswith("_")]
+    if not matches:
+        print(f"대본 없음: {ep_id}", file=sys.stderr)
+        return 1
+    path = matches[0]
+    fm, body = parse_script(path)
+    claims = {c["id"]: c for c in load_claims()["claims"]}
+    claim = claims.get(fm["claim_id"], {})
+    refs = {r["id"]: r for r in
+            yaml.safe_load((ROOT / "content" / "references.yaml").read_text(encoding="utf-8"))["references"]}
+
+    out = BUILD / fm["id"]
+    out.mkdir(parents=True, exist_ok=True)
+
+    # ── 큐 분해 + 타이밍 ──
+    cues: list[dict] = []
+    pending_screen: list[str] = []
+    t = 0.0
+    for kind, text, section in walk(body):
+        if kind == "screen":
+            pending_screen.append(text)
+            continue
+        spoken = strip_md(text)
+        if not spoken:
+            continue
+        dur = estimate_seconds(spoken)
+        cues.append({
+            "n": len(cues) + 1, "start": t, "end": t + dur, "dur": dur,
+            "text": spoken, "raw": text, "section": section,
+            "screen": pending_screen[:],
+            "sources": re.findall(r"\[(S-[A-Z0-9\-]+)\]", text),
+        })
+        pending_screen = []
+        t += dur
+    total = round(t, 1)
+
+    # ── narration.txt ──
+    N = [f"# {fm['id']} 낭독 원고", f"# {fm['title']}",
+         f"# 예상 {total}초 · 큐 {len(cues)}개",
+         "#",
+         "# 숫자와 학명은 의도적으로 느리게 읽을 것 (docs/05 ⑦).",
+         "# TTS 사용 시 회차 간 보이스를 절대 바꾸지 마세요 — 일관성이 신뢰도입니다.",
+         ""]
+    cur = None
+    for c in cues:
+        if c["section"] != cur:
+            cur = c["section"]
+            N.append(f"\n## {cur}")
+        N.append(f"\n[{c['n']:02d}] ({c['start']:05.1f}s ~ {c['end']:05.1f}s)")
+        N.append(c["text"])
+    (out / "narration.txt").write_text("\n".join(N) + "\n", encoding="utf-8")
+
+    # ── SRT ──
+    S = []
+    for c in cues:
+        S += [str(c["n"]), f"{srt_time(c['start'])} --> {srt_time(c['end'])}", c["text"], ""]
+    (out / f"{fm['id']}.srt").write_text("\n".join(S), encoding="utf-8")
+
+    # ── shotlist.md ──
+    H = [f"# {fm['id']} 샷 리스트", "", f"**{fm['title']}**", "",
+         f"예상 {total}초 · 큐 {len(cues)}개 · confidence `{fm['confidence']}`", "",
+         "> 편집 규칙 — docs/02-brand.md §3",
+         "> - 창조론 주장 인용 = `--claim` (#B4472F) / 검증된 사실 = `--evidence` (#2E7D6B)",
+         "> - **출처 자막 없는 증거 컷은 반려.** 아래 '출처 자막' 열이 채워진 큐는 반드시 표기",
+         "> - 안전영역: 상단 12% / 하단 20%", "",
+         "| 큐 | 시각 | 화면 | 낭독 | 출처 자막 |", "|---|---|---|---|---|"]
+    for c in cues:
+        screen = "<br>".join(c["screen"]) if c["screen"] else "—"
+        src = "—"
+        if c["sources"]:
+            parts = []
+            for sid in c["sources"]:
+                r = refs.get(sid, {})
+                v = r.get("verified") or {}
+                if v.get("status") == "ok":
+                    parts.append(f"**{v['container']} {v['year']}**, {r.get('doi','')}")
+                else:
+                    parts.append(f"**{sid}** (서지 미검증 — 확인 필요)")
+            src = "<br>".join(parts)
+        H.append(f"| {c['n']:02d} | {c['start']:.1f}–{c['end']:.1f}s | {screen} | "
+                 f"{c['text'][:44]}{'…' if len(c['text']) > 44 else ''} | {src} |")
+    cited = sorted({s for c in cues for s in c["sources"]})
+    H += ["", f"## 이 편에서 화면에 표기할 출처 {len(cited)}건", ""]
+    for sid in cited:
+        r = refs.get(sid, {})
+        v = r.get("verified") or {}
+        mark = "✅" if v.get("status") == "ok" else "☐ 사람 확인 필요"
+        cite = (f"{v['authors']} ({v['year']}). {v['title']}. {v['container']}."
+                if v.get("status") == "ok" else r.get("citation", "(서지사항 없음)"))
+        H.append(f"- {mark} `{sid}` — {cite}")
+    (out / "shotlist.md").write_text("\n".join(H) + "\n", encoding="utf-8")
+
+    # ── metadata.md ──
+    tags = fm.get("hashtags") or []
+    cap = f"{fm['title']} {' '.join(tags[:4])}"
+    M = [f"# {fm['id']} 업로드 메타데이터", "",
+         "## YouTube Shorts", "",
+         "**제목** (검색어 중심)", "```", fm["title"], "```", "",
+         "**설명**", "```", (claim.get("rebuttal") or "").strip(), "",
+         " ".join(tags) + " #Shorts", "```", "",
+         "## TikTok", "",
+         f"**캡션** ({len(cap)}자{' — ⚠ 150자 초과, 잘립니다' if len(cap) > 150 else ''})",
+         "```", cap, "```", "",
+         "> 틱톡에서 내려받은 워터마크 파일을 쇼츠에 올리지 마세요.",
+         "> 항상 원본에서 각각 내보내기 — docs/04-platform-playbook.md §3", ""]
+    if fm.get("named_target"):
+        M += ["## ⚠ 실명 대상 편", "",
+              f"대상: **{fm['named_target']}**", "",
+              "발행 전 확인 — docs/11-format-confrontation.md",
+              "- [ ] 인용문이 원문 그대로인가 (요약이면 인용부호 제거 + `요약` 표기)",
+              "- [ ] 출처가 0~5초 화면에 노출되는가",
+              "- [ ] 원문 아카이브와 앞뒤 문맥을 보관했는가",
+              "- [ ] 동기 추정 표현이 없는가 ('알면서도', '돈 때문에')", ""]
+    (out / "metadata.md").write_text("\n".join(M), encoding="utf-8")
+
+    # ── pinned_comment.txt ──
+    if m := re.search(r"## 고정 댓글.*?```\n(.*?)```", body, re.S):
+        pinned = m.group(1).rstrip()
+    else:
+        lines = ["출처"]
+        for sid in cited:
+            r = refs.get(sid, {})
+            v = r.get("verified") or {}
+            lines.append(f"[{sid}] " + (f"{v['authors']} ({v['year']}). {v['title']}. "
+                                        f"{v['container']}. doi:{r.get('doi','')}"
+                                        if v.get("status") == "ok"
+                                        else r.get("citation", "")))
+        lines += ["", "이 채널은 종교를 비판하지 않습니다. 검증 가능한 주장만 다룹니다."]
+        pinned = "\n".join(lines)
+    (out / "pinned_comment.txt").write_text(pinned + "\n", encoding="utf-8")
+
+    # ── checklist.md ──
+    unverified = [s for s in cited
+                  if (refs.get(s, {}).get("verified") or {}).get("status") != "ok"]
+    C = [f"# {fm['id']} 발행 전 확인", "",
+         f"예상 길이 **{total}초**" + ("  ⚠ 60초 초과" if total > 60 else ""), "",
+         "## 게이트 (docs/05-production-pipeline.md)", "",
+         "- [ ] ④ `claimctl validate` 통과",
+         "- [ ] ⑤ 인용문을 **원문에서** 확인 (2차 인용 금지)",
+         "- [ ] ⑥ '예상 재반박' 각 항목에 답이 준비됨", "",
+         "## 편집", "",
+         "- [ ] 번인 자막 (56px+, 외곽선). 자동자막 의존 금지",
+         "- [ ] 출처 자막이 모든 증거 컷 하단에 고정",
+         "- [ ] 색 규칙: 주장=`--claim` / 사실=`--evidence`",
+         "- [ ] 안전영역 상단 12% / 하단 20%",
+         "- [ ] 음량 -14 LUFS, 트루피크 -1dBTP", "",
+         "## 최종", "",
+         "- [ ] **음소거로 재생** — 소리 없이 이해되면 통과",
+         "- [ ] 아무 프레임을 캡처해도 오해 소지 없음",
+         "- [ ] 두 플랫폼에 원본에서 각각 내보내기",
+         "- [ ] 발행 즉시 고정 댓글 게시",
+         "- [ ] `claims.yaml` / 대본 front matter `status: published` 갱신", ""]
+    if unverified:
+        C += ["## ⚠ 서지 미검증 출처", "",
+              "아래 출처는 기계 검증되지 않았습니다. **원문 확인 후 인용하세요.**", ""]
+        C += [f"- `{s}`" for s in unverified] + [""]
+    if fm["confidence"] == "active":
+        C += ["## ⚠ confidence: active", "",
+              "단정 어조 금지. '현재로서는', '아직 모릅니다' 같은 유보 표현 확인.",
+              "→ docs/03-editorial-policy.md §3", ""]
+    (out / "checklist.md").write_text("\n".join(C), encoding="utf-8")
+
+    if not quiet:
+        warn = "  ⚠ 60초 초과" if total > 60 else ""
+        print(f"  {fm['id']}  {total:>5.1f}초  큐 {len(cues):>2}개  출처 {len(cited)}건"
+              f"{'  ⚠ 미검증 ' + str(len(unverified)) if unverified else ''}{warn}")
+    return 0
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("episode", nargs="?", help="예: EP001")
+    ap.add_argument("--all", action="store_true", help="전체 대본 빌드")
+    args = ap.parse_args()
+
+    if args.all:
+        eps = sorted({p.name.split("-")[0] for p in SCRIPTS.glob("EP*.md")})
+        print(f"제작 패키지 빌드 — {len(eps)}편\n")
+        rc = 0
+        for e in eps:
+            rc |= build_one(e)
+        print(f"\nbuild/ 에 생성 완료")
+        return rc
+    if not args.episode:
+        ap.error("episode 를 지정하거나 --all 을 쓰세요")
+    rc = build_one(args.episode)
+    if rc == 0:
+        print(f"\nbuild/{args.episode}/ 생성 완료")
+    return rc
+
+
+if __name__ == "__main__":
+    sys.exit(main())

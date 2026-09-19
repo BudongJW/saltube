@@ -7,7 +7,7 @@
 > python3 tools/refcheck.py render   # 이 파일 재생성
 > ```
 
-생성 시각: 2026-09-19 · 총 54건 · **Crossref 검증 완료 38건** · 사람 확인 필요 16건
+생성 시각: 2026-09-19 · 총 55건 · **Crossref 검증 완료 39건** · 사람 확인 필요 16건
 
 ## 검증 수준
 
@@ -98,6 +98,7 @@
 | ✅ | `S-BERSAGLIERI-2004` | Bersaglieri 외 8인 (2004). "Genetic Signatures of Strong Recent Positive Selection at the Lactase Gene". *The American Journal of Human Genetics* 74, 1111-1120. | doi:10.1086/421051 | C011 |
 | ✅ | `S-CHEN-1997` | Chen, DeVries, Cheng (1997). "Evolution of antifreeze glycoprotein gene from a trypsinogen gene in Antarctic notothenioid fish". *Proc. Natl. Acad. Sci. U.S.A.* 94, 3811-3816. | doi:10.1073/pnas.94.8.3811 | C011, C023 |
 | ✅ | `S-CHIMP-GENOME-2005` | The Chimpanzee Sequencing and Analysis Consortium (2005). "Initial sequence of the chimpanzee genome and comparison with the human genome". *Nature* 437, 69-87. | doi:10.1038/nature04072 | C009, C010 |
+| ✅ | `S-ERV-PRIMATE-2025` | Chen 외 5인 (2025). "A phylogenetic approach uncovers cryptic endogenous retrovirus subfamilies in the primate lineage". *Sci. Adv.* 11. | doi:10.1126/sciadv.ads9164 | C010 |
 | ✅ | `S-HUMAN-GENOME-2001` | Lander 외 248인 (2001). "Initial sequencing and analysis of the human genome". *Nature* 409, 860-921. | doi:10.1038/35057062 | C010 |
 | ✅ | `S-IJDO-1991` | IJdo 외 4인 (1991). "Origin of human chromosome 2: an ancestral telomere-telomere fusion.". *Proc. Natl. Acad. Sci. U.S.A.* 88, 9051-9055. | doi:10.1073/pnas.88.20.9051 | C009 |
 | ✅ | `S-LENSKI-2008` | Blount, Borland, Lenski (2008). "Historical contingency and the evolution of a key innovation in an experimental population of Escherichia coli". *Proc. Natl. Acad. Sci. U.S.A.* 105, 7899-7906. | doi:10.1073/pnas.0803151105 | C011, C023 |
@@ -119,6 +120,7 @@
 - **`S-TISHKOFF-2006`** — 락타아제 지속성의 아프리카-유럽 수렴 진화. ID는 2007이었으나 Crossref 발행연도는 2006
 - **`S-BERSAGLIERI-2004`** — 유럽 락타아제 유전자 양성선택 신호
 - **`S-YI-2010`** — 티베트인 EPAS1 고지대 적응
+- **`S-ERV-PRIMATE-2025`** — 영장류 게놈의 미확인 ERV 아계열. 공유 삽입 좌위 논거 보강
 
 </details>
 
@@ -261,7 +263,7 @@
 | `C007` | 세균 편모는 부품 하나만 빠져도 작동하지 않으므로 설계된 것… | `S-KITZMILLER-2005`, `S-PALLEN-2006` |
 | `C008` | 지층과 화석은 노아의 대홍수로 한 번에 만들어졌다 | `S-JOGGINS`, `S-PROTHERO-2017` |
 | `C009` | 인간과 유인원은 염색체 수가 달라(46 vs 48) 공통조상… | `S-CHIMP-GENOME-2005`, `S-IJDO-1991` |
-| `C010` | DNA 유사성은 공통조상이 아니라 공통 설계자 때문이다 | `S-CHIMP-GENOME-2005`, `S-HUMAN-GENOME-2001`, `S-NISHIKIMI-1994`, `S-SYNCYTIN-2000` |
+| `C010` | DNA 유사성은 공통조상이 아니라 공통 설계자 때문이다 | `S-CHIMP-GENOME-2005`, `S-ERV-PRIMATE-2025`, `S-HUMAN-GENOME-2001`, `S-NISHIKIMI-1994`, `S-SYNCYTIN-2000` |
 | `C011` | 돌연변이는 항상 해롭다 / 유익한 돌연변이는 없다 | `S-BERSAGLIERI-2004`, `S-CHEN-1997`, `S-LENSKI-2008`, `S-TISHKOFF-2006`, `S-YI-2010` |
 | `C012` | 소진화는 인정하지만 대진화(종의 경계를 넘는 변화)는 관찰된… | `S-BYRNE-1999`, `S-FEDER-1988`, `S-HERREL-2008`, `S-LAMICHHANEY-2018` |
 | `C013` | 캄브리아기 대폭발은 생물이 갑자기 창조되었음을 보여준다 | `S-ERWIN-2011`, `S-NARBONNE-2005` |

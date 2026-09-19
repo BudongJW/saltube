@@ -1,0 +1,71 @@
+harvested: '2026-09-19'
+since: '2024-06-01'
+count: 5
+howto: '검토 후: python3 tools/harvest.py promote <DOI> --claims C003 --note ''...''  / 기각: python3 tools/harvest.py
+  drop <DOI>'
+candidates:
+- doi: 10.1007/s00239-024-10225-5
+  title: Mutation Rate Variation and Other Challenges in 2-LTR Dating of Primate Endogenous Retrovirus
+    Integrations
+  authors: van der Kuyl
+  year: 2024
+  container: J Mol Evol
+  cited_by: 0
+  score: 25.3
+  matched:
+  - Q-ERV
+  suggested_claims:
+  - C010
+  topic: genetics
+- doi: 10.3390/ijms252413639
+  title: Association Between Activated Loci of HML-2 Primate-Specific Endogenous Retrovirus and Newly
+    Formed Chromatin Contacts in Human Primordial Germ Cell-like Cells
+  authors: Cordazzo Vargas, Shioda
+  year: 2024
+  container: International Journal of Molecular Sciences
+  cited_by: 2
+  score: 24.7
+  matched:
+  - Q-ERV
+  suggested_claims:
+  - C010
+  topic: genetics
+- doi: 10.1186/s12977-024-00652-z
+  title: Shared and unique patterns of autonomous human endogenous retrovirus loci transcriptomes in CD14
+    + monocytes from individuals with physical trauma or infection with COVID-19
+  authors: Koo, Morrow
+  year: 2024
+  container: Retrovirology
+  cited_by: 4
+  score: 24.5
+  matched:
+  - Q-ERV
+  suggested_claims:
+  - C010
+  topic: genetics
+- doi: 10.1186/s13100-024-00337-6
+  title: A genome-wide study of ruminants uncovers two endogenous retrovirus families recently active
+    in goats
+  authors: Verneret 외 5인
+  year: 2025
+  container: Mobile DNA
+  cited_by: 15
+  score: 23.4
+  matched:
+  - Q-ERV
+  suggested_claims:
+  - C010
+  topic: genetics
+- doi: 10.1186/s13100-025-00349-w
+  title: Association of a 7.9 kb Endogenous Retrovirus Insertion in Intron 1 of CD36 with Obesity and
+    Fat Measurements in Sheep
+  authors: Saleh 외 7인
+  year: 2025
+  container: Mobile DNA
+  cited_by: 4
+  score: 22.2
+  matched:
+  - Q-ERV
+  suggested_claims:
+  - C010
+  topic: genetics

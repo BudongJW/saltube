@@ -842,3 +842,21 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+- id: S-ERV-PRIMATE-2025
+  type: article
+  doi: 10.1126/sciadv.ads9164
+  topic: genetics
+  used_for:
+  - C010
+  note: 영장류 게놈의 미확인 ERV 아계열. 공유 삽입 좌위 논거 보강
+  verified:
+    authors: Chen 외 5인
+    author_count: 6
+    title: A phylogenetic approach uncovers cryptic endogenous retrovirus subfamilies in the primate lineage
+    container: Sci. Adv.
+    year: 2025
+    volume: '11'
+    page: null
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'

@@ -28,12 +28,16 @@
 
 ```
 docs/                 전략·정책·운영 문서 (읽는 순서대로 번호)
-content/claims.yaml     창조론 주장 데이터베이스 = 에피소드 백로그
-content/references.yaml 레퍼런스 원장 (Source of Truth)
-content/sources.md      ↑에서 자동 생성 — 직접 편집 금지
-content/scripts/        쇼츠 대본 (YAML front matter + 본문)
-tools/claimctl.py       대본 검수 / 발행 캘린더 / 플랫폼 메타데이터
-tools/refcheck.py       Crossref DOI 검증 / 레퍼런스 검색 / sources.md 생성
+content/claims.yaml          창조론 주장 데이터베이스 = 에피소드 백로그
+content/references.yaml      레퍼런스 원장 (Source of Truth)
+content/sources.md           ↑에서 자동 생성 — 직접 편집 금지
+content/harvest_queries.yaml 정기 수집 질의 정의
+content/inbox/               수집된 레퍼런스 후보 (검토 대기)
+content/scripts/             쇼츠 대본 (YAML front matter + 본문)
+tools/claimctl.py            대본 검수 / 발행 캘린더 / 플랫폼 메타데이터
+tools/refcheck.py            Crossref DOI 검증 / 레퍼런스 검색 / sources.md 생성
+tools/harvest.py             신규 레퍼런스 정기 수집 (월 1회 자동 PR)
+tools/produce.py             검증된 대본 → 제작 패키지 (build/)
 ```
 
 ## 빠른 시작
@@ -48,6 +52,10 @@ python3 tools/refcheck.py status            # 레퍼런스 검증 현황
 python3 tools/refcheck.py search "질의"      # Crossref에서 새 레퍼런스 찾기
 python3 tools/refcheck.py verify            # DOI를 Crossref로 검증
 python3 tools/refcheck.py render            # sources.md 재생성
+
+python3 tools/harvest.py run                # Crossref에서 신규 후보 수집
+python3 tools/harvest.py inbox              # 미처리 후보 확인
+python3 tools/produce.py --all              # 제작 패키지 빌드 → build/
 ```
 
 **서지 메타데이터는 손으로 적지 않습니다.** `references.yaml`에 DOI만 넣으면
@@ -71,3 +79,4 @@ python3 tools/refcheck.py render            # sources.md 재생성
 | [09 리스크](docs/09-risk-and-compliance.md) | 저작권, 명예훼손, 플랫폼 정지 대응 |
 | [10 포맷 검토](docs/10-format-review-ai-drama.md) | AI 인물 드라마 연재 검토 — 판정과 대안 |
 | [11 대결 포맷](docs/11-format-confrontation.md) | 실명 공격 포맷 사양 — 인용 규칙, 법적 방어선 |
+| [12 파이프라인](docs/12-pipeline.md) | 자료 수집 자동화 + 제작 파이프라인 |

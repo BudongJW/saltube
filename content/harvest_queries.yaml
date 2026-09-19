@@ -1,0 +1,147 @@
+# 정기 수집 질의 정의 — tools/harvest.py 가 읽습니다.
+#
+# 각 질의는 Crossref 에 던져 최근 논문을 가져옵니다. 결과는 자동 등재되지 않고
+# content/inbox/ 에 후보로 쌓입니다. 사람이 읽고 골라야 references.yaml 에 들어갑니다.
+# (편집 정책 §2 — 초록만 읽고 등재 금지)
+#
+# 질의를 추가·수정하는 것이 이 파이프라인의 유지보수 전부입니다.
+
+version: 1
+
+defaults:
+  min_score: 12          # Crossref 관련도 최소값. 12 미만은 주제 무관 결과
+  rows: 20              # 질의당 가져올 최대 건수
+
+queries:
+  - id: Q-TRANSITIONAL
+    query: "transitional fossil tetrapod origin Devonian fish limb evolution"
+    claims: [C003]
+    topic: paleontology
+
+  - id: Q-WHALE
+    query: "whale cetacean evolution archaeocete terrestrial ancestor fossil"
+    claims: [C003, C021]
+    topic: paleontology
+
+  - id: Q-HUMAN-ORIGINS
+    query: "hominin fossil Australopithecus Homo evolution phylogeny new species"
+    claims: [C003]
+    topic: paleontology
+
+  - id: Q-CAMBRIAN
+    query: "Cambrian explosion Ediacaran early animal diversification molecular clock"
+    claims: [C013]
+    topic: paleontology
+
+  - id: Q-DATING
+    query: "radiometric dating calibration cross-validation varve ice core chronology"
+    claims: [C004, C005]
+    topic: geochronology
+
+  - id: Q-EARTH-AGE
+    query: "age of the Earth meteorite lead isotope geochronology zircon"
+    claims: [C005]
+    topic: geochronology
+
+  - id: Q-FLOOD-GEOLOGY
+    query: "evaporite deposition eolian cross-bedding stratigraphy depositional environment"
+    claims: [C008]
+    topic: geology
+
+  - id: Q-CHROMOSOME
+    query: "human chromosome 2 fusion telomere centromere great ape karyotype"
+    claims: [C009]
+    topic: genetics
+
+  - id: Q-ERV
+    query: "endogenous retrovirus orthologous insertion primate genome shared locus"
+    claims: [C010]
+    topic: genetics
+
+  - id: Q-PSEUDOGENE
+    query: "pseudogene loss of function shared mutation primate comparative genomics"
+    claims: [C010]
+    topic: genetics
+
+  - id: Q-BENEFICIAL-MUT
+    query: "beneficial mutation adaptive allele positive selection human population"
+    claims: [C011]
+    topic: genetics
+
+  - id: Q-NEW-FUNCTION
+    query: "gene duplication neofunctionalization novel enzyme function evolution"
+    claims: [C023]
+    topic: genetics
+
+  - id: Q-EXPERIMENTAL-EVO
+    query: "experimental evolution long-term Escherichia coli novel trait innovation"
+    claims: [C011, C012]
+    topic: evolution
+
+  - id: Q-SPECIATION
+    query: "observed speciation reproductive isolation sympatric natural population"
+    claims: [C012]
+    topic: evolution
+
+  - id: Q-EYE
+    query: "eye evolution photoreceptor opsin intermediate stages optics"
+    claims: [C006]
+    topic: evolution
+
+  - id: Q-FLAGELLUM
+    query: "bacterial flagellum type III secretion system evolution homology assembly"
+    claims: [C007]
+    topic: evolution
+
+  - id: Q-VESTIGIAL
+    query: "vestigial structure rudimentary organ regressive evolution limb loss"
+    claims: [C021]
+    topic: evolution
+
+  - id: Q-SN1987A
+    query: "SN 1987A distance Large Magellanic Cloud light echo ring geometry"
+    claims: [C005]
+    topic: astronomy
+
+  - id: Q-KUIPER
+    query: "Kuiper belt object short-period comet reservoir Oort cloud dynamics"
+    claims: [C020]
+    topic: astronomy
+
+  - id: Q-EARTH-MOON
+    query: "lunar recession tidal dissipation Precambrian tidal rhythmite Earth rotation"
+    claims: [C019]
+    topic: astronomy
+
+  - id: Q-SCIENCE-ED
+    query: "evolution education creationism public acceptance science teaching survey"
+    claims: [C014, C024]
+    topic: methodology
+
+  - id: Q-MISCONCEPTION
+    query: "student misconception evolution natural selection conceptual change instruction"
+    claims: [C001, C012]
+    topic: methodology
+
+  - id: Q-FINE-TUNING
+    query: "fine-tuning cosmological constants anthropic principle multiverse physics"
+    claims: [C025]
+    topic: cosmology
+    note: "C025는 confidence:active — 반대 논변도 함께 수집할 것"
+
+  - id: Q-DARWIN-HISTORY
+    query: "Darwinism eugenics Nazi racial ideology historiography social Darwinism"
+    claims: [C016, C017]
+    topic: history
+    note: "상대편 논변(Weikart 계열)도 수집 대상. 편집 정책 §2 3단계"
+
+  - id: Q-THERMO-ED
+    query: "second law thermodynamics entropy open system misconception biology"
+    claims: [C002]
+    topic: physics
+
+# 수집 대상에서 제외한 주장 (신규 학술 문헌이 나올 영역이 아님)
+#   C015 파스퇴르/자연발생설 — 과학사 확정 사안
+#   C018 바나나 논증          — 작물화 문헌 이미 확보
+#   C022 팔럭시 강 발자국     — 현장 조사 종결
+# 이들은 기존 출처로 충분하며, 필요 시 수동으로 추가하세요.

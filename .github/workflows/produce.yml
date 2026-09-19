@@ -1,0 +1,37 @@
+name: produce
+
+# 검증된 대본으로 제작 패키지(낭독 원고·SRT·샷리스트·메타데이터)를 빌드해
+# 워크플로 아티팩트로 올립니다. 편집자가 여기서 내려받아 씁니다.
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "content/**"
+      - "tools/**"
+      - ".github/workflows/produce.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - run: pip install --quiet pyyaml
+
+      - name: 대본 검수 (빌드 전 필수)
+        run: python3 tools/claimctl.py validate
+
+      - name: 제작 패키지 빌드
+        run: python3 tools/produce.py --all
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: production-packages
+          path: build/
+          retention-days: 90
