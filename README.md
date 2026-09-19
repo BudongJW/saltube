@@ -80,3 +80,4 @@ python3 tools/produce.py --all              # 제작 패키지 빌드 → build/
 | [10 포맷 검토](docs/10-format-review-ai-drama.md) | AI 인물 드라마 연재 검토 — 판정과 대안 |
 | [11 대결 포맷](docs/11-format-confrontation.md) | 실명 공격 포맷 사양 — 인용 규칙, 법적 방어선 |
 | [12 파이프라인](docs/12-pipeline.md) | 자료 수집 자동화 + 제작 파이프라인 |
+| [13 외부 도구](docs/13-external-tools.md) | 외부 프로젝트 조사 — 무엇을 쓰고 무엇을 안 쓰는가 |
