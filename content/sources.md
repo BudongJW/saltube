@@ -7,7 +7,7 @@
 > python3 tools/refcheck.py render   # 이 파일 재생성
 > ```
 
-생성 시각: 2026-09-19 · 총 62건 · **Crossref 검증 완료 45건** · 사람 확인 필요 16건
+생성 시각: 2026-09-19 · 총 63건 · **Crossref 검증 완료 46건** · 사람 확인 필요 16건
 
 ## 검증 수준
 
@@ -214,6 +214,7 @@
 | ☐ | `S-NAS-2008` | National Academy of Sciences & Institute of Medicine (2008). Science, Evolution, and Creationism, 3rd ed. National Academies Press. | ISBN 978-0309105866 | C001 |
 | ✅ | `S-PAYNTER-2019` | Paynter 외 9인 (2019). "Evaluation of a template for countering misinformation—Real-world Autism treatment myth debunking". *PLoS ONE* 14, e0210746. | doi:10.1371/journal.pone.0210746 | C001 |
 | ☐ | `S-PROJECTSTEVE` | National Center for Science Education — Project Steve. | https://ncse.ngo/project-steve | C024 |
+| ✅ | `S-ROOZENBEEK-2020` | Roozenbeek, van der Linden, Nygren (2020). "Prebunking interventions based on the psychological theory of “inoculation” can reduce susceptibility to misinformation across cultures.". *HKS Misinfo Review*. | doi:10.37016//mr-2020-008 | C001 |
 | ✅ | `S-SWIRE-2021` | Swire-Thompson 외 5인 (2021). "Correction format has a limited role when debunking misinformation". *Cogn. Research* 6. | doi:10.1186/s41235-021-00346-6 | C001 |
 | ✅ | `S-VANDERLINDEN-2024` | van der Linden, Roozenbeek (2024). "“Inoculation” to Resist Misinformation". *JAMA* 331, 1961. | doi:10.1001/jama.2024.5026 | C001 |
 
@@ -226,6 +227,7 @@
 - **`S-PAYNTER-2019`** — 논박 템플릿의 실세계 효과 검증
 - **`S-SWIRE-2021`** — ★ 반대 증거 — 정정의 형식이 미치는 영향은 제한적이라는 결과. 구조를 과신하지 말 것. 편집 정책 §2 3단계에 따라 함께 읽어야 함
 - **`S-VANDERLINDEN-2024`** — 접종(prebunking) 이론. 논박보다 선제 대응이 1차 방어선
+- **`S-ROOZENBEEK-2020`** — 접종 이론 기반 prebunking 개입의 효과. 접종 시리즈(fallacies.yaml)의 직접 근거
 
 </details>
 
@@ -268,7 +270,7 @@
 
 | 주장 | 내용 | 출처 |
 |---|---|---|
-| `C001` | 진화는 '이론'일 뿐이다 | `S-DEBUNK-2020`, `S-ECKER-2019`, `S-NAS-2008`, `S-PAYNTER-2019`, `S-SWIRE-2021`, `S-VANDERLINDEN-2024` |
+| `C001` | 진화는 '이론'일 뿐이다 | `S-DEBUNK-2020`, `S-ECKER-2019`, `S-NAS-2008`, `S-PAYNTER-2019`, `S-ROOZENBEEK-2020`, `S-SWIRE-2021`, `S-VANDERLINDEN-2024` |
 | `C002` | 열역학 제2법칙이 진화를 반증한다 | `S-NASA-SOLAR` |
 | `C003` | 중간 화석(전이 화석)이 존재하지 않는다 | `S-POLAND-TRACKS-2010`, `S-THEWISSEN-2001`, `S-THEWISSEN-2009`, `S-TIKTAALIK-2006`, `S-TIKTAALIK-FIN-2006`, `S-TIKTAALIK-PELVIS-2014` |
 | `C004` | 방사성 연대측정은 가정에 의존하므로 믿을 수 없다 | `S-DALRYMPLE-2004`, `S-EPICA-2004`, `S-JOUZEL-2007`, `S-PATTERSON-1956`, `S-SUIGETSU-2012` |

@@ -1465,3 +1465,22 @@ references:
   abstract: this jama insights in the communicating medicine series explores the concept of "prebunking,"
     a psychological inoculation technique that could help prevent the spread of misinformation.
   abstract_source: crossref
+- id: S-ROOZENBEEK-2020
+  type: article
+  doi: 10.37016//mr-2020-008
+  topic: methodology
+  used_for:
+  - C001
+  note: 접종 이론 기반 prebunking 개입의 효과. 접종 시리즈(fallacies.yaml)의 직접 근거
+  verified:
+    authors: Roozenbeek, van der Linden, Nygren
+    author_count: 3
+    title: Prebunking interventions based on the psychological theory of “inoculation” can reduce susceptibility
+      to misinformation across cultures.
+    container: HKS Misinfo Review
+    year: 2020
+    volume: null
+    page: null
+    type: journal-article
+    status: ok
+    checked: '2026-09-19'

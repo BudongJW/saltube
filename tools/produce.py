@@ -29,7 +29,7 @@ import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from claimctl import (ROOT, SCRIPTS, estimate_seconds, load_claims,  # noqa: E402
-                      narration_of, parse_script)
+                      load_fallacies, narration_of, parse_script)
 
 BUILD = ROOT / "build"
 SECTION = re.compile(r"^##\s+(.+?)\s*(?:\((.+?)\))?\s*$")
@@ -83,7 +83,14 @@ def build_one(ep_id: str, quiet: bool = False) -> int:
     path = matches[0]
     fm, body = parse_script(path)
     claims = {c["id"]: c for c in load_claims()["claims"]}
-    claim = claims.get(fm["claim_id"], {})
+    fams = {f["id"]: f for f in load_fallacies()["families"]}
+    # 일반 편은 claims.yaml, 접종 편은 fallacies.yaml 에서 설명 문구를 가져옵니다.
+    if fid := fm.get("fallacy_id"):
+        fam = fams.get(fid, {})
+        claim = {"rebuttal": (fam.get("why_it_works") or "").strip(),
+                 "fallacy": fam.get("test", "")}
+    else:
+        claim = claims.get(fm.get("claim_id"), {})
     refs = {r["id"]: r for r in
             yaml.safe_load((ROOT / "content" / "references.yaml").read_text(encoding="utf-8"))["references"]}
 
@@ -232,6 +239,13 @@ def build_one(ep_id: str, quiet: bool = False) -> int:
         C += ["## ⚠ 서지 미검증 출처", "",
               "아래 출처는 기계 검증되지 않았습니다. **원문 확인 후 인용하세요.**", ""]
         C += [f"- `{s}`" for s in unverified] + [""]
+    if fid := fm.get("fallacy_id"):
+        fam = fams.get(fid, {})
+        C += ["## 접종 편 확인", "",
+              f"시험법: **{fam.get('test', '')}**", "",
+              "- [ ] 이 문장이 화면에 **두 번** 나오는가 (도입·마무리)",
+              "- [ ] 특정 주장이 아니라 **논법**을 다루고 있는가",
+              "- [ ] 우리 자신도 이 시험을 통과하는가", ""]
     if fm["confidence"] == "active":
         C += ["## ⚠ confidence: active", "",
               "단정 어조 금지. '현재로서는', '아직 모릅니다' 같은 유보 표현 확인.",
@@ -334,7 +348,7 @@ def align_with_whisperx(ep_id: str, audio: Path, model: str) -> int:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("episode", nargs="?", help="예: EP001")
+    ap.add_argument("episode", nargs="?", help="예: EP001, PB01")
     ap.add_argument("--all", action="store_true", help="전체 대본 빌드")
     ap.add_argument("--align", metavar="AUDIO",
                     help="녹음 파일로 실측 자막 타이밍 생성 (WhisperX 필요)")
@@ -348,7 +362,8 @@ def main() -> int:
         return align_with_whisperx(args.episode, Path(args.align), args.align_model)
 
     if args.all:
-        eps = sorted({p.name.split("-")[0] for p in SCRIPTS.glob("EP*.md")})
+        eps = sorted({p.name.split("-")[0] for p in SCRIPTS.glob("*.md")
+                      if not p.name.startswith("_")})
         print(f"제작 패키지 빌드 — {len(eps)}편\n")
         rc = 0
         for e in eps:

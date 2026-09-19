@@ -31,6 +31,7 @@ docs/                 전략·정책·운영 문서 (읽는 순서대로 번호)
 content/claims.yaml          창조론 주장 데이터베이스 = 에피소드 백로그
 content/references.yaml      레퍼런스 원장 (Source of Truth)
 content/sources.md           ↑에서 자동 생성 — 직접 편집 금지
+content/fallacies.yaml       접종 시리즈 논법 가족 (7종)
 content/harvest_queries.yaml 정기 수집 질의 정의
 content/inbox/               수집된 레퍼런스 후보 (검토 대기)
 content/scripts/             쇼츠 대본 (YAML front matter + 본문)

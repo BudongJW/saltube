@@ -22,6 +22,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 CLAIMS = ROOT / "content" / "claims.yaml"
+FALLACIES = ROOT / "content" / "fallacies.yaml"
 SOURCES = ROOT / "content" / "sources.md"
 SCRIPTS = ROOT / "content" / "scripts"
 
@@ -30,8 +31,9 @@ SYLLABLES_PER_MIN = 355
 DURATION_MIN, DURATION_MAX = 40, 62   # 경고 범위(초)
 DURATION_HARD_MAX = 70                # 초과 시 오류 — 채널 편집 기준(플랫폼 한도 아님)
 
+# 일반 편은 claim_id, 접종 편은 fallacy_id 를 가집니다 (둘 중 하나 필수)
 REQUIRED_KEYS = {
-    "id", "claim_id", "title", "pillar", "confidence",
+    "id", "title", "pillar", "confidence",
     "duration_target", "sources", "status", "platforms",
 }
 VALID_PILLARS = set("ABCDE")
@@ -75,6 +77,13 @@ def load_claims() -> dict:
     return yaml.safe_load(CLAIMS.read_text(encoding="utf-8"))
 
 
+def load_fallacies() -> dict:
+    """접종 시리즈의 논법 가족 — content/fallacies.yaml"""
+    if not FALLACIES.exists():
+        return {"families": []}
+    return yaml.safe_load(FALLACIES.read_text(encoding="utf-8")) or {"families": []}
+
+
 def load_source_ids() -> set[str]:
     """sources.md 표에서 `S-XXX` 형식 ID를 추출."""
     text = SOURCES.read_text(encoding="utf-8")
@@ -116,6 +125,8 @@ def cmd_validate(args) -> int:
     claims_doc = load_claims()
     claims = {c["id"]: c for c in claims_doc["claims"]}
     claim_ids = set(claims)
+    fallacies = {f["id"]: f for f in load_fallacies()["families"]}
+    fallacy_ids = set(fallacies)
     source_ids = load_source_ids()
 
     errors: list[str] = []
@@ -151,8 +162,14 @@ def cmd_validate(args) -> int:
             err(f"confidence '{fm['confidence']}' 유효하지 않음 {sorted(VALID_CONFIDENCE)}")
         if fm["status"] not in VALID_STATUS:
             err(f"status '{fm['status']}' 유효하지 않음 {sorted(VALID_STATUS)}")
-        if fm["claim_id"] not in claim_ids:
+        has_claim, has_fallacy = "claim_id" in fm, "fallacy_id" in fm
+        if not (has_claim or has_fallacy):
+            err("claim_id 또는 fallacy_id 중 하나가 필요합니다 "
+                "(접종 편은 fallacy_id — content/fallacies.yaml)")
+        if has_claim and fm["claim_id"] not in claim_ids:
             err(f"claim_id '{fm['claim_id']}'가 claims.yaml에 없음")
+        if has_fallacy and fm["fallacy_id"] not in fallacy_ids:
+            err(f"fallacy_id '{fm['fallacy_id']}'가 fallacies.yaml에 없음")
 
         # 3. 출처 — 편집 정책 §2 1단계
         declared = set(fm.get("sources") or [])
@@ -197,11 +214,23 @@ def cmd_validate(args) -> int:
                 (err if fm.get("named_target") else warn)(
                     f"동기 추정 표현: {msg} (대결 포맷 §2)")
 
-        # 7. 논박 구조 — docs/14-debunking-method.md (Debunking Handbook 2020)
+        # 7. 접종 편 — 시험법이 대본에 실려야 함.
+        # 이 시리즈가 파는 유일한 물건이 "들고 다닐 수 있는 한 문장짜리 질문"이므로,
+        # 그게 빠지면 그냥 또 하나의 주장 해체 편이 됩니다. → content/fallacies.yaml
+        if fm.get("fallacy_id"):
+            fam = fallacies.get(fm["fallacy_id"], {})
+            core = re.sub(r"[^가-힣]", "", str(fam.get("test", "")))[:8]
+            if core and core not in re.sub(r"[^가-힣]", "", narration):
+                err(f"접종 편인데 시험법이 대본에 없음 — fallacies.yaml {fm['fallacy_id']}: "
+                    f"\"{fam.get('test', '')}\"")
+            if fm["pillar"] != "C":
+                warn(f"접종 편은 C 기둥(방법론)이어야 합니다 — 현재 {fm['pillar']}")
+
+        # 8. 논박 구조 — docs/14-debunking-method.md (Debunking Handbook 2020)
         # 구조를 강제하지 않고 경고만 합니다. Swire-Thompson(2021)이 형식의 효과는
         # 제한적이라고 보고했고, 구조를 맞추려다 사실을 비트는 것이 더 큰 손실이므로.
         head = body.split("\n---\n")[0]
-        if fm["pillar"] in ("A", "B", "C"):
+        if fm["pillar"] in ("A", "B", "C") and not fm.get("fallacy_id"):
             if "## 오류" not in head and "오류" not in narration:
                 warn("오류의 이름을 부르지 않음 — 논법 비판은 다른 주장에도 전이됩니다 "
                      "(논박 방법 §3)")
@@ -213,12 +242,12 @@ def cmd_validate(args) -> int:
             if not any(k in narration for k in causal):
                 warn("인과적 대안이 보이지 않음 — 단순 부정으로 끝나면 효과가 떨어집니다 "
                      "(논박 방법 §2)")
-            claim_row = claims.get(fm["claim_id"]) or {}
+            claim_row = claims.get(fm.get("claim_id")) or {}
             if claim_row.get("fallacy") and "오류" not in head:
                 warn(f"claims.yaml 에 오류명이 있는데 대본에 반영 안 됨: "
                      f"{str(claim_row['fallacy'])[:40]}…")
 
-        # 8. 실명 대상 편 — 대결 포맷 §4 자료 수집 프로토콜 강제
+        # 9. 실명 대상 편 — 대결 포맷 §4 자료 수집 프로토콜 강제
         target = fm.get("named_target")
         if target:
             quotes = fm.get("quotes")
@@ -245,7 +274,7 @@ def cmd_validate(args) -> int:
                 warn("실명 대상 편인데 confidence: active — "
                      "확정되지 않은 근거로 실명 비판 시 위험 (대결 포맷 §6)")
 
-        # 9. 반대 심문 — 편집 정책 §2 3단계
+        # 10. 반대 심문 — 편집 정책 §2 3단계
         if "예상 재반박" not in body:
             warn("'예상 재반박' 섹션 없음 — 편집 정책 §2 3단계 미수행 (§2)")
 
@@ -311,6 +340,12 @@ def cmd_backlog(args) -> int:
 def cmd_calendar(args) -> int:
     data = load_claims()
     pending = [c for c in data["claims"] if c["status"] != "published"]
+    # 접종 편도 같은 슬롯을 놓고 경쟁합니다. C 기둥 비중을 채우는 주력이므로
+    # 별도 트랙으로 빼지 않고 우선순위로 섞습니다. → docs/01-strategy.md §6
+    for f in load_fallacies()["families"]:
+        pending.append({"id": f["id"], "claim": f"[접종] {f['episode_title']}",
+                        "priority": f.get("priority", 2), "difficulty": 2,
+                        "pillar": "C", "status": "backlog"})
     # 우선순위 → 난이도(쉬운 것 먼저, 초반 완주율 확보) → id
     pending.sort(key=lambda c: (c["priority"], c["difficulty"], c["id"]))
 
