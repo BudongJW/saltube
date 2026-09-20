@@ -1,0 +1,41 @@
+# 자료 화면 배정표 — 이 파일은 자동으로 덮어쓰지 않습니다.
+#
+# file 에 이미지(png/jpg) 또는 영상(mp4) 경로를 넣으면
+# render.py 가 해당 구간 배경으로 깝니다. 경로는 리포 루트 기준.
+# fit: cover(가득 채우고 잘라냄) | contain(전체를 보이게, 여백은 배경색)
+#
+# 비워두면 그 구간은 단색 배경입니다. 전부 채울 필요 없습니다.
+# 출처 표기 의무를 잊지 마세요 — docs/09-risk-and-compliance.md §1
+
+episode: EP002
+shots:
+- cue: 1
+  at: 0.0
+  until: 3.1
+  screen: '"**고립계**의 엔트로피는 감소하지 않는다" — `--evidence` 색, ''고립계''만 강조'
+  file: ''
+  fit: cover
+- cue: 4
+  at: 9.3
+  until: 14.0
+  screen: 주장 인용 — `--claim` 색
+  file: ''
+  fit: cover
+- cue: 5
+  at: 14.0
+  until: 18.2
+  screen: '"조건 생략 인용" 크게'
+  file: ''
+  fit: cover
+- cue: 9
+  at: 27.4
+  until: 30.9
+  screen: 태양 → 지구 에너지 유입
+  file: ''
+  fit: cover
+- cue: 11
+  at: 37.3
+  until: 41.5
+  screen: 냉장고 / 눈 결정 / 수정란→태아
+  file: ''
+  fit: cover

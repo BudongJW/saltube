@@ -216,6 +216,36 @@ def build_one(ep_id: str, quiet: bool = False) -> int:
         pinned = "\n".join(lines)
     (out / "pinned_comment.txt").write_text(pinned + "\n", encoding="utf-8")
 
+    # ── assets/<EP>/shots.yaml — 자료 화면 배정표 ──
+    # build/ 는 재생성되므로 사람이 채운 경로가 날아갑니다. assets/ 에 두고 절대 덮어쓰지 않습니다.
+    ashots = ROOT / "assets" / fm["id"] / "shots.yaml"
+    if not ashots.exists():
+        ashots.parent.mkdir(parents=True, exist_ok=True)
+        rows = []
+        for c in cues:
+            if not c["screen"]:
+                continue
+            rows.append({
+                "cue": c["n"],
+                "at": round(c["start"], 2),
+                "until": round(c["end"], 2),
+                "screen": " / ".join(c["screen"]),
+                "file": "",
+                "fit": "cover",
+            })
+        ashots.write_text(
+            "# 자료 화면 배정표 — 이 파일은 자동으로 덮어쓰지 않습니다.\n"
+            "#\n"
+            "# file 에 이미지(png/jpg) 또는 영상(mp4) 경로를 넣으면\n"
+            "# render.py 가 해당 구간 배경으로 깝니다. 경로는 리포 루트 기준.\n"
+            "# fit: cover(가득 채우고 잘라냄) | contain(전체를 보이게, 여백은 배경색)\n"
+            "#\n"
+            "# 비워두면 그 구간은 단색 배경입니다. 전부 채울 필요 없습니다.\n"
+            "# 출처 표기 의무를 잊지 마세요 — docs/09-risk-and-compliance.md §1\n\n"
+            + yaml.dump({"episode": fm["id"], "shots": rows},
+                        allow_unicode=True, sort_keys=False, width=100),
+            encoding="utf-8")
+
     # ── checklist.md ──
     unverified = [s for s in cited
                   if (refs.get(s, {}).get("verified") or {}).get("status") != "ok"]

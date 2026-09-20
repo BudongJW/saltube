@@ -1,0 +1,41 @@
+# 자료 화면 배정표 — 이 파일은 자동으로 덮어쓰지 않습니다.
+#
+# file 에 이미지(png/jpg) 또는 영상(mp4) 경로를 넣으면
+# render.py 가 해당 구간 배경으로 깝니다. 경로는 리포 루트 기준.
+# fit: cover(가득 채우고 잘라냄) | contain(전체를 보이게, 여백은 배경색)
+#
+# 비워두면 그 구간은 단색 배경입니다. 전부 채울 필요 없습니다.
+# 출처 표기 의무를 잊지 마세요 — docs/09-risk-and-compliance.md §1
+
+episode: PB01
+shots:
+- cue: 1
+  at: 0.0
+  until: 3.7
+  screen: '"무엇이 관찰되면 이 주장이 틀린 게 됩니까?" — `--evidence` 색, 전체 화면'
+  file: assets/shared/gap-1.png
+  fit: cover
+- cue: 6
+  at: 12.4
+  until: 13.9
+  screen: 대화 3단 — `--claim` 색
+  file: ''
+  fit: cover
+- cue: 9
+  at: 17.8
+  until: 20.8
+  screen: A···C 사이에 B를 넣자 빈틈이 둘로 갈라지는 애니메이션
+  file: assets/shared/gap-2.png
+  fit: cover
+- cue: 13
+  at: 27.5
+  until: 31.4
+  screen: '"져본 적 없음 ≠ 강함"'
+  file: ''
+  fit: cover
+- cue: 18
+  at: 43.6
+  until: 46.5
+  screen: 첫 화면과 동일한 문장 재노출
+  file: ''
+  fit: cover

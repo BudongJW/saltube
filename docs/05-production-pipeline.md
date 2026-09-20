@@ -69,6 +69,12 @@ python3 tools/produce.py EP0XX
 **⑦ 녹음 전에 빌드하세요** — `narration.txt` 가 녹음 원고이고,
 `shotlist.md` 가 편집 작업 문서입니다. → [12 파이프라인](12-pipeline.md) §B
 
+## ⑧.5 자료 화면 배정
+`produce.py` 가 `assets/EP0XX/shots.yaml` 뼈대를 만듭니다.
+`file:` 에 이미지 경로를 넣으면 렌더 시 배경으로 깔립니다.
+전부 채울 필요 없습니다 — 비운 구간은 단색 배경입니다.
+→ [assets/README.md](../assets/README.md)
+
 ## ⑧.6 자막 영상 초안 렌더
 ```bash
 python3 tools/render.py EP0XX                    # 무음 자막 영상
@@ -81,6 +87,7 @@ python3 tools/render.py EP0XX --audio 녹음.wav   # 녹음 얹기
 1080×1920 / H.264 High / yuv420p / 30fps / AAC 48kHz —
 [04 플랫폼](04-platform-playbook.md) §2 의 유튜브 공식 권장값과 일치.
 자막 62px·줄바꿈·안전영역(상 12% 하 20%)·출처 하단바·MYTH 컷 `--claim` 색 자동 적용.
+자료 화면이 배정된 구간에는 어둠막이 깔려 자막 가독성을 확보합니다.
 
 ## ⑨ 게이트 4 — 최종 검수
 ```bash

@@ -36,6 +36,30 @@ SUB_SIZE = 62          # 56px 하한 + 여유
 SRC_SIZE = 30
 
 
+VIDEO_EXT = {".mp4", ".mov", ".webm", ".mkv"}
+# 자료 화면 위에 까는 어둠막 — 흰 자막이 밝은 사진 위에서도 읽히게 합니다.
+# 자막 블록 주변만 덮습니다. 너무 높으면 자료 화면 내용을 가립니다.
+SCRIM_TOP = 0.58
+
+
+def load_shots(ep: str) -> list[dict]:
+    """assets/<EP>/shots.yaml 에서 file 이 채워진 항목만."""
+    f = ROOT / "assets" / ep / "shots.yaml"
+    if not f.exists():
+        return []
+    doc = yaml.safe_load(f.read_text(encoding="utf-8")) or {}
+    out = []
+    for s in doc.get("shots") or []:
+        if not s.get("file"):
+            continue
+        path = (ROOT / s["file"]).resolve()
+        if not path.exists():
+            print(f"  ! 자료 화면 없음: {s['file']} (큐 {s.get('cue')})", file=sys.stderr)
+            continue
+        out.append({**s, "path": path})
+    return out
+
+
 def font_path() -> str | None:
     for p in (Path.home() / ".fonts/Pretendard-Bold.otf",
               Path("/usr/share/fonts/opentype/pretendard/Pretendard-Bold.otf")):
@@ -131,6 +155,38 @@ def wrap(text: str, size: int) -> list[str]:
     return lines or [""]
 
 
+def build_overlays(shots: list[dict]) -> tuple[list[str], str, str]:
+    """자료 화면을 배경 위에 겹치는 필터 체인.
+
+    반환: (ffmpeg 입력 인자, 필터 체인, 마지막 라벨)
+    각 자료는 1080x1920 에 맞춰 cover(잘라내기) 또는 contain(레터박스)으로 정규화한 뒤,
+    해당 큐 구간에만 overlay 합니다.
+    """
+    inputs, chain, last = [], [], "[bg]"
+    for i, s in enumerate(shots):
+        is_video = s["path"].suffix.lower() in VIDEO_EXT
+        dur = float(s["until"]) - float(s["at"])
+        if is_video:
+            inputs += ["-i", str(s["path"])]
+        else:
+            inputs += ["-loop", "1", "-t", f"{dur:.2f}", "-i", str(s["path"])]
+        src = f"[{i + 2}:v]"   # 0=배경, 1=무음/오디오
+        lbl = f"[a{i}]"
+        if s.get("fit", "cover") == "contain":
+            fit = (f"scale={W}:{H}:force_original_aspect_ratio=decrease,"
+                   f"pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:color={EVID.replace('0x', '#')}")
+        else:
+            fit = (f"scale={W}:{H}:force_original_aspect_ratio=increase,"
+                   f"crop={W}:{H}")
+        # 하단에서 위로 올라가는 어둠막 — 자막 가독성 확보
+        chain.append(f"{src}{fit},setsar=1{lbl}")
+        out = f"[v{i}]"
+        chain.append(f"{last}{lbl}overlay=0:0:enable='between(t,{float(s['at']):.2f},"
+                     f"{float(s['until']):.2f})'{out}")
+        last = out
+    return inputs, ";".join(chain), last
+
+
 def build_filters(cues: list[dict], sections: dict[int, str], sources: dict[int, str],
                   font: str, store: "TextStore") -> str:
     """자막 + 출처바를 drawtext 체인으로.
@@ -202,21 +258,41 @@ def render(ep: str, audio: Path | None, quiet: bool = False) -> int:
     dur = cues[-1]["end"] + 1.0 if cues else 5.0
     dst = out / f"{ep}-draft.mp4"
     store = TextStore(out)
-    vf = build_filters(cues, sections, sources, font, store)
+    shots = load_shots(ep)
+    shot_inputs, overlay_chain, last = build_overlays(shots)
+
+    # 어둠막은 **자료 화면이 깔린 구간에만** 적용합니다.
+    # 자료 없는 컷은 단색 배경이라 어둠막이 불필요하고, 브랜드 색을 흐립니다.
+    scrim = ""
+    if shots:
+        cond = "+".join(f"between(t,{float(s['at']):.2f},{float(s['until']):.2f})"
+                        for s in shots)
+        scrim = (f";{last}drawbox=0:{int(H * SCRIM_TOP)}:{W}:{H - int(H * SCRIM_TOP)}:"
+                 f"{INK}@0.6:t=fill:enable='{cond}'[s]")
+        last = "[s]"
+
+    vf = (f"[0:v]null[bg]"
+          + (f";{overlay_chain}" if overlay_chain else "")
+          + scrim
+          + f";{last}" + build_filters(cues, sections, sources, font, store) + "[out]")
 
     cmd = ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
            "-f", "lavfi", "-i", f"color=c={EVID.replace('0x','#')}:s={W}x{H}:d={dur:.2f}:r=30"]
     if audio:
-        cmd += ["-i", str(audio), "-shortest", "-c:a", "aac", "-b:a", "384k", "-ar", "48000"]
+        cmd += ["-i", str(audio)]
     else:
         # 무음 트랙 — 플랫폼이 오디오 없는 파일을 거르는 경우가 있음
-        cmd += ["-f", "lavfi", "-i", f"anullsrc=r=48000:cl=stereo:d={dur:.2f}",
-                "-c:a", "aac", "-b:a", "384k"]
+        cmd += ["-f", "lavfi", "-i", f"anullsrc=r=48000:cl=stereo:d={dur:.2f}"]
+    cmd += shot_inputs
+
     vf_file = out / ".filter.txt"
     vf_file.write_text(vf, encoding="utf-8")
-    cmd += ["-filter_script:v", str(vf_file),
+    cmd += ["-filter_complex_script", str(vf_file),
+            "-map", "[out]", "-map", "1:a",
+            "-c:a", "aac", "-b:a", "384k", "-ar", "48000",
             "-c:v", "libx264", "-profile:v", "high", "-pix_fmt", "yuv420p",
-            "-b:v", "8M", "-g", "60", "-movflags", "+faststart", str(dst)]
+            "-b:v", "8M", "-g", "60", "-t", f"{dur:.2f}",
+            "-movflags", "+faststart", str(dst)]
 
     r = subprocess.run(cmd, capture_output=True, text=True)
     if r.returncode != 0:
@@ -227,7 +303,8 @@ def render(ep: str, audio: Path | None, quiet: bool = False) -> int:
     if not quiet:
         mb = dst.stat().st_size / 1024 / 1024
         print(f"  {ep}-draft.mp4  {dur:.1f}초  {mb:.1f}MB  큐 {len(cues)}개"
-              f"  출처자막 {len(sources)}컷" + ("  (음성 포함)" if audio else "  (무음)"))
+              f"  자료화면 {len(shots)}컷  출처자막 {len(sources)}컷"
+              + ("  (음성 포함)" if audio else "  (무음)"))
     return 0
 
 

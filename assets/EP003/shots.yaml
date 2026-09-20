@@ -1,0 +1,35 @@
+# 자료 화면 배정표 — 이 파일은 자동으로 덮어쓰지 않습니다.
+#
+# file 에 이미지(png/jpg) 또는 영상(mp4) 경로를 넣으면
+# render.py 가 해당 구간 배경으로 깝니다. 경로는 리포 루트 기준.
+# fit: cover(가득 채우고 잘라냄) | contain(전체를 보이게, 여백은 배경색)
+#
+# 비워두면 그 구간은 단색 배경입니다. 전부 채울 필요 없습니다.
+# 출처 표기 의무를 잊지 마세요 — docs/09-risk-and-compliance.md §1
+
+episode: EP003
+shots:
+- cue: 1
+  at: 0.0
+  until: 4.6
+  screen: 틱타알릭 복원도 — `--evidence` 색
+  file: ''
+  fit: cover
+- cue: 4
+  at: 11.0
+  until: 13.5
+  screen: 주장 인용 — `--claim` 색
+  file: ''
+  fit: cover
+- cue: 5
+  at: 13.5
+  until: 15.0
+  screen: '"무한 후퇴 요구" — A···C 사이에 B를 넣자 빈틈이 둘로 갈라지는 도식'
+  file: assets/shared/gap-2.png
+  fit: cover
+- cue: 11
+  at: 34.9
+  until: 38.6
+  screen: 틱타알릭 골격 클로즈업
+  file: ''
+  fit: cover
