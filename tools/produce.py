@@ -28,6 +28,7 @@ from pathlib import Path
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import credits as credits_mod  # noqa: E402
 from claimctl import (ROOT, SCRIPTS, estimate_seconds, load_claims,  # noqa: E402
                       load_fallacies, narration_of, parse_script)
 
@@ -214,6 +215,15 @@ def build_one(ep_id: str, quiet: bool = False) -> int:
                                         else r.get("citation", "")))
         lines += ["", "이 채널은 종교를 비판하지 않습니다. 검증 가능한 주장만 다룹니다."]
         pinned = "\n".join(lines)
+    # 자료 화면의 저작자 표시를 자동으로 덧붙입니다.
+    # CC BY 자료를 쓰고 표기를 빠뜨리면 라이선스 위반입니다 — 사람이 기억할 일이 아닙니다.
+    cred_block = credits_mod.block(fm["id"])
+    if cred_block:
+        marker = "이 채널은 종교를 비판하지 않습니다"
+        if marker in pinned:
+            pinned = pinned.replace(marker, cred_block.strip() + "\n\n" + marker, 1)
+        else:
+            pinned += "\n" + cred_block
     (out / "pinned_comment.txt").write_text(pinned + "\n", encoding="utf-8")
 
     # ── assets/<EP>/shots.yaml — 자료 화면 배정표 ──
@@ -266,6 +276,8 @@ def build_one(ep_id: str, quiet: bool = False) -> int:
          "- [ ] 아무 프레임을 캡처해도 오해 소지 없음",
          "- [ ] 두 플랫폼에 원본에서 각각 내보내기",
          "- [ ] 발행 즉시 고정 댓글 게시",
+         *(["- [ ] **이미지 저작자 표시**가 고정 댓글에 포함됐는지 확인 (CC BY 의무)"]
+           if credits_mod.block(fm["id"]) else []),
          "- [ ] `claims.yaml` / 대본 front matter `status: published` 갱신", ""]
     if unverified:
         C += ["## ⚠ 서지 미검증 출처", "",

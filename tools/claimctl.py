@@ -251,6 +251,19 @@ def cmd_validate(args) -> int:
                 warn(f"claims.yaml 에 오류명이 있는데 대본에 반영 안 됨: "
                      f"{str(claim_row['fallacy'])[:40]}…")
 
+        # 8.5 자료 화면 라이선스 — 기록 없는 외부 자료는 발행 불가.
+        # 출처를 모르는 이미지를 쓰는 것이 분쟁 시 가장 나쁜 상태입니다
+        # (docs/09-risk-and-compliance.md §1).
+        try:
+            import credits as _credits
+            _, missing = _credits.for_episode(fm["id"])
+            for m in missing:
+                err(f"자료 화면 '{m}' 의 출처 기록이 없습니다 — "
+                    f"`fetchmedia.py` 로 받았다면 assets/CREDITS.yaml 에 자동 기록됩니다. "
+                    f"직접 넣은 파일이면 출처를 수동으로 추가하세요")
+        except ImportError:
+            pass
+
         # 9. 실명 대상 편 — 대결 포맷 §4 자료 수집 프로토콜 강제
         target = fm.get("named_target")
         if target:

@@ -20,9 +20,22 @@
   원본을 길게 붙여넣으면 인용이 아니라 복제가 됩니다.
 - **화석·표본 사진**: 박물관 소장품 사진은 박물관이 권리를 주장하는 경우가 많습니다.
 
-### 실무 규칙
-`content/sources.md`에 **이미지·음원 출처도 함께 기록**하세요.
-분쟁 시 "어디서 가져왔는지 모른다"가 가장 나쁜 상태입니다.
+### 실무 규칙 — 도구가 강제합니다
+
+```bash
+python3 tools/fetchmedia.py search "Tiktaalik"   # 자유 라이선스만 자동 승인
+python3 tools/fetchmedia.py credits               # 표시 의무가 있는 자료 목록
+```
+
+1. `fetchmedia.py` 로 받으면 `assets/CREDITS.yaml` 에 저작자·라이선스·원본 URL이 **자동 기록**됩니다
+2. `produce.py` 가 CC BY 계열 자료의 **저작자 표시를 고정 댓글에 자동 삽입**합니다
+3. `claimctl.py validate` 가 **출처 기록 없는 외부 자료를 발행 차단**합니다
+
+직접 넣은 파일은 `assets/CREDITS.yaml` 에 수동으로 추가해야 검수를 통과합니다.
+`assets/shared/` 의 자체 제작 도식은 예외입니다.
+
+> 분쟁 시 **"어디서 가져왔는지 모른다"가 가장 나쁜 상태**입니다.
+> 그래서 사람의 기억이 아니라 도구가 막습니다.
 
 ## 2. 명예훼손
 
