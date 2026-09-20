@@ -41,6 +41,8 @@ tools/harvest.py             신규 레퍼런스 정기 수집 (월 1회 자동 
 tools/attest.py              근거 대조 — 인용이 실제 출처에 존재하는지
 tools/produce.py             검증된 대본 → 제작 패키지 (build/)
 tools/ttscheck.py            TTS 발음 시험 목록 생성
+tools/makelogo.py            브랜드 로고 생성 (brand/)
+brand/                       로고 파일 + AI 이미지 프롬프트
 ```
 
 ## 빠른 시작
