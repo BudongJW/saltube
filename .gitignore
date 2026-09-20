@@ -17,3 +17,6 @@ build/
 
 # 렌더 산출물 (build/ 에 생성)
 *-draft.mp4
+
+# TTS 산출물 (build/ 에 생성)
+*.mp3

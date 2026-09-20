@@ -26,8 +26,12 @@ FALLACIES = ROOT / "content" / "fallacies.yaml"
 SOURCES = ROOT / "content" / "sources.md"
 SCRIPTS = ROOT / "content" / "scripts"
 
-# 한국어 발화 속도 (음절/분). docs/02-brand.md §4 — 쇼츠 표준보다 약간 느리게.
-SYLLABLES_PER_MIN = 355
+# 한국어 발화 속도 (음절/분).
+# 355 는 추정치였고, edge-tts(ko-KR-InJoonNeural, rate +15%)로 5편을 실제 합성해
+# 측정한 값은 264~282, 평균 275 였습니다. 추정이 29% 낙관적이었고 그 결과
+# 5편 전부 60초를 넘겼습니다. 아래 값은 실측입니다 — 엔진이나 rate 를 바꾸면
+# `tools/tts.py --all` 로 다시 재서 갱신하세요.
+SYLLABLES_PER_MIN = 275
 DURATION_MIN, DURATION_MAX = 40, 62   # 경고 범위(초)
 DURATION_HARD_MAX = 70                # 초과 시 오류 — 채널 편집 기준(플랫폼 한도 아님)
 

@@ -69,6 +69,14 @@ python3 tools/produce.py EP0XX
 **⑦ 녹음 전에 빌드하세요** — `narration.txt` 가 녹음 원고이고,
 `shotlist.md` 가 편집 작업 문서입니다. → [12 파이프라인](12-pipeline.md) §B
 
+## ⑦ 음성 합성 (TTS)
+```bash
+python3 tools/tts.py EP0XX        # build/EP0XX/EP0XX.mp3
+python3 tools/tts.py --voices     # 한국어 음성 목록
+```
+음성과 속도는 `tools/tts.py` 상단에 고정돼 있습니다. **회차마다 바꾸지 마세요.**
+합성 후 실제 길이가 출력되므로 60초 초과 여부를 여기서 확인합니다.
+
 ## ⑧.5 자료 화면 배정
 `produce.py` 가 `assets/EP0XX/shots.yaml` 뼈대를 만듭니다.
 `file:` 에 이미지 경로를 넣으면 렌더 시 배경으로 깔립니다.
@@ -78,7 +86,7 @@ python3 tools/produce.py EP0XX
 ## ⑧.6 자막 영상 초안 렌더
 ```bash
 python3 tools/render.py EP0XX                    # 무음 자막 영상
-python3 tools/render.py EP0XX --audio 녹음.wav   # 녹음 얹기
+python3 tools/render.py EP0XX --audio build/EP0XX/EP0XX.mp3   # TTS 얹기
 ```
 `build/EP0XX/EP0XX-draft.mp4` 생성. **완성본이 아니라 초안입니다** —
 자료 화면(화석 사진·그래프)은 편집자가 얹어야 합니다.
@@ -88,6 +96,12 @@ python3 tools/render.py EP0XX --audio 녹음.wav   # 녹음 얹기
 [04 플랫폼](04-platform-playbook.md) §2 의 유튜브 공식 권장값과 일치.
 자막 62px·줄바꿈·안전영역(상 12% 하 20%)·출처 하단바·MYTH 컷 `--claim` 색 자동 적용.
 자료 화면이 배정된 구간에는 어둠막이 깔려 자막 가독성을 확보합니다.
+
+**화질 요소** — 정지 화면은 쇼츠에서 이탈의 주원인입니다:
+- 자료 화면에 **켄번스**(느린 확대) 자동 적용. `shots.yaml`에 `kenburns: false`로 끌 수 있음
+- 대본의 `**강조**`가 자막에서 `--accent` 금색으로 표시됩니다
+- 자막은 0.18초 **페이드인**. 툭 나타나면 싸구려로 보입니다
+- 글자 위치는 폰트 메트릭(advance width)으로 계산합니다. 추정값을 쓰면 강조 구간에서 간격이 벌어집니다
 
 ## ⑨ 게이트 4 — 최종 검수
 ```bash

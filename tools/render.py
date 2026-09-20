@@ -40,6 +40,7 @@ VIDEO_EXT = {".mp4", ".mov", ".webm", ".mkv"}
 # 자료 화면 위에 까는 어둠막 — 흰 자막이 밝은 사진 위에서도 읽히게 합니다.
 # 자막 블록 주변만 덮습니다. 너무 높으면 자료 화면 내용을 가립니다.
 SCRIM_TOP = 0.58
+FADE_IN = 0.18        # 자막 페이드인 시간(초)
 
 
 def load_shots(ep: str) -> list[dict]:
@@ -104,6 +105,24 @@ class TextStore:
         return str(f)
 
 
+def cue_marked(script_body: str) -> dict[int, str]:
+    """큐 번호 -> **강조**가 보존된 텍스트.
+
+    SRT 는 편집 프로그램에서 쓰라고 깨끗하게 유지하므로, 강조 정보는 대본에서 직접 읽습니다.
+    """
+    n, out = 0, {}
+    for line in script_body.split("\n---\n")[0].split("\n"):
+        s = line.strip()
+        if not s or s.startswith(("#", ">", "```", "|", "-")):
+            continue
+        n += 1
+        s = re.sub(r"\[S-[A-Z0-9\-]+\]", "", s)
+        s = re.sub(r"`(.+?)`", r"\1", s)
+        s = re.sub(r"\s+", " ", s).strip()
+        out[n] = re.sub(r"\s+([.,!?%）\)])", r"\1", s)
+    return out
+
+
 def cue_sections(script_body: str) -> dict[int, str]:
     """큐 번호 -> 섹션명. 섹션에 따라 자막 색을 바꿉니다 (MYTH 는 --claim)."""
     sec, n, out = "?", 0, {}
@@ -121,19 +140,70 @@ SIDE_MARGIN = 64
 LINE_GAP = 16
 
 
-def text_width_em(s: str) -> float:
-    """글자 폭을 em 단위로 추정. 한글은 1.0, 영숫자는 0.55, 공백 0.3."""
+_metrics: dict[str, float] | None = None
+
+
+def _load_metrics(font: str) -> dict[str, float]:
+    """폰트에서 글자별 실제 advance width 를 읽습니다 (em 단위).
+
+    추정값으로는 강조 색을 나눠 그릴 때 위치가 어긋납니다. 한글을 1.0em 으로
+    잡았더니 실제는 0.864 여서 어절 간격이 눈에 띄게 벌어졌습니다.
+    """
+    global _metrics
+    if _metrics is not None:
+        return _metrics
+    try:
+        from fontTools.ttLib import TTFont
+        f = TTFont(font, lazy=True)
+        upm = f["head"].unitsPerEm
+        hmtx, cmap = f["hmtx"], f.getBestCmap()
+        _metrics = {"__upm__": upm, "__cmap__": cmap, "__hmtx__": hmtx}
+    except Exception:
+        _metrics = {}
+    return _metrics
+
+
+def text_width_em(s: str, font: str | None = None) -> float:
+    """글자 폭을 em 단위로. 폰트 메트릭을 읽을 수 있으면 실측, 아니면 근사."""
+    s = s.replace("**", "")
+    m = _load_metrics(font) if font else (_metrics or {})
+    if m.get("__cmap__"):
+        upm, cmap, hmtx = m["__upm__"], m["__cmap__"], m["__hmtx__"]
+        total = 0.0
+        for ch in s:
+            g = cmap.get(ord(ch))
+            total += (hmtx[g][0] / upm) if g else 0.86
+        return total
     w = 0.0
     for ch in s:
-        if "\uac00" <= ch <= "\ud7a3":
-            w += 1.0
-        elif ch == " ":
-            w += 0.3
-        elif ch.isascii():
-            w += 0.55
-        else:
-            w += 1.0
+        w += 1.0 if "\uac00" <= ch <= "\ud7a3" else (0.3 if ch == " " else
+                                                      0.55 if ch.isascii() else 1.0)
     return w
+
+
+def wrap_masked(text: str, mask: list[bool], size: int) -> list[tuple[str, list[bool]]]:
+    """어절 단위로 줄을 나누되 강조 마스크도 같이 잘라 옮깁니다."""
+    budget = (W - 2 * SIDE_MARGIN) / size
+    lines: list[tuple[str, list[bool]]] = []
+    cur, cur_mask, pos = "", [], 0
+    for word in text.split(" "):
+        wlen = len(word)
+        wmask = mask[pos:pos + wlen]
+        pos += wlen + 1          # 공백 한 칸
+        if not word:
+            continue
+        trial = f"{cur} {word}".strip()
+        if text_width_em(trial) <= budget or not cur:
+            if cur:
+                cur, cur_mask = cur + " " + word, cur_mask + [False] + wmask
+            else:
+                cur, cur_mask = word, wmask
+        else:
+            lines.append((cur, cur_mask))
+            cur, cur_mask = word, wmask
+    if cur:
+        lines.append((cur, cur_mask))
+    return lines or [("", [])]
 
 
 def wrap(text: str, size: int) -> list[str]:
@@ -172,6 +242,13 @@ def build_overlays(shots: list[dict]) -> tuple[list[str], str, str]:
             inputs += ["-loop", "1", "-t", f"{dur:.2f}", "-i", str(s["path"])]
         src = f"[{i + 2}:v]"   # 0=배경, 1=무음/오디오
         lbl = f"[a{i}]"
+        # 켄번스 — 정지 이미지를 아주 천천히 확대합니다.
+        # 움직임이 없으면 시청자는 "멈춘 줄" 알고 이탈합니다.
+        kb = ""
+        if not is_video and s.get("kenburns", True):
+            frames = max(int(dur * 30), 1)
+            kb = (f",zoompan=z='min(zoom+0.0006,1.10)':d={frames}"
+                  f":x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s={W}x{H}:fps=30")
         if s.get("fit", "cover") == "contain":
             fit = (f"scale={W}:{H}:force_original_aspect_ratio=decrease,"
                    f"pad={W}:{H}:(ow-iw)/2:(oh-ih)/2:color={EVID.replace('0x', '#')}")
@@ -179,7 +256,7 @@ def build_overlays(shots: list[dict]) -> tuple[list[str], str, str]:
             fit = (f"scale={W}:{H}:force_original_aspect_ratio=increase,"
                    f"crop={W}:{H}")
         # 하단에서 위로 올라가는 어둠막 — 자막 가독성 확보
-        chain.append(f"{src}{fit},setsar=1{lbl}")
+        chain.append(f"{src}{fit}{kb},setsar=1{lbl}")
         out = f"[v{i}]"
         chain.append(f"{last}{lbl}overlay=0:0:enable='between(t,{float(s['at']):.2f},"
                      f"{float(s['until']):.2f})'{out}")
@@ -187,8 +264,40 @@ def build_overlays(shots: list[dict]) -> tuple[list[str], str, str]:
     return inputs, ";".join(chain), last
 
 
+EMPH = re.compile(r"\*\*(.+?)\*\*")
+
+
+def strip_emphasis(s: str) -> tuple[str, list[bool]]:
+    """**강조** 표시를 떼고, 문자별 강조 여부 마스크를 함께 반환합니다.
+
+    강조가 줄바꿈을 걸치면 한 줄 안에서 ** 짝을 찾을 수 없으므로,
+    줄을 나누기 **전에** 마스크를 만들어 두고 나중에 줄별로 잘라 씁니다.
+    """
+    plain, mask, i, emph = [], [], 0, False
+    while i < len(s):
+        if s.startswith("**", i):
+            emph = not emph
+            i += 2
+            continue
+        plain.append(s[i])
+        mask.append(emph)
+        i += 1
+    return "".join(plain), mask
+
+
+def segments_from_mask(line: str, mask: list[bool]) -> list[tuple[str, bool]]:
+    """(텍스트, 마스크) 를 색이 같은 구간들로 묶습니다."""
+    out: list[tuple[str, bool]] = []
+    for ch, em in zip(line, mask):
+        if out and out[-1][1] == em:
+            out[-1] = (out[-1][0] + ch, em)
+        else:
+            out.append((ch, em))
+    return out or [(line, False)]
+
+
 def build_filters(cues: list[dict], sections: dict[int, str], sources: dict[int, str],
-                  font: str, store: "TextStore") -> str:
+                  font: str, store: "TextStore", marked: dict[int, str] | None = None) -> str:
     """자막 + 출처바를 drawtext 체인으로.
 
     아래에서부터: [하단 안전영역 384px 비움] → [자막 블록] → [출처바]
@@ -200,16 +309,28 @@ def build_filters(cues: list[dict], sections: dict[int, str], sources: dict[int,
         sec = sections.get(c["n"], "")
         # MYTH 섹션은 창조론 주장 인용이므로 --claim 색 (docs/02 §3)
         color = CLAIM if "MYTH" in sec.upper() else PAPER
-        lines = wrap(c["text"].replace("\n", " "), SUB_SIZE)
-        block_h = len(lines) * SUB_SIZE + (len(lines) - 1) * LINE_GAP
+        # 자막이 툭 나타나면 싸구려로 보입니다. 짧은 페이드인을 줍니다.
+        fade = (f"if(lt(t,{c['start']:.2f}),0,"
+                f"min(1,(t-{c['start']:.2f})/{FADE_IN}))")
+        raw = (marked or {}).get(c["n"]) or c["text"]
+        plain, mask = strip_emphasis(raw.replace("\n", " "))
+        wrapped = wrap_masked(plain, mask, SUB_SIZE)
+        block_h = len(wrapped) * SUB_SIZE + (len(wrapped) - 1) * LINE_GAP
         top = H - BOTTOM_SAFE - block_h
 
-        for i, line in enumerate(lines):
+        for i, (line, lmask) in enumerate(wrapped):
             y = top + i * (SUB_SIZE + LINE_GAP)
-            parts.append(
-                f"drawtext=fontfile='{font}':textfile='{store.put(line)}':fontcolor={color}"
-                f":fontsize={SUB_SIZE}:x=(w-text_w)/2:y={y}"
-                f":borderw=6:bordercolor={INK}@0.9:enable='{between}'")
+            segs = segments_from_mask(line, lmask)
+            total = sum(text_width_em(s) for s, _ in segs) * SUB_SIZE
+            x = (W - total) / 2
+            for seg, is_em in segs:
+                if seg.strip():
+                    parts.append(
+                        f"drawtext=fontfile='{font}':textfile='{store.put(seg)}'"
+                        f":fontcolor={ACCENT if is_em else color}:fontsize={SUB_SIZE}"
+                        f":x={x:.0f}:y={y}:alpha='{fade}'"
+                        f":borderw=6:bordercolor={INK}@0.9:enable='{between}'")
+                x += text_width_em(seg) * SUB_SIZE
 
         if src := sources.get(c["n"]):
             parts.append(
@@ -236,8 +357,10 @@ def render(ep: str, audio: Path | None, quiet: bool = False) -> int:
 
     matches = [p for p in SCRIPTS.glob(f"{ep}*.md") if not p.name.startswith("_")]
     fm, body = parse_script(matches[0])
+    _load_metrics(font)
     cues = parse_srt(srt)
     sections = cue_sections(body)
+    marked = cue_marked(body)
 
     # 큐별 출처 문자열 — refcheck 가 검증한 서지에서
     refs = {r["id"]: r for r in yaml.safe_load(
@@ -274,7 +397,7 @@ def render(ep: str, audio: Path | None, quiet: bool = False) -> int:
     vf = (f"[0:v]null[bg]"
           + (f";{overlay_chain}" if overlay_chain else "")
           + scrim
-          + f";{last}" + build_filters(cues, sections, sources, font, store) + "[out]")
+          + f";{last}" + build_filters(cues, sections, sources, font, store, marked) + "[out]")
 
     cmd = ["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
            "-f", "lavfi", "-i", f"color=c={EVID.replace('0x','#')}:s={W}x{H}:d={dur:.2f}:r=30"]
