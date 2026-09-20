@@ -194,7 +194,11 @@ def build_one(ep_id: str, quiet: bool = False) -> int:
     M = [f"# {fm['id']} 업로드 메타데이터", "",
          "## YouTube Shorts", "",
          "**제목** (검색어 중심)", "```", fm["title"], "```", "",
-         "**설명**", "```", (claim.get("rebuttal") or "").strip(), "",
+         # 대본이 description 을 들고 있으면 그걸 씁니다.
+         # claims.yaml 의 rebuttal 은 그 주장 전반에 대한 설명이라
+         # 회차가 특정 사건을 다루면 제목과 설명이 따로 놉니다.
+         "**설명**", "```",
+         (fm.get("description") or claim.get("rebuttal") or "").strip(), "",
          " ".join(tags) + " #Shorts", "```", "",
          "## TikTok", "",
          f"**캡션** ({len(cap)}자{' — ⚠ 150자 초과, 잘립니다' if len(cap) > 150 else ''})",
