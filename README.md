@@ -47,6 +47,7 @@ tools/fetchmedia.py          자유 라이선스 이미지 검색·수집 (Commo
 tools/credits.py             저작자 표시 계산 (고정 댓글 삽입 + 발행 차단)
 tools/makediagram.py         자료 화면 도식 생성 (assets/shared/)
 tools/makelogo.py            브랜드 로고 생성 (brand/)
+tools/uploadtiktok.py        완성 영상 → 틱톡 초안함 (자동 게시 아님)
 brand/                       로고 파일 + AI 이미지 프롬프트
 assets/                      자료 화면 + 편별 샷 배정표
 ```
@@ -69,6 +70,7 @@ python3 tools/harvest.py inbox              # 미처리 후보 확인
 python3 tools/produce.py --all              # 제작 패키지 빌드 → build/
 python3 tools/tts.py --all                  # 음성 합성 → build/*/….mp3
 python3 tools/render.py --all               # 자막 영상 초안 → build/*/…-draft.mp4
+python3 tools/uploadtiktok.py CN01 --check  # 전송 전 규격 검사 (네트워크 없이)
 
 python3 tools/attest.py fetch               # 초록 캐시 (Crossref→EuropePMC→S2)
 python3 tools/attest.py init EP001          # 근거 항목 뼈대 생성
@@ -103,3 +105,4 @@ python3 tools/attest.py check               # 인용이 실제 출처에 존재�
 | [12 파이프라인](docs/12-pipeline.md) | 자료 수집 자동화 + 제작 파이프라인 |
 | [13 외부 도구](docs/13-external-tools.md) | 외부 프로젝트 조사 — 무엇을 쓰고 무엇을 안 쓰는가 |
 | [14 논박 방법](docs/14-debunking-method.md) | 연구 기반 대본 구조 — FACT·MYTH·FALLACY·FACT |
+| [15 업로드 자동화](docs/15-upload-automation.md) | 틱톡 API 검토 — 초안까지만 자동, 심사 전엔 비공개 강제 |
