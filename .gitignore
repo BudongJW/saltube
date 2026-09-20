@@ -20,3 +20,6 @@ build/
 
 # TTS 산출물 (build/ 에 생성)
 *.mp3
+
+# fetchmedia 검색 캐시
+.fetchmedia-last.json

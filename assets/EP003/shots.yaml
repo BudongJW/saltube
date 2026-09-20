@@ -13,7 +13,7 @@ shots:
   at: 0.0
   until: 4.6
   screen: 틱타알릭 복원도 — `--evidence` 색
-  file: ''
+  file: assets/EP003/tiktaalik-restoration.jpg
   fit: cover
 - cue: 4
   at: 11.0
@@ -31,5 +31,5 @@ shots:
   at: 34.9
   until: 38.6
   screen: 틱타알릭 골격 클로즈업
-  file: ''
+  file: assets/EP003/tiktaalik-fossil.jpg
   fit: cover

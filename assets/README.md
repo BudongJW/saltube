@@ -63,6 +63,31 @@ python3 tools/makediagram.py
 **만들고 나면 반드시 렌더해서 보세요.** 위 다섯 가지는 전부 코드만 봐서는 안 보였고,
 PNG로 뽑아 눈으로 본 뒤에야 드러났습니다.
 
+## 자유 라이선스 이미지 받기
+
+```bash
+python3 tools/fetchmedia.py search "Tiktaalik roseae"
+python3 tools/fetchmedia.py get 3 --ep EP003 --name tiktaalik-restoration
+python3 tools/fetchmedia.py credits      # 저작자 표시가 필요한 자료 목록
+```
+
+**소스** (둘 다 API 키 불필요)
+
+| 소스 | 강점 |
+|---|---|
+| **Wikimedia Commons** | 화석·복원도·표본 사진이 가장 풍부. 퍼블릭 도메인 자료 다수 |
+| **Openverse** | CC 통합 검색 (Flickr, 박물관 등) |
+
+Pexels·Unsplash 는 넣지 않았습니다 — 일반 스톡이라 "틱타알릭 화석" 같은
+과학 소재가 없고, API 키도 필요합니다. 필요하면 키를 받아 소스를 추가하세요.
+
+**상업적 이용·개작이 가능한 라이선스만 자동 승인**합니다 (CC0 / PD / CC BY / CC BY-SA).
+NC(비상업)·ND(개작금지)는 경고가 뜨고 `--force` 없이는 받지 않습니다 —
+영상에 얹어 편집하고 수익화를 열려면 이 조건이 필요합니다.
+
+받은 자료의 출처는 `assets/CREDITS.yaml` 에 자동 기록됩니다.
+`credits` 명령이 **저작자 표시 의무가 있는 자료만** 따로 뽑아줍니다.
+
 ## ⚠ 저작권
 
 **이미지에도 출처 기록 의무가 있습니다** → [09 리스크](../docs/09-risk-and-compliance.md) §1
