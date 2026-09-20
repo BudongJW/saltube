@@ -20,6 +20,7 @@ from __future__ import annotations
 import argparse
 import asyncio
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -34,6 +35,24 @@ BUILD = ROOT / "build"
 VOICE = "ko-KR-InJoonNeural"
 RATE = "+15%"      # 기본 속도는 246음절/분으로 느립니다. +15% = 약 282음절/분
 VOLUME = "+0%"
+GAP = 0.08         # 큐 사이 무음(초). TTS 가 문장 끝에서 이미 쉬므로 짧게
+
+
+def cue_lines(ep: str) -> tuple[list[str], dict]:
+    """큐별 낭독 문장. 한 덩어리로 합성하면 자막이 음성과 어긋납니다."""
+    matches = [p for p in SCRIPTS.glob(f"{ep}*.md") if not p.name.startswith("_")]
+    if not matches:
+        raise FileNotFoundError(f"대본 없음: {ep}")
+    fm, body = parse_script(matches[0])
+    return [s for s in (strip_md(t) for kind, t, _ in walk(body) if kind == "cue") if s], fm
+
+
+def srt_time(sec: float) -> str:
+    ms = int(round(sec * 1000))
+    h, ms = divmod(ms, 3600000)
+    m, ms = divmod(ms, 60000)
+    s, ms = divmod(ms, 1000)
+    return f"{h:02d}:{m:02d}:{s:02d},{ms:03d}"
 
 
 def narration_text(ep: str) -> tuple[str, dict]:
@@ -60,13 +79,28 @@ def duration(p: Path) -> float:
 
 
 def run(ep: str, voice: str, rate: str, quiet: bool = False) -> int:
-    text, fm = narration_text(ep)
+    """큐마다 따로 합성해 이어붙이고, 실제 길이로 SRT 를 다시 씁니다.
+
+    한 덩어리로 합성하면 자막 타이밍(음절 추정)과 음성이 어긋납니다.
+    EP001 에서 실측 4.7초(9%) 차이가 났습니다.
+    """
+    lines, fm = cue_lines(ep)
     out = BUILD / fm["id"]
     out.mkdir(parents=True, exist_ok=True)
     dst = out / f"{fm['id']}.mp3"
+    parts_dir = out / ".tts"
+    if parts_dir.exists():
+        shutil.rmtree(parts_dir)
+    parts_dir.mkdir()
 
+    segs, t0 = [], 0.0
     try:
-        asyncio.run(synth(text, dst, voice, rate))
+        for i, line in enumerate(lines, 1):
+            seg = parts_dir / f"{i:03d}.mp3"
+            asyncio.run(synth(line, seg, voice, rate))
+            d = duration(seg)
+            segs.append({"n": i, "text": line, "start": t0, "end": t0 + d, "file": seg})
+            t0 += d + GAP
     except Exception as e:
         msg = str(e)
         if "CERTIFICATE" in msg.upper():
@@ -75,17 +109,43 @@ def run(ep: str, voice: str, rate: str, quiet: bool = False) -> int:
         print(f"  {ep} 합성 실패: {msg}", file=sys.stderr)
         return 1
 
+    # 큐 사이에 짧은 무음을 넣어 이어붙입니다. 붙여 읽으면 숨 쉴 틈이 없습니다.
+    concat = parts_dir / "list.txt"
+    sil = parts_dir / "gap.mp3"
+    subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                    "-f", "lavfi", "-i", f"anullsrc=r=24000:cl=mono:d={GAP}",
+                    "-c:a", "libmp3lame", "-b:a", "128k", str(sil)], check=False)
+    rows = []
+    for i, s in enumerate(segs):
+        rows.append(f"file '{s['file'].name}'")
+        if i < len(segs) - 1:
+            rows.append(f"file '{sil.name}'")
+    concat.write_text("\n".join(rows), encoding="utf-8")
+    subprocess.run(["ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+                    "-f", "concat", "-safe", "0", "-i", str(concat),
+                    "-c:a", "libmp3lame", "-b:a", "192k", str(dst)], check=False)
+
     if not dst.exists() or dst.stat().st_size == 0:
         print(f"  {ep}: 빈 파일이 생성됐습니다 — 네트워크를 확인하세요", file=sys.stderr)
         return 1
 
+    # 실측 타이밍으로 SRT 를 다시 씁니다. 이게 자막-음성 동기의 핵심입니다.
+    srt = []
+    for s in segs:
+        srt += [str(s["n"]), f"{srt_time(s['start'])} --> {srt_time(s['end'])}",
+                s["text"], ""]
+    (out / f"{fm['id']}.srt").write_text("\n".join(srt), encoding="utf-8")
+    shutil.rmtree(parts_dir, ignore_errors=True)
+
+    text = " ".join(lines)
     dur = duration(dst)
     syl = len(re.findall(r"[가-힣]", text)) + 1.5 * len(re.findall(r"[0-9]", text))
     rate_spm = syl / dur * 60 if dur else 0
     if not quiet:
         over = "  ⚠ 60초 초과" if dur > 60 else ""
         print(f"  {fm['id']}.mp3  {dur:.1f}초  {rate_spm:.0f}음절/분  "
-              f"{dst.stat().st_size/1024:.0f}KB{over}")
+              f"큐 {len(segs)}개  {dst.stat().st_size/1024:.0f}KB{over}")
+        print(f"     SRT 를 실측 타이밍으로 갱신했습니다 — render.py 가 이 값을 씁니다")
     return 0
 
 

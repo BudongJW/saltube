@@ -41,6 +41,9 @@ VIDEO_EXT = {".mp4", ".mov", ".webm", ".mkv"}
 # 자막 블록 주변만 덮습니다. 너무 높으면 자료 화면 내용을 가립니다.
 SCRIM_TOP = 0.58
 FADE_IN = 0.18        # 자막 페이드인 시간(초)
+# 라우드니스 — docs/04-platform-playbook.md §2
+# 플랫폼은 초과분만 낮추고 미달분은 올려주지 않습니다. 조용하면 조용한 채로 나갑니다.
+LOUDNESS_I, LOUDNESS_TP, LOUDNESS_LRA = -14, -1, 11
 
 
 def load_shots(ep: str) -> list[dict]:
@@ -410,9 +413,12 @@ def render(ep: str, audio: Path | None, quiet: bool = False) -> int:
 
     vf_file = out / ".filter.txt"
     vf_file.write_text(vf, encoding="utf-8")
+    # 음성 정규화 + 스테레오. 모노로 내보내면 일부 플레이어에서 한쪽으로 치우칩니다.
+    af = (f"loudnorm=I={LOUDNESS_I}:TP={LOUDNESS_TP}:LRA={LOUDNESS_LRA},"
+          f"aformat=channel_layouts=stereo,aresample=48000")
     cmd += ["-filter_complex_script", str(vf_file),
-            "-map", "[out]", "-map", "1:a",
-            "-c:a", "aac", "-b:a", "384k", "-ar", "48000",
+            "-map", "[out]", "-map", "1:a", "-af", af,
+            "-c:a", "aac", "-b:a", "384k", "-ar", "48000", "-ac", "2",
             "-c:v", "libx264", "-profile:v", "high", "-pix_fmt", "yuv420p",
             "-b:v", "8M", "-g", "60", "-t", f"{dur:.2f}",
             "-movflags", "+faststart", str(dst)]
