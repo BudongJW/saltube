@@ -1,0 +1,414 @@
+harvested: '2026-09-20'
+since: '2025-06-01'
+count: 32
+howto: '검토 후: python3 tools/harvest.py promote <DOI> --claims C003 --note ''...''  / 기각: python3 tools/harvest.py
+  drop <DOI>'
+candidates:
+- doi: 10.1016/s0262-4079(25)01352-1
+  title: Fossil teeth may come from a new species of early hominin
+  authors: Le Page
+  year: 2025
+  container: New Scientist
+  cited_by: 0
+  score: 33.5
+  matched:
+  - Q-HUMAN-ORIGINS
+  suggested_claims:
+  - C003
+  topic: paleontology
+- doi: 10.1038/d44151-026-00075-z
+  title: Ancient whale fossil from India reshapes early evolution of cetaceans
+  authors: (단체 저자)
+  year: 2026
+  container: Nat India
+  cited_by: 0
+  score: 28.3
+  matched:
+  - Q-WHALE
+  suggested_claims:
+  - C003
+  - C021
+  topic: paleontology
+- doi: 10.1016/j.jhevol.2025.103731
+  title: The hominin fossil record of the Omo-Turkana Basin
+  authors: Marchal, Reed, Prat
+  year: 2025
+  container: Journal of Human Evolution
+  cited_by: 2
+  score: 28.0
+  matched:
+  - Q-HUMAN-ORIGINS
+  suggested_claims:
+  - C003
+  topic: paleontology
+- doi: 10.1016/j.jhevol.2026.103857
+  title: The Omo-Turkana Basin fossil record as a milestone toward a comprehensive database of the hominin
+    fossil record online
+  authors: Reed 외 3인
+  year: 2026
+  container: Journal of Human Evolution
+  cited_by: 0
+  score: 27.7
+  matched:
+  - Q-HUMAN-ORIGINS
+  suggested_claims:
+  - C003
+  topic: paleontology
+- doi: 10.1016/j.jop.2026.100406
+  title: Trace fossils from the Ediacaran–Cambrian in southeastern margin of North China and their implications
+    for the Cambrian Explosion
+  authors: Yang 외 5인
+  year: 2026
+  container: Journal of Palaeogeography
+  cited_by: 0
+  score: 27.7
+  matched:
+  - Q-CAMBRIAN
+  suggested_claims:
+  - C013
+  topic: paleontology
+- doi: 10.1007/s12371-026-01371-x
+  title: Moroccan Fossil Hominins and their Role in the Branching Model of Hominin Evolution
+  authors: Ben-Ncer
+  year: 2026
+  container: Geoheritage
+  cited_by: 0
+  score: 26.9
+  matched:
+  - Q-HUMAN-ORIGINS
+  suggested_claims:
+  - C003
+  topic: paleontology
+- doi: 10.1016/j.precamres.2026.108061
+  title: 'Early Cambrian occurrence of multicellular algae Wengania: Survivors of the terminal Ediacaran
+    Kotlinian Crisis'
+  authors: You, Shang, Liu
+  year: 2026
+  container: Precambrian Research
+  cited_by: 0
+  score: 26.2
+  matched:
+  - Q-CAMBRIAN
+  suggested_claims:
+  - C013
+  topic: paleontology
+- doi: 10.1127/zdgg/2025/0468
+  title: New genera indicating the origin and early evolution of pharciceratoid ammonoids (Agoniatitida,
+    Pharciceratoidea, Middle Devonian)
+  authors: Becker
+  year: 2025
+  container: Zeitschrift der Deutschen Gesellschaft für Geowissenschaften
+  cited_by: 1
+  score: 26.1
+  matched:
+  - Q-TRANSITIONAL
+  suggested_claims:
+  - C003
+  topic: paleontology
+- doi: 10.3114/persoonia.2026.56.06_supp
+  title: 'SUPPLEMENTARY: Nine new species of cordycipitoid fungi (Hypocreales, Sordariomycetes) from China'
+  authors: (단체 저자)
+  year: 2026
+  container: persoonia
+  cited_by: 0
+  score: 26.0
+  matched:
+  - Q-HUMAN-ORIGINS
+  suggested_claims:
+  - C003
+  topic: paleontology
+- doi: 10.1002/ar.70242
+  title: 'The fossil record stays silent: Confusions and conundrums for hominin pelvis evolution'
+  authors: Kurki, Wall‐Scheffler
+  year: 2026
+  container: The Anatomical Record
+  cited_by: 0
+  score: 25.6
+  matched:
+  - Q-HUMAN-ORIGINS
+  suggested_claims:
+  - C003
+  topic: paleontology
+- doi: 10.1016/j.palaeo.2026.113973
+  title: 'Quantifying navigational capacity in trace fossils using spectral bandwidths: Applications for
+    animal movement ecology through the Ediacaran–Cambrian transition'
+  authors: Wang, Chen
+  year: 2026
+  container: Palaeogeography, Palaeoclimatology, Palaeoecology
+  cited_by: 3
+  score: 25.5
+  matched:
+  - Q-CAMBRIAN
+  suggested_claims:
+  - C013
+  topic: paleontology
+- doi: 10.1038/s41559-025-02799-0
+  title: Isotope analysis of fossil teeth provides insight into the habitat and life histories of the
+    early hominin Paranthropus robustus
+  authors: (단체 저자)
+  year: 2025
+  container: Nat Ecol Evol
+  cited_by: 0
+  score: 24.9
+  matched:
+  - Q-HUMAN-ORIGINS
+  suggested_claims:
+  - C003
+  topic: paleontology
+- doi: 10.1038/s41467-026-73821-7
+  title: Evolution of limb and digit identity genes since the tetrapod ancestor
+  authors: Kang 외 4인
+  year: 2026
+  container: Nat Commun
+  cited_by: 0
+  score: 24.8
+  matched:
+  - Q-TRANSITIONAL
+  suggested_claims:
+  - C003
+  topic: paleontology
+- doi: 10.3114/persoonia.2025.54.04
+  title: 'Taxonomy and phylogeny of Stereaceae ( Russulales , Basidiomycota ): two new genera, nine new
+    species and twenty new combinations'
+  authors: Xu 외 4인
+  year: 2025
+  container: persoonia
+  cited_by: 3
+  score: 24.3
+  matched:
+  - Q-HUMAN-ORIGINS
+  suggested_claims:
+  - C003
+  topic: paleontology
+- doi: 10.1002/ece3.74232
+  title: 'Long‐Term Fluctuations in Cetacean Occurrence Derived From Whale‐Watching Platforms Off Southwest
+    Gran Canaria: Evaluating Their Potential as an Ecological Indicator'
+  authors: Herrera 외 3인
+  year: 2026
+  container: Ecology and Evolution
+  cited_by: 0
+  score: 23.9
+  matched:
+  - Q-WHALE
+  suggested_claims:
+  - C003
+  - C021
+  topic: paleontology
+- doi: 10.1371/journal.pone.0325547
+  title: Ediacaran-Cambrian paleosols of Nevada and California
+  authors: Retallack
+  year: 2025
+  container: PLoS One
+  cited_by: 1
+  score: 23.8
+  matched:
+  - Q-CAMBRIAN
+  suggested_claims:
+  - C013
+  topic: paleontology
+- doi: 10.1111/sed.70094
+  title: 'The relationship between organic matgrounds and sedimentary packaging: examples from the Ediacaran
+    and early Cambrian'
+  authors: Droser 외 3인
+  year: 2026
+  container: Sedimentology
+  cited_by: 1
+  score: 23.7
+  matched:
+  - Q-CAMBRIAN
+  suggested_claims:
+  - C013
+  topic: paleontology
+- doi: 10.1016/j.precamres.2026.108232
+  title: Hydrothermal-biogenic controls on critical metal enrichment in Ediacaran-early Cambrian stone
+    coal of the Qinling-Daba Mountains
+  authors: Zhang 외 5인
+  year: 2026
+  container: Precambrian Research
+  cited_by: 0
+  score: 23.4
+  matched:
+  - Q-CAMBRIAN
+  suggested_claims:
+  - C013
+  topic: paleontology
+- doi: 10.1126/sciadv.adx9449
+  title: Advent of three-dimensional sediment exploration reveals Ediacaran-Cambrian ecosystem transition
+  authors: Chen, Liu
+  year: 2025
+  container: Sci. Adv.
+  cited_by: 11
+  score: 23.0
+  matched:
+  - Q-CAMBRIAN
+  suggested_claims:
+  - C013
+  topic: paleontology
+- doi: 10.1093/gbe/evag157
+  title: Evidence that Zymocin-Like Killer Plasmids Were Present in the Common Ancestor of Terrestrial
+    Fungi
+  authors: Heneghan, Salzberg, Wolfe
+  year: 2026
+  container: Genome Biology and Evolution
+  cited_by: 1
+  score: 22.9
+  matched:
+  - Q-WHALE
+  suggested_claims:
+  - C003
+  - C021
+  topic: paleontology
+- doi: 10.1038/d41586-026-01753-9
+  title: Confirmation that bryozoan animals were present during the Cambrian explosion
+  authors: (단체 저자)
+  year: 2026
+  container: Nature
+  cited_by: 0
+  score: 22.6
+  matched:
+  - Q-CAMBRIAN
+  suggested_claims:
+  - C013
+  topic: paleontology
+- doi: 10.1111/mms.70112
+  title: 'Rice''s Whale: Considerations for Identifying New Cetacean Species'
+  authors: Davis
+  year: 2025
+  container: Marine Mammal Science
+  cited_by: 1
+  score: 22.4
+  matched:
+  - Q-WHALE
+  suggested_claims:
+  - C003
+  - C021
+  topic: paleontology
+- doi: 10.1016/j.pgeola.2026.101177
+  title: Carboniferous tetrapod fauna of the fossil lycopsid trees at Joggins and the origin of the hollow
+    tree guild
+  authors: Calder 외 4인
+  year: 2026
+  container: Proceedings of the Geologists' Association
+  cited_by: 0
+  score: 21.8
+  matched:
+  - Q-TRANSITIONAL
+  suggested_claims:
+  - C003
+  topic: paleontology
+- doi: 10.1016/j.isci.2025.112486
+  title: Digital volumetric modeling reveals unique body plan experimentation in the Devonian tetrapod
+    Ichthyostega
+  authors: Strong 외 3인
+  year: 2025
+  container: iScience
+  cited_by: 1
+  score: 20.8
+  matched:
+  - Q-TRANSITIONAL
+  suggested_claims:
+  - C003
+  topic: paleontology
+- doi: 10.47536/jcrm.v27i1.1125
+  title: 'Short Communication: North Sinai fin whale stranding represents easternmost confirmed record
+    for the Egyptian Mediterranean coast'
+  authors: Rabia
+  year: 2026
+  container: J. Cetacean Res. Manage.
+  cited_by: 0
+  score: 20.7
+  matched:
+  - Q-WHALE
+  suggested_claims:
+  - C003
+  - C021
+  topic: paleontology
+- doi: 10.1016/j.ijpp.2026.03.004
+  title: Evidence of bony stress syndrome in a fossil cetacean
+  authors: Hampe, Asbach
+  year: 2026
+  container: International Journal of Paleopathology
+  cited_by: 0
+  score: 20.5
+  matched:
+  - Q-WHALE
+  suggested_claims:
+  - C003
+  - C021
+  topic: paleontology
+- doi: 10.47278/journal.ijab/2026.027
+  title: 'Postmortem Pathology of a Cuvier''s Beaked Whale: Evidence of Environmental and Traumatic Stress
+    in a Deep-Diving Cetacean'
+  authors: (단체 저자)
+  year: 2026
+  container: International Journal of Agriculture and Biosciences
+  cited_by: 0
+  score: 20.5
+  matched:
+  - Q-WHALE
+  suggested_claims:
+  - C003
+  - C021
+  topic: paleontology
+- doi: 10.3390/s25196084
+  title: Statistical Analysis of Digital 3D Models of a Fossil Tetrapod Skull from µCT and Optical Scanning
+  authors: Garashchenko, Kogan, Rucki
+  year: 2025
+  container: Sensors
+  cited_by: 1
+  score: 20.4
+  matched:
+  - Q-TRANSITIONAL
+  suggested_claims:
+  - C003
+  topic: paleontology
+- doi: 10.26502/ijpaes.4490191
+  title: Spider Origin and Evolution in Fossil Environments
+  authors: de la Fuente
+  year: 2026
+  container: Int J Plant Anim Environ Sci 2026
+  cited_by: 0
+  score: 20.2
+  matched:
+  - Q-TRANSITIONAL
+  suggested_claims:
+  - C003
+  topic: paleontology
+- doi: 10.47536/jcrm.v5i1.1099
+  title: Insights into fin whale movements and foraging behaviour around Elephant Island, Antarctica
+  authors: Panigada 외 4인
+  year: 2026
+  container: J. Cetacean Res. Manage.
+  cited_by: 1
+  score: 20.0
+  matched:
+  - Q-WHALE
+  suggested_claims:
+  - C003
+  - C021
+  topic: paleontology
+- doi: 10.1111/cla.70063
+  title: Deep‐time evolution and biogeography of a transitional lacewing lineage with Gondwanan origin
+  authors: Li 외 7인
+  year: 2026
+  container: Cladistics
+  cited_by: 0
+  score: 19.2
+  matched:
+  - Q-TRANSITIONAL
+  suggested_claims:
+  - C003
+  topic: paleontology
+- doi: 10.1134/s0031030125600544
+  title: Paleosols, Floristic Paleosuccession, and a New Genus of Fossil Tetrapod Traces from the Upper
+    Permian of the North of European Russia
+  authors: Naugolnykh
+  year: 2025
+  container: Paleontol. J.
+  cited_by: 0
+  score: 18.6
+  matched:
+  - Q-TRANSITIONAL
+  suggested_claims:
+  - C003
+  topic: paleontology
