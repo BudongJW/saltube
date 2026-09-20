@@ -20,8 +20,9 @@
 그래서 이 도구는 video.upload 를 씁니다. 심사를 통과하면 그때
 Direct Post 로 바꾸는 게 맞습니다.
 
-토큰: 환경변수 TIKTOK_ACCESS_TOKEN.
-발급 절차는 docs/15-upload-automation.md 를 보세요.
+토큰: tools/tiktokauth.py 가 발급·갱신하고 이 도구가 알아서 읽습니다.
+    python3 tools/tiktokauth.py login    (최초 1회)
+환경변수 TIKTOK_ACCESS_TOKEN 이 있으면 그걸 우선합니다.
 
 제약 (공식 문서 기준):
   - 액세스 토큰당 분당 6요청
@@ -235,11 +236,20 @@ def main() -> int:
         print(f"\n  규격 통과. 전송하려면 --check 를 빼고 다시 돌리세요.")
         return 0
 
+    # 저장된 토큰을 먼저 봅니다 — 만료가 가까우면 알아서 갱신합니다.
+    # 액세스 토큰은 24시간이라 환경변수에 박아 두면 매일 끊깁니다.
     token = os.environ.get("TIKTOK_ACCESS_TOKEN", "").strip()
     if not token:
-        print("TIKTOK_ACCESS_TOKEN 이 없습니다.\n"
-              "발급 절차: docs/15-upload-automation.md", file=sys.stderr)
-        return 1
+        try:
+            from tiktokauth import fresh_token
+            token = fresh_token()
+        except SystemExit:
+            return 1
+        except Exception as e:
+            print(f"토큰을 얻지 못했습니다: {e}\n"
+                  "  python3 tools/tiktokauth.py login\n"
+                  "  자세한 절차: docs/15-upload-automation.md", file=sys.stderr)
+            return 1
     if a.status:
         return status(token, a.status)
     return upload(a.episode, token)

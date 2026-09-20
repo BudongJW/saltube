@@ -47,6 +47,7 @@ tools/fetchmedia.py          자유 라이선스 이미지 검색·수집 (Commo
 tools/credits.py             저작자 표시 계산 (고정 댓글 삽입 + 발행 차단)
 tools/makediagram.py         자료 화면 도식 생성 (assets/shared/)
 tools/makelogo.py            브랜드 로고 생성 (brand/)
+tools/tiktokauth.py          틱톡 토큰 발급·자동 갱신 (OAuth + PKCE)
 tools/uploadtiktok.py        완성 영상 → 틱톡 초안함 (자동 게시 아님)
 brand/                       로고 파일 + AI 이미지 프롬프트
 assets/                      자료 화면 + 편별 샷 배정표

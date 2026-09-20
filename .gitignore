@@ -23,3 +23,6 @@ build/
 
 # fetchmedia 검색 캐시
 .fetchmedia-last.json
+
+# 틱톡 토큰 — 계정 접근 권한입니다. 절대 커밋하지 마세요.
+.tiktok_token.json

@@ -46,28 +46,62 @@ Direct Post 로 **공개** 게시가 가능해집니다. 대신:
 24시간 5건 제한 때문에 `--check` 로 먼저 거르는 게 중요합니다.
 잘못된 파일로 시도를 낭비하면 그날 다시 못 올립니다.
 
-## 4. 토큰 발급 절차
+## 4. 토큰 발급 — "키"는 하나가 아닙니다
 
-이 저장소에서는 할 수 없습니다 — 브라우저 리디렉션이 필요합니다.
+셋이 따로 있고, **정작 필요한 건 포털에서 복사할 수 없습니다.**
 
-1. <https://developers.tiktok.com> 에서 앱 등록
-2. **Content Posting API** 제품 추가, 스코프 `video.upload` 신청
-3. 리디렉션 URI 등록 (로컬 테스트면 `http://localhost:8080/callback`)
-4. 로그인 키트로 인가 → `code` → 토큰 교환
-5. 받은 access token 을 환경변수로:
+| | 어디서 | 수명 |
+|---|---|---|
+| **Client Key / Secret** | 개발자 포털에서 **복사** | 고정 |
+| **Access Token** | **포털에 없음.** OAuth 로 발급 | **24시간** |
+| **Refresh Token** | 위와 함께 발급 | 365일 |
+
+`uploadtiktok.py` 가 쓰는 건 **Access Token** 이고, 이건 브라우저 인가를
+거쳐야만 나옵니다. 그래서 `tools/tiktokauth.py` 가 그 과정을 대신합니다.
+
+### 준비 (한 번만)
+
+1. <https://developers.tiktok.com> 에서 앱 생성
+2. **앱 종류를 `Desktop` 으로 고르세요.**
+   `Web` 으로 고르면 리디렉션 URI 가 **https 여야 해서 localhost 를 쓸 수 없습니다.**
+   Desktop 은 `http://localhost` 와 `127.0.0.1` 이 허용됩니다.
+3. Products 에 **Content Posting API** 추가 → 스코프 **`video.upload`**
+   (`video.publish` 가 아닙니다 — §1 참고)
+4. Redirect URI 에 **정확히** 이것을 등록: `http://localhost:8080/callback`
+   URI 는 고정이어야 하고 쿼리·프래그먼트를 붙일 수 없습니다.
+5. 포털 → 앱 → Basic information 에서 Client key / secret 복사
+
+### 발급
 
 ```bash
-export TIKTOK_ACCESS_TOKEN='...'
-python3 tools/uploadtiktok.py CN01 --check   # 먼저 규격 검사
-python3 tools/uploadtiktok.py CN01           # 초안함으로 전송
+export TIKTOK_CLIENT_KEY='...'
+export TIKTOK_CLIENT_SECRET='...'
+
+python3 tools/tiktokauth.py login     # 브라우저 열림 → 승인 → 토큰 저장
+python3 tools/tiktokauth.py status    # 남은 시간 확인
 ```
 
-액세스 토큰은 24시간 만료입니다. 리프레시 토큰으로 갱신해야
-주기적 자동화가 됩니다 — 지금은 수동 갱신을 전제로 합니다.
+**본인 PC 에서 돌리세요** — 브라우저가 열려야 합니다.
+토큰은 `.tiktok_token.json` 에 저장되고 `.gitignore` 에 들어 있습니다.
+**계정 접근 권한이므로 절대 커밋하지 마세요.**
 
-> **이 도구는 실제 API 호출로 검증되지 않았습니다.**
-> 자격증명이 없어 `--check`(오프라인 검사)까지만 시험했습니다.
-> 첫 전송은 반드시 사람이 지켜보면서 하세요.
+이후로는 `uploadtiktok.py` 가 저장된 토큰을 알아서 읽고,
+24시간이 지났으면 리프레시 토큰으로 **자동 갱신**합니다.
+
+```bash
+python3 tools/uploadtiktok.py TW01 --check   # 규격 검사
+python3 tools/uploadtiktok.py TW01           # 초안함으로 전송
+```
+
+### 걸리기 쉬운 곳
+
+- **`Web` 앱으로 만들면 localhost 를 못 씁니다.** Desktop 으로 다시 만드세요.
+- **PKCE 의 `code_challenge` 는 hex 인코딩 SHA256 입니다.**
+  표준 OAuth 는 base64url 인데 틱톡은 hex 를 받습니다.
+  표준대로 만들면 `invalid_grant` 가 납니다. (도구가 알아서 처리합니다)
+- 리디렉션 URI 는 포털 등록값과 **글자 하나까지 같아야** 합니다.
+- 갱신할 때 **새 refresh_token 이 오면 그걸로 교체**해야 합니다.
+  옛것을 계속 쓰면 어느 순간 끊깁니다. (도구가 처리합니다)
 
 ## 5. 유튜브 쇼츠
 
