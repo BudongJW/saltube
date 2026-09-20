@@ -23,6 +23,7 @@ TOP, BOT = 230, 1100          # 실질 작업 영역
 # docs/02-brand.md §3
 INK, PAPER, EVID, CLAIM, ACCENT = "#12151A", "#F5F3EE", "#2E7D6B", "#B4472F", "#E0A800"
 F = "Pretendard, Helvetica, Arial, sans-serif"
+FCN = "Noto Sans CJK SC, sans-serif"   # fc-query 로 확인한 실제 패밀리명
 
 
 def svg(inner: str, bg: str = EVID) -> str:
@@ -37,7 +38,61 @@ def text(x, y, s, size=56, fill=PAPER, weight=700, anchor="middle", opacity=1):
             f'opacity="{opacity}">{s}</text>')
 
 
-# ─────────────────────── EP001 ───────────────────────
+
+# ─────────────────────── EP001 — 2012 한국 교과서 사건 ───────────────────────
+
+def ep001_archaeopteryx():
+    """시조새가 지워질 뻔한 교과서 — 경고 톤."""
+    return svg(
+        f'<rect x="90" y="300" width="900" height="640" rx="20" fill="{PAPER}"/>'
+        + f'<rect x="90" y="300" width="900" height="640" rx="20" fill="none" '
+          f'stroke="{CLAIM}" stroke-width="16"/>'
+        + text(540, 420, "고등학교 생명과학", 44, INK, opacity=0.5)
+        + text(540, 570, "시조새", 140, INK)
+        + f'<path d="M 250 470 L 830 700" stroke="{CLAIM}" stroke-width="22" '
+          f'stroke-linecap="round"/>'
+        + text(540, 730, "말의 진화", 72, INK, opacity=0.45)
+        + f'<path d="M 300 700 L 780 800" stroke="{CLAIM}" stroke-width="18" '
+          f'stroke-linecap="round" opacity="0.8"/>'
+        + text(540, 880, "삭제 요청", 48, CLAIM)
+        + text(540, 1040, "2012년 · 대한민국", 46, PAPER, opacity=0.8))
+
+
+def ep001_pipeline():
+    """청원 → 교과부 → 출판사. 세로 3단."""
+    steps = []
+    for i, (label, sub, col) in enumerate([
+            ("창조과학회 산하 단체", "청원 제출", CLAIM),
+            ("교육과학기술부", "그대로 전달", ACCENT),
+            ("출판사", "삭제 동의", PAPER)]):
+        y = 330 + i * 230
+        steps.append(f'<rect x="130" y="{y}" width="820" height="150" rx="16" '
+                     f'fill="{col}" opacity="{0.9 if col != PAPER else 0.18}"/>')
+        steps.append(text(540, y + 62, label, 46, INK if col != PAPER else PAPER))
+        steps.append(text(540, y + 118, sub, 36, INK if col != PAPER else PAPER,
+                          opacity=0.75))
+        if i < 2:
+            steps.append(f'<path d="M 540 {y + 158} L 540 {y + 214} M 512 {y + 186} '
+                         f'L 540 {y + 214} L 568 {y + 186}" stroke="{PAPER}" '
+                         f'stroke-width="9" fill="none" stroke-linecap="round" opacity="0.6"/>')
+    return svg("".join(steps))
+
+
+def ep001_panel():
+    """한국과학기술한림원 패널 기각 — 결말."""
+    return svg(
+        text(540, 350, "2012년 9월", 48, PAPER, opacity=0.6)
+        + text(540, 450, "한국과학기술한림원", 58, PAPER)
+        + f'<rect x="240" y="520" width="600" height="110" rx="55" fill="{PAPER}" opacity="0.14"/>'
+        + text(540, 592, "전문가 11인", 56, PAPER)
+        + f'<rect x="200" y="700" width="680" height="150" rx="20" fill="{EVID}" '
+          f'stroke="{ACCENT}" stroke-width="10"/>'
+        + text(540, 800, "청원 기각", 92, ACCENT)
+        + text(540, 950, "시조새는 교과서에 남았습니다", 48, PAPER)
+        + text(540, 1050, "Nature 2012", 34, PAPER, opacity=0.5))
+
+
+# ─────────────────────── EP001 (기존) ───────────────────────
 
 def ep001_theory_def():
     """'충분히 입증된 설명' — 정의 카드."""
@@ -70,6 +125,20 @@ def ep001_ladder():
     caption = (f'<rect x="230" y="1000" width="620" height="92" rx="46" fill="{PAPER}"/>'
                + text(540, 1062, "이런 사다리는 없습니다", 48, CLAIM))
     return svg("".join(boxes) + x_mark + "".join(labels) + caption)
+
+
+def ep001_claim():
+    """반박 대상 주장을 그대로 인용 — 주장은 반드시 `--claim` 색으로 표시합니다.
+
+    편집 정책 §4: 주장과 사실을 같은 색으로 그리면 시청자가 둘을 구분하지 못합니다.
+    """
+    return svg(
+        text(540, 340, "가장 흔한 반론", 44, PAPER, opacity=0.6)
+        + f'<rect x="110" y="410" width="860" height="330" rx="20" fill="{CLAIM}"/>'
+        + text(540, 545, "\u201c진화는", 76, PAPER)
+        + text(540, 655, "이론일 뿐이잖아요\u201d", 76, PAPER)
+        + text(540, 860, "이 문장 하나로", 46, PAPER, opacity=0.7)
+        + text(540, 940, "교과서를 고치려 했습니다", 46, PAPER, opacity=0.7))
 
 
 def ep001_fallacy():
@@ -208,9 +277,173 @@ def ep004_skepticism():
         + text(540, 1000, "양쪽에 대보세요", 50, ACCENT))
 
 
+
+# ─────────────────────── CN01 — 중국어판 ───────────────────────
+
+def _cn(x, y, s, size=56, fill=PAPER, weight=700, anchor="middle", opacity=1):
+    return (f'<text x="{x}" y="{y}" font-family="{FCN}" font-size="{size}" '
+            f'font-weight="{weight}" fill="{fill}" text-anchor="{anchor}" '
+            f'opacity="{opacity}">{s}</text>')
+
+
+def cn01_textbook():
+    """始祖鸟差点被删掉 — 교과서에 줄."""
+    return svg(
+        f'<rect x="90" y="310" width="900" height="600" rx="20" fill="{PAPER}"/>'
+        + f'<rect x="90" y="310" width="900" height="600" rx="20" fill="none" '
+          f'stroke="{CLAIM}" stroke-width="16"/>'
+        + _cn(540, 420, "高中生物教科书", 46, INK, opacity=0.5)
+        + _cn(540, 580, "始祖鸟", 150, INK)
+        + f'<path d="M 250 480 L 830 700" stroke="{CLAIM}" stroke-width="24" '
+          f'stroke-linecap="round"/>'
+        + _cn(540, 740, "马的进化", 72, INK, opacity=0.45)
+        + f'<path d="M 300 710 L 780 810" stroke="{CLAIM}" stroke-width="18" '
+          f'stroke-linecap="round" opacity="0.8"/>'
+        + _cn(540, 870, "要求删除", 50, CLAIM)
+        + _cn(540, 1030, "2012年 · 韩国", 46, PAPER, opacity=0.8))
+
+
+def cn01_pipeline():
+    """请愿 → 教育部 → 出版社."""
+    steps = []
+    for i, (label, sub, col) in enumerate([
+            ("创造科学会下属团体", "提交请愿", CLAIM),
+            ("教育科学技术部", "未经审查，直接转交", ACCENT),
+            ("出版社", "同意删除", PAPER)]):
+        y = 330 + i * 230
+        steps.append(f'<rect x="110" y="{y}" width="860" height="150" rx="16" '
+                     f'fill="{col}" opacity="{0.9 if col != PAPER else 0.18}"/>')
+        steps.append(_cn(540, y + 62, label, 46, INK if col != PAPER else PAPER))
+        steps.append(_cn(540, y + 118, sub, 34, INK if col != PAPER else PAPER,
+                         opacity=0.75))
+        if i < 2:
+            steps.append(f'<path d="M 540 {y + 158} L 540 {y + 214} M 512 {y + 186} '
+                         f'L 540 {y + 214} L 568 {y + 186}" stroke="{PAPER}" '
+                         f'stroke-width="9" fill="none" stroke-linecap="round" opacity="0.6"/>')
+    return svg("".join(steps))
+
+
+def cn01_nature():
+    """《自然》 보도 — 국제적 파장."""
+    return svg(
+        f'<rect x="150" y="420" width="780" height="260" rx="18" fill="{PAPER}"/>'
+        + f'<text x="540" y="560" font-family="Helvetica, Arial, sans-serif" '
+          f'font-size="110" font-weight="700" fill="{INK}" text-anchor="middle">nature</text>'
+        + _cn(540, 640, "2012年6月", 40, INK, opacity=0.55)
+        + _cn(540, 790, "全球科学界哗然", 62, PAPER)
+        + _cn(540, 900, "doi:10.1038/486014a", 32, PAPER, opacity=0.5))
+
+
+def cn01_panel():
+    """翰林院 11人 专家 驳回."""
+    return svg(
+        _cn(540, 350, "同年 9月", 48, PAPER, opacity=0.6)
+        + _cn(540, 450, "韩国科学技术翰林院", 56, PAPER)
+        + f'<rect x="270" y="520" width="540" height="110" rx="55" fill="{PAPER}" opacity="0.14"/>'
+        + _cn(540, 592, "11位专家", 56, PAPER)
+        + f'<rect x="230" y="700" width="620" height="150" rx="20" fill="{EVID}" '
+          f'stroke="{ACCENT}" stroke-width="10"/>'
+        + _cn(540, 800, "驳回请愿", 88, ACCENT)
+        + _cn(540, 950, "始祖鸟留在了教科书里", 48, PAPER))
+
+
+def cn01_conclusion():
+    """科学不靠投票."""
+    return svg(
+        _cn(540, 480, "科学结论", 72, PAPER, opacity=0.7)
+        + _cn(540, 620, "不由请愿书决定", 72, PAPER, opacity=0.7)
+        + f'<rect x="240" y="700" width="600" height="8" rx="4" fill="{PAPER}" opacity="0.25"/>'
+        + _cn(540, 860, "由证据决定", 104, ACCENT))
+
+
+def _cross(cx, cy, r=42, w=16, fill=CLAIM):
+    """✗ — 글리프 대신 선으로 그립니다. 폰트에 없으면 두부(tofu)가 됩니다."""
+    return (f'<line x1="{cx - r}" y1="{cy - r}" x2="{cx + r}" y2="{cy + r}" '
+            f'stroke="{fill}" stroke-width="{w}" stroke-linecap="round"/>'
+            f'<line x1="{cx + r}" y1="{cy - r}" x2="{cx - r}" y2="{cy + r}" '
+            f'stroke="{fill}" stroke-width="{w}" stroke-linecap="round"/>')
+
+
+def _tick(cx, cy, r=42, w=16, fill=ACCENT):
+    """✓ — 같은 이유로 선으로 그립니다."""
+    return (f'<polyline points="{cx - r},{cy} {cx - r * 0.2},{cy + r * 0.7} '
+            f'{cx + r},{cy - r * 0.8}" fill="none" stroke="{fill}" '
+            f'stroke-width="{w}" stroke-linecap="round" stroke-linejoin="round"/>')
+
+
+def cn01_who():
+    """청원 주체 — 창조과학회 산하 단체. 개신교 전체로 번지지 않게 이름을 못 박습니다."""
+    return svg(
+        _cn(540, 330, "请愿方", 44, PAPER, opacity=0.6)
+        + f'<rect x="150" y="380" width="780" height="130" rx="18" fill="{CLAIM}"/>'
+        + _cn(540, 465, "韩国创造科学会", 60, PAPER)
+        + f'<line x1="540" y1="530" x2="540" y2="600" stroke="{PAPER}" '
+          f'stroke-width="10" opacity="0.55"/>'
+        + f'<polygon points="540,630 518,596 562,596" fill="{PAPER}" opacity="0.55"/>'
+        + f'<rect x="150" y="660" width="780" height="200" rx="18" '
+          f'fill="{PAPER}" opacity="0.13"/>'
+        + _cn(540, 730, "下属团体", 44, PAPER, opacity=0.7)
+        + _cn(540, 805, "教科书进化论改正推进委员会", 46, PAPER)
+        + _cn(540, 960, "不代表韩国基督教整体", 42, ACCENT))
+
+
+def cn01_demands():
+    """삭제 요구 2건."""
+    rows = ""
+    for i, (label, y) in enumerate((("始祖鸟", 400), ("马的进化", 560))):
+        rows += (f'<rect x="170" y="{y}" width="740" height="120" rx="14" fill="{PAPER}"/>'
+                 + _cn(540, y + 82, label, 68, INK)
+                 + f'<line x1="215" y1="{y + 92}" x2="865" y2="{y + 30}" '
+                   f'stroke="{CLAIM}" stroke-width="14" stroke-linecap="round"/>')
+    return svg(
+        _cn(540, 330, "要求删除的内容", 46, PAPER, opacity=0.65)
+        + rows
+        + _cn(540, 800, "共 2 项", 56, ACCENT)
+        + _cn(540, 900, "请愿书直接送到了教育部", 42, PAPER, opacity=0.8))
+
+
+def cn01_notconsulted():
+    """생물학자들이 사전에 자문받지 못했다는 Nature 보도 내용."""
+    return svg(
+        _cn(540, 350, "韩国的生物学家", 56, PAPER)
+        + f'<rect x="150" y="410" width="780" height="170" rx="18" '
+          f'fill="{PAPER}" opacity="0.13" stroke="{CLAIM}" stroke-width="8"/>'
+        + _cn(540, 515, "事先完全没有被咨询", 60, PAPER)
+        + _cross(540, 700, r=54, w=20)
+        + _cn(540, 870, "教科书要改，却没问研究者", 44, PAPER, opacity=0.8))
+
+
+def cn01_verdict():
+    """막은 것은 여론이 아니라 전문가 심의 — 이 편의 요점."""
+    return svg(
+        _cn(540, 330, "挡住请愿的是什么？", 48, PAPER, opacity=0.65)
+        + f'<rect x="140" y="400" width="800" height="150" rx="18" '
+          f'fill="{PAPER}" opacity="0.08"/>'
+        + _cross(250, 475, r=38, w=14)
+        + _cn(600, 495, "舆论", 60, PAPER, opacity=0.62)
+        + f'<rect x="140" y="600" width="800" height="150" rx="18" '
+          f'fill="{ACCENT}" opacity="0.18" stroke="{ACCENT}" stroke-width="6"/>'
+        + _tick(250, 675, r=38, w=14)
+        + _cn(600, 695, "专家审议", 60, ACCENT)
+        + _cn(540, 890, "不是吵赢的，是审出来的", 44, PAPER))
+
+
 DIAGRAMS = {
+    "cn01-textbook": cn01_textbook,
+    "cn01-who": cn01_who,
+    "cn01-demands": cn01_demands,
+    "cn01-notconsulted": cn01_notconsulted,
+    "cn01-verdict": cn01_verdict,
+    "cn01-pipeline": cn01_pipeline,
+    "cn01-nature": cn01_nature,
+    "cn01-panel": cn01_panel,
+    "cn01-conclusion": cn01_conclusion,
+    "ep001-archaeopteryx": ep001_archaeopteryx,
+    "ep001-pipeline": ep001_pipeline,
+    "ep001-panel": ep001_panel,
     "ep001-theory-def": ep001_theory_def,
     "ep001-ladder": ep001_ladder,
+    "ep001-claim": ep001_claim,
     "ep001-fallacy": ep001_fallacy,
     "ep002-isolated": ep002_isolated,
     "ep002-energy": ep002_energy,

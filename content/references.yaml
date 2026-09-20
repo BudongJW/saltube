@@ -1484,3 +1484,48 @@ references:
     type: journal-article
     status: ok
     checked: '2026-09-19'
+  abstract: this study finds that the online "fake news" game, bad news, can confer psychological resistance
+    against common online misinformation strategies across different cultures. the intervention draws
+    on ...
+  abstract_source: semanticscholar
+- id: S-KOREA-2012
+  type: article
+  doi: 10.1038/486014a
+  topic: history
+  used_for:
+  - C001
+  - C014
+  note: 2012년 한국 교과서 시조새·말 진화 삭제 시도 보도. 한국창조과학회 산하 교과서진화론개정추진위원회 청원을 교과부가 출판사에 전달, 출판사들이 삭제 동의. 채널의 국내
+    소재 중 가장 강력한 실화
+  verified:
+    authors: Park
+    author_count: 1
+    title: South Korea surrenders to creationist demands
+    container: Nature
+    year: 2012
+    volume: '486'
+    page: 14-14
+    type: journal-article
+    status: ok
+    checked: '2026-09-20'
+  abstract_available: false
+- id: S-KOREA-2012-OUT
+  type: article
+  doi: 10.1038/nature.2012.11377
+  topic: history
+  used_for:
+  - C001
+  - C014
+  note: 위 사건의 결말. 2012년 9월 한국과학기술한림원 주도 11인 패널이 청원 기각, 시조새 존치 결정. 말 진화 예시는 단순화 인정해 고래 진화로 대체 권고
+  verified:
+    authors: Park
+    author_count: 1
+    title: Science wins over creationism in South Korea
+    container: Nature
+    year: 2012
+    volume: null
+    page: null
+    type: journal-article
+    status: ok
+    checked: '2026-09-20'
+  abstract_available: false

@@ -33,9 +33,14 @@ BUILD = ROOT / "build"
 
 # ── 고정 설정 — 회차마다 바꾸지 말 것 ──
 VOICE = "ko-KR-InJoonNeural"
-RATE = "+15%"      # 기본 속도는 246음절/분으로 느립니다. +15% = 약 282음절/분
+# 대본 front matter 의 lang 으로 자동 선택합니다. 언어별로 보이스를 고정하세요.
+VOICE_BY_LANG = {
+    "ko-KR": "ko-KR-InJoonNeural",
+    "zh-CN": "zh-CN-YunyangNeural",   # News / Professional·Reliable — 채널 톤에 맞음
+}
+RATE = "+30%"     # 기본 246음절/분은 너무 느림. +30% 로 약 320음절/분
 VOLUME = "+0%"
-GAP = 0.08         # 큐 사이 무음(초). TTS 가 문장 끝에서 이미 쉬므로 짧게
+GAP = 0.05         # 큐 사이 무음(초). 텀이 길면 늘어집니다
 
 
 def cue_lines(ep: str) -> tuple[list[str], dict]:
@@ -85,6 +90,9 @@ def run(ep: str, voice: str, rate: str, quiet: bool = False) -> int:
     EP001 에서 실측 4.7초(9%) 차이가 났습니다.
     """
     lines, fm = cue_lines(ep)
+    # 대본이 언어를 지정하면 그 언어의 고정 보이스를 씁니다.
+    if (lang := fm.get("lang")) and voice == VOICE and lang in VOICE_BY_LANG:
+        voice = VOICE_BY_LANG[lang]
     out = BUILD / fm["id"]
     out.mkdir(parents=True, exist_ok=True)
     dst = out / f"{fm['id']}.mp3"
@@ -139,7 +147,8 @@ def run(ep: str, voice: str, rate: str, quiet: bool = False) -> int:
 
     text = " ".join(lines)
     dur = duration(dst)
-    syl = len(re.findall(r"[가-힣]", text)) + 1.5 * len(re.findall(r"[0-9]", text))
+    syl = (len(re.findall(r"[가-힣]", text)) + len(re.findall(r"[\u4e00-\u9fff]", text))
+           + 1.5 * len(re.findall(r"[0-9]", text)))
     rate_spm = syl / dur * 60 if dur else 0
     if not quiet:
         over = "  ⚠ 60초 초과" if dur > 60 else ""

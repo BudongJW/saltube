@@ -142,7 +142,17 @@ def build_one(ep_id: str, quiet: bool = False) -> int:
     S = []
     for c in cues:
         S += [str(c["n"]), f"{srt_time(c['start'])} --> {srt_time(c['end'])}", c["text"], ""]
-    (out / f"{fm['id']}.srt").write_text("\n".join(S), encoding="utf-8")
+    # tts.py 가 실측 타이밍으로 다시 쓴 SRT 를 음절 추정값으로 덮어쓰지 않도록.
+    # 덮어쓰면 자막과 음성이 몇 초씩 어긋나고, 그 사실이 영상을 볼 때까지 안 보입니다.
+    srt_path = out / f"{fm['id']}.srt"
+    voiced = out / f"{fm['id']}.mp3"
+    if (srt_path.exists() and voiced.exists()
+            and srt_path.stat().st_mtime > voiced.stat().st_mtime - 1):
+        print(f"  ! {srt_path.name} 은 tts.py 가 실측으로 쓴 것 같아 건드리지 않았습니다.\n"
+              f"    대본을 고쳤다면 tools/tts.py {fm['id']} 를 다시 돌리세요.",
+              file=sys.stderr)
+    else:
+        srt_path.write_text("\n".join(S), encoding="utf-8")
 
     # ── shotlist.md ──
     H = [f"# {fm['id']} 샷 리스트", "", f"**{fm['title']}**", "",
@@ -239,6 +249,9 @@ def build_one(ep_id: str, quiet: bool = False) -> int:
                 "cue": c["n"],
                 "at": round(c["start"], 2),
                 "until": round(c["end"], 2),
+                # 이 컷이 어느 자막에 붙었는지 적어 둡니다. 대본을 고쳐 큐가
+                # 다시 쪼개지면 cue 번호만으로는 어긋난 걸 알 수 없습니다.
+                "line": c["text"],
                 "screen": " / ".join(c["screen"]),
                 "file": "",
                 "fit": "cover",

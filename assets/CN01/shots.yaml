@@ -1,0 +1,116 @@
+# 자료 화면 배정표 — 이 파일은 자동으로 덮어쓰지 않습니다.
+#
+# file 에 이미지(png/jpg) 또는 영상(mp4) 경로를 넣으면
+# render.py 가 해당 구간 배경으로 깝니다. 경로는 리포 루트 기준.
+# fit: cover(가득 채우고 잘라냄) | contain(전체를 보이게, 여백은 배경색)
+#
+# 비워두면 그 구간은 단색 배경입니다. 전부 채울 필요 없습니다.
+# 출처 표기 의무를 잊지 마세요 — docs/09-risk-and-compliance.md §1
+
+episode: CN01
+shots:
+- cue: 1
+  at: 0.0
+  until: 2.86
+  line: 2012年，韩国高中生物教科书里，
+  screen: 시조새 삭제 요구 — 교과서에 줄
+  file: assets/shared/cn01-textbook.png
+  fit: cover
+- cue: 2
+  at: 2.91
+  until: 4.78
+  line: 始祖鸟差点被删掉 。
+  screen: 시조새 삭제 요구 — 교과서에 줄
+  file: assets/shared/cn01-textbook.png
+  fit: cover
+- cue: 3
+  at: 4.83
+  until: 8.04
+  line: 请愿来自韩国创造科学会下属的一个团体。
+  screen: '청원 주체: 창조과학회 산하 단체 (개신교 전체 아님)'
+  file: assets/shared/cn01-who.png
+  fit: cover
+- cue: 4
+  at: 8.09
+  until: 11.31
+  line: 他们要求删掉始祖鸟，也要求删掉马的进化。
+  screen: 삭제 요구 2건 — 시조새 / 말의 진화
+  file: assets/shared/cn01-demands.png
+  fit: cover
+- cue: 6
+  at: 13.28
+  until: 17.48
+  line: 教育科学技术部没有做任何审查，直接把请愿转给了出版社。
+  screen: 청원 → 교육부(심사 없음) → 출판사 3단 도식
+  file: assets/shared/cn01-pipeline.png
+  fit: cover
+- cue: 7
+  at: 17.53
+  until: 19.4
+  line: 出版社同意了。
+  screen: 청원 → 교육부(심사 없음) → 출판사 3단 도식
+  file: assets/shared/cn01-pipeline.png
+  fit: cover
+- cue: 8
+  at: 19.45
+  until: 21.35
+  line: 《自然》杂志报道了这件事。
+  screen: Nature 보도
+  file: assets/shared/cn01-nature.png
+  fit: cover
+- cue: 9
+  at: 21.4
+  until: 24.71
+  line: 韩国的生物学家说，他们事先完全没有被咨询过。
+  screen: 생물학자들 사전 자문 없음
+  file: assets/shared/cn01-notconsulted.png
+  fit: cover
+- cue: 10
+  at: 24.76
+  until: 27.31
+  line: 同年9月，韩国科学技术翰林院
+  screen: 한림원 11인 패널 — 청원 기각
+  file: assets/shared/cn01-panel.png
+  fit: cover
+- cue: 11
+  at: 27.36
+  until: 30.21
+  line: 组织11位专家重新审议，驳回了请愿 。
+  screen: 한림원 11인 패널 — 청원 기각
+  file: assets/shared/cn01-panel.png
+  fit: cover
+- cue: 12
+  at: 30.26
+  until: 32.16
+  line: 始祖鸟留在了教科书里。
+  screen: 한림원 11인 패널 — 청원 기각
+  file: assets/shared/cn01-panel.png
+  fit: cover
+- cue: 13
+  at: 32.21
+  until: 34.68
+  line: 挡住它的不是舆论，是专家审议。
+  screen: 막은 것은 여론이 아니라 전문가 심의
+  file: assets/shared/cn01-verdict.png
+  fit: cover
+- cue: 14
+  at: 34.73
+  until: 36.79
+  line: 科学结论不由请愿书决定，
+  screen: 科学不靠投票 — 증거가 결정한다
+  file: assets/shared/cn01-conclusion.png
+  fit: cover
+- cue: 15
+  at: 36.84
+  until: 38.84
+  line: 也不由多数人的投票决定。
+  screen: 科学不靠投票 — 증거가 결정한다
+  file: assets/shared/cn01-conclusion.png
+  fit: cover
+- cue: 16
+  at: 38.89
+  until: 40.76
+  line: 它由证据决定。
+  screen: 科学不靠投票 — 증거가 결정한다
+  file: assets/shared/cn01-conclusion.png
+  fit: cover

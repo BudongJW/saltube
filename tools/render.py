@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """render — 제작 패키지로 자막 영상 초안을 만듭니다.
 
-    python3 tools/render.py EP001              무음 자막 초안
-    python3 tools/render.py EP001 --audio n.wav   녹음 얹기
+    python3 tools/render.py EP001              tts.py 음성이 있으면 자동으로 얹음
+    python3 tools/render.py EP001 --audio n.wav   다른 녹음을 대신 얹기
     python3 tools/render.py --all
 
 produce.py 가 만든 SRT 와 샷리스트를 받아 1080x1920 영상을 조립합니다.
@@ -14,6 +14,7 @@ produce.py 가 만든 SRT 와 샷리스트를 받아 1080x1920 영상을 조립�
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import shutil
 import subprocess
@@ -46,11 +47,49 @@ FADE_IN = 0.18        # 자막 페이드인 시간(초)
 LOUDNESS_I, LOUDNESS_TP, LOUDNESS_LRA = -14, -1, 11
 
 
-def load_shots(ep: str) -> list[dict]:
-    """assets/<EP>/shots.yaml 에서 file 이 채워진 항목만."""
+def loudnorm_filter(audio: Path, quiet: bool = False) -> str:
+    """loudnorm 을 2패스로 씁니다 — 1패스로 재고, 그 측정값을 넣어 보정합니다.
+
+    1패스(동적 모드)는 실시간으로 눌러가며 맞추는 방식이라 목표에서 몇 dB 씩
+    빗나갑니다. CN01 은 -14 를 지정했는데 실제 결과가 -17.3 LUFS 였습니다.
+    3dB 낮으면 다른 채널 영상 사이에서 확연히 작게 들립니다 —
+    플랫폼은 초과분만 낮추고 **미달분은 올려주지 않습니다**.
+
+    측정에 실패하면 1패스 필터로 조용히 되돌아갑니다 (없는 것보단 낫습니다).
+    """
+    base = f"loudnorm=I={LOUDNESS_I}:TP={LOUDNESS_TP}:LRA={LOUDNESS_LRA}"
+    try:
+        r = subprocess.run(
+            ["ffmpeg", "-nostdin", "-i", str(audio),
+             "-af", f"{base}:print_format=json", "-f", "null", "-"],
+            capture_output=True, text=True, timeout=300)
+        blob = r.stderr[r.stderr.rindex("{"):r.stderr.rindex("}") + 1]
+        m = json.loads(blob)
+        measured = ":".join(
+            f"measured_{k}={m[f'input_{k}']}" for k in ("i", "tp", "lra", "thresh"))
+        if not quiet:
+            print(f"  음량: {m['input_i']} LUFS → {LOUDNESS_I} LUFS (2패스)")
+        # linear=true 로 전체를 같은 양만큼 올립니다. 목표에 못 미치면
+        # ffmpeg 가 알아서 동적 모드로 내려갑니다.
+        return f"{base}:{measured}:offset={m['target_offset']}:linear=true"
+    except Exception as e:
+        print(f"  ! 음량 측정 실패({type(e).__name__}) — 1패스로 진행합니다",
+              file=sys.stderr)
+        return base
+
+
+def load_shots(ep: str, cues: list[dict]) -> list[dict]:
+    """assets/<EP>/shots.yaml 에서 file 이 채워진 항목만.
+
+    **타이밍은 shots.yaml 이 아니라 현재 SRT 에서 큐 번호로 찾습니다.**
+    shots.yaml 의 at/until 은 produce.py 가 음절 추정으로 쓴 값이라,
+    tts.py 가 SRT 를 실측으로 다시 쓰고 나면 최대 몇 초씩 어긋납니다.
+    실제로 EP001 에서 2.6초 어긋나 자료 화면이 엉뚱한 자막에 붙었습니다.
+    """
     f = ROOT / "assets" / ep / "shots.yaml"
     if not f.exists():
         return []
+    by_cue = {c["n"]: c for c in cues}
     doc = yaml.safe_load(f.read_text(encoding="utf-8")) or {}
     out = []
     for s in doc.get("shots") or []:
@@ -60,15 +99,41 @@ def load_shots(ep: str) -> list[dict]:
         if not path.exists():
             print(f"  ! 자료 화면 없음: {s['file']} (큐 {s.get('cue')})", file=sys.stderr)
             continue
-        out.append({**s, "path": path})
+        cue = by_cue.get(s.get("cue"))
+        if not cue:
+            print(f"  ! 큐 {s.get('cue')} 가 현재 대본에 없습니다 — "
+                  f"대본이 바뀌었다면 shots.yaml 을 다시 만드세요", file=sys.stderr)
+            continue
+        # 큐 번호는 살아 있는데 그 자리의 자막이 바뀐 경우.
+        # 번호만 보면 멀쩡해 보여서 엉뚱한 자막 위에 그림이 깔립니다.
+        # CN01 에서 Nature 도식이 교육부 대사 위에 깔린 걸 이 검사로 잡았습니다.
+        pinned = (s.get("line") or "").strip()
+        if pinned and pinned != cue["text"].strip():
+            moved = next((n for n, c in by_cue.items()
+                          if c["text"].strip() == pinned), None)
+            where = f"지금은 큐 {moved} 에 있습니다" if moved else "지금 대본에 없습니다"
+            print(f"  ! 큐 {s['cue']} 의 자막이 바뀌었습니다 — 이 컷은 "
+                  f"\"{pinned[:24]}\" 에 붙어 있었고 {where}.\n"
+                  f"    (화면: {s.get('screen', '')[:40]}) "
+                  f"shots.yaml 의 cue 를 고치세요", file=sys.stderr)
+        out.append({**s, "path": path, "at": cue["start"], "until": cue["end"]})
     return out
 
 
-def font_path() -> str | None:
-    for p in (Path.home() / ".fonts/Pretendard-Bold.otf",
-              Path("/usr/share/fonts/opentype/pretendard/Pretendard-Bold.otf")):
-        if p.exists():
-            return str(p)
+# 언어별 폰트. Pretendard 는 한자를 전혀 커버하지 못합니다.
+FONT_BY_LANG = {
+    "ko-KR": ["Pretendard-Bold.otf"],
+    "zh-CN": ["NotoSansSC-Bold.otf"],
+}
+
+
+def font_path(lang: str = "ko-KR") -> str | None:
+    names = FONT_BY_LANG.get(lang, FONT_BY_LANG["ko-KR"])
+    for n in names:
+        for base in (Path.home() / ".fonts", Path("/usr/share/fonts/opentype")):
+            p = base / n
+            if p.exists():
+                return str(p)
     return None
 
 
@@ -179,13 +244,55 @@ def text_width_em(s: str, font: str | None = None) -> float:
         return total
     w = 0.0
     for ch in s:
-        w += 1.0 if "\uac00" <= ch <= "\ud7a3" else (0.3 if ch == " " else
-                                                      0.55 if ch.isascii() else 1.0)
+        w += 1.0 if ("\uac00" <= ch <= "\ud7a3" or "\u4e00" <= ch <= "\u9fff") else (
+            0.3 if ch == " " else 0.55 if ch.isascii() else 1.0)
     return w
 
 
+# 줄 끝에 올 수 없는 문장부호 — 중국어/일본어 금칙문자(禁則文字).
+NO_LINE_START = "。，、；：？！）】》」』%…·"
+# 금칙문자를 여백 쪽으로 내밀 수 있는 한도. 좌우 여백(64px)보다 작게 잡아
+# 화면 밖으로 잘리는 일이 없게 합니다.
+HANG_EM = 0.6
+
+
+def _chunk_word(word: str, mask: list[bool], budget: float,
+                room: float) -> list[tuple[str, list[bool]]]:
+    """한 줄보다 긴 덩어리를 글자 단위로 쪼갭니다.
+
+    중국어에는 띄어쓰기가 없어서 문장 하나가 통째로 한 '어절'이 됩니다.
+    예전에는 이걸 그대로 한 줄에 넣어서 화면 밖으로 흘러넘쳤습니다.
+    room 은 현재 줄에 남은 폭이고, 두 번째 조각부터는 budget 을 다 씁니다.
+    """
+    out: list[tuple[str, list[bool]]] = []
+    cur, cur_mask, avail = "", [], room
+    for i, ch in enumerate(word):
+        trial = cur + ch
+        if cur and text_width_em(trial) > avail:
+            if ch in NO_LINE_START:
+                # 금칙문자는 다음 줄 첫 글자로 보내지 않습니다.
+                # 여백 안쪽(HANG)으로 조금 내밀 수 있으면 그대로 매달고,
+                # 그것도 넘치면 앞 글자를 같이 내려서 둘이 함께 줄을 바꿉니다.
+                if text_width_em(trial) <= avail + HANG_EM:
+                    cur, cur_mask = trial, cur_mask + [mask[i]]
+                    continue
+                out.append((cur[:-1], cur_mask[:-1]))
+                cur, cur_mask, avail = cur[-1] + ch, cur_mask[-1:] + [mask[i]], budget
+                continue
+            out.append((cur, cur_mask))
+            cur, cur_mask, avail = ch, [mask[i]], budget
+        else:
+            cur, cur_mask = trial, cur_mask + [mask[i]]
+    if cur:
+        out.append((cur, cur_mask))
+    return out
+
+
 def wrap_masked(text: str, mask: list[bool], size: int) -> list[tuple[str, list[bool]]]:
-    """어절 단위로 줄을 나누되 강조 마스크도 같이 잘라 옮깁니다."""
+    """어절 단위로 줄을 나누되 강조 마스크도 같이 잘라 옮깁니다.
+
+    한 어절이 한 줄에 안 들어가면 그때만 글자 단위로 쪼갭니다 (_chunk_word).
+    """
     budget = (W - 2 * SIDE_MARGIN) / size
     lines: list[tuple[str, list[bool]]] = []
     cur, cur_mask, pos = "", [], 0
@@ -196,11 +303,26 @@ def wrap_masked(text: str, mask: list[bool], size: int) -> list[tuple[str, list[
         if not word:
             continue
         trial = f"{cur} {word}".strip()
-        if text_width_em(trial) <= budget or not cur:
+        if text_width_em(trial) <= budget:
             if cur:
                 cur, cur_mask = cur + " " + word, cur_mask + [False] + wmask
             else:
                 cur, cur_mask = word, wmask
+        elif text_width_em(word) > budget:
+            # 어절 자체가 한 줄보다 김 — 현재 줄 남은 자리부터 이어 쪼갭니다.
+            sep = 1 if cur else 0
+            room = budget - text_width_em(cur) - (text_width_em(" ") if sep else 0)
+            pieces = _chunk_word(word, wmask, budget, max(room, 0.0))
+            head, head_mask = pieces[0]
+            if cur and room > 0 and head:
+                lines.append((cur + " " + head, cur_mask + [False] + head_mask))
+            else:
+                if cur:
+                    lines.append((cur, cur_mask))
+                lines.append((head, head_mask))
+            for piece, pmask in pieces[1:-1]:
+                lines.append((piece, pmask))
+            cur, cur_mask = pieces[-1] if len(pieces) > 1 else ("", [])
         else:
             lines.append((cur, cur_mask))
             cur, cur_mask = word, wmask
@@ -210,22 +332,28 @@ def wrap_masked(text: str, mask: list[bool], size: int) -> list[tuple[str, list[
 
 
 def wrap(text: str, size: int) -> list[str]:
-    """drawtext 는 자동 줄바꿈을 하지 않으므로 직접 끊습니다.
+    """drawtext 는 자동 줄바꿈을 하지 않으므로 직접 끊습니다."""
+    return [ln for ln, _ in wrap_masked(text, [False] * len(text), size)]
 
-    한국어는 어절 단위로 끊어야 읽힙니다. 한 어절이 한 줄을 넘으면 그때만 글자로 쪼갭니다.
+
+def coalesce_shots(shots: list[dict]) -> list[dict]:
+    """같은 파일이 연달아 붙은 큐를 한 컷으로 합칩니다.
+
+    한 도식을 여러 줄에 걸쳐 보여줄 때 큐마다 따로 overlay 하면 경계에서
+    켄번스 확대가 처음으로 되감겨 화면이 튑니다. 이어 붙여야 한 번에
+    천천히 확대됩니다.
     """
-    budget = (W - 2 * SIDE_MARGIN) / size
-    lines, cur = [], ""
-    for word in text.split():
-        trial = f"{cur} {word}".strip()
-        if text_width_em(trial) <= budget or not cur:
-            cur = trial
+    out: list[dict] = []
+    for s in sorted(shots, key=lambda x: float(x["at"])):
+        prev = out[-1] if out else None
+        same = (prev and prev["path"] == s["path"]
+                and prev.get("fit", "cover") == s.get("fit", "cover")
+                and abs(float(prev["until"]) - float(s["at"])) < 0.25)
+        if same:
+            prev["until"] = s["until"]
         else:
-            lines.append(cur)
-            cur = word
-    if cur:
-        lines.append(cur)
-    return lines or [""]
+            out.append(dict(s))
+    return out
 
 
 def build_overlays(shots: list[dict]) -> tuple[list[str], str, str]:
@@ -235,6 +363,7 @@ def build_overlays(shots: list[dict]) -> tuple[list[str], str, str]:
     각 자료는 1080x1920 에 맞춰 cover(잘라내기) 또는 contain(레터박스)으로 정규화한 뒤,
     해당 큐 구간에만 overlay 합니다.
     """
+    shots = coalesce_shots(shots)
     inputs, chain, last = [], [], "[bg]"
     for i, s in enumerate(shots):
         is_video = s["path"].suffix.lower() in VIDEO_EXT
@@ -347,12 +476,24 @@ def render(ep: str, audio: Path | None, quiet: bool = False) -> int:
     if not shutil.which("ffmpeg"):
         print("ffmpeg 가 필요합니다: apt-get install ffmpeg", file=sys.stderr)
         return 1
-    font = font_path()
+    matches0 = [p for p in SCRIPTS.glob(f"{ep}*.md") if not p.name.startswith("_")]
+    lang = (parse_script(matches0[0])[0].get("lang") if matches0 else None) or "ko-KR"
+    font = font_path(lang)
     if not font:
-        print("Pretendard Bold 를 ~/.fonts/ 에 두세요 — docs/02-brand.md §3", file=sys.stderr)
+        need = ", ".join(FONT_BY_LANG.get(lang, []))
+        print(f"{lang} 용 폰트({need})를 ~/.fonts/ 에 두세요 — docs/02-brand.md §3",
+              file=sys.stderr)
         return 1
 
     out = BUILD / ep
+    # tts.py 가 만들어 둔 음성을 자동으로 얹습니다.
+    # --audio 를 빼먹어서 무음 영상을 완성본으로 착각한 적이 있습니다.
+    if audio is None:
+        tts_mp3 = out / f"{ep}.mp3"
+        if tts_mp3.exists():
+            audio = tts_mp3
+            if not quiet:
+                print(f"  음성: {tts_mp3.relative_to(ROOT)} (자동)")
     srt = out / f"{ep}.srt"
     if not srt.exists():
         print(f"먼저 `produce.py {ep}` 를 실행하세요", file=sys.stderr)
@@ -384,7 +525,7 @@ def render(ep: str, audio: Path | None, quiet: bool = False) -> int:
     dur = cues[-1]["end"] + 1.0 if cues else 5.0
     dst = out / f"{ep}-draft.mp4"
     store = TextStore(out)
-    shots = load_shots(ep)
+    shots = load_shots(ep, cues)
     shot_inputs, overlay_chain, last = build_overlays(shots)
 
     # 어둠막은 **자료 화면이 깔린 구간에만** 적용합니다.
@@ -414,13 +555,19 @@ def render(ep: str, audio: Path | None, quiet: bool = False) -> int:
     vf_file = out / ".filter.txt"
     vf_file.write_text(vf, encoding="utf-8")
     # 음성 정규화 + 스테레오. 모노로 내보내면 일부 플레이어에서 한쪽으로 치우칩니다.
-    af = (f"loudnorm=I={LOUDNESS_I}:TP={LOUDNESS_TP}:LRA={LOUDNESS_LRA},"
+    af = (f"{loudnorm_filter(audio, quiet)},"
           f"aformat=channel_layouts=stereo,aresample=48000")
     cmd += ["-filter_complex_script", str(vf_file),
             "-map", "[out]", "-map", "1:a", "-af", af,
             "-c:a", "aac", "-b:a", "384k", "-ar", "48000", "-ac", "2",
+            # CRF + 상한. 예전엔 -b:v 8M 고정이었는데, 이 채널 화면은 대부분
+            # 단색 도식이라 그 비트레이트가 통째로 낭비됐습니다 (41초에 37MB).
+            # CRF 18 은 이런 화면에선 사실상 무손실이고 용량은 몇 배 작습니다.
+            # maxrate 는 유튜브 권장(1080p ~8Mbps) 안쪽으로 피크를 묶어 둡니다.
             "-c:v", "libx264", "-profile:v", "high", "-pix_fmt", "yuv420p",
-            "-b:v", "8M", "-g", "60", "-t", f"{dur:.2f}",
+            "-crf", "18", "-preset", "medium",
+            "-maxrate", "8M", "-bufsize", "16M",
+            "-g", "60", "-t", f"{dur:.2f}",
             "-movflags", "+faststart", str(dst)]
 
     r = subprocess.run(cmd, capture_output=True, text=True)

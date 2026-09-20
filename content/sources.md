@@ -7,7 +7,7 @@
 > python3 tools/refcheck.py render   # 이 파일 재생성
 > ```
 
-생성 시각: 2026-09-19 · 총 63건 · **Crossref 검증 완료 46건** · 사람 확인 필요 16건
+생성 시각: 2026-09-20 · 총 65건 · **Crossref 검증 완료 48건** · 사람 확인 필요 16건
 
 ## 검증 수준
 
@@ -250,6 +250,8 @@
 
 | | ID | 서지사항 | 식별자 | 사용처 |
 |---|---|---|---|---|
+| ✅ | `S-KOREA-2012` | Park (2012). "South Korea surrenders to creationist demands". *Nature* 486, 14-14. | doi:10.1038/486014a | C001, C014 |
+| ✅ | `S-KOREA-2012-OUT` | Park (2012). "Science wins over creationism in South Korea". *Nature*. | doi:10.1038/nature.2012.11377 | C001, C014 |
 | ☐ | `S-LADYHOPE` | Moore, J. (1994). The Darwin Legend. Baker Books. | ISBN 978-0801062629 | C016 |
 | ✅ | `S-LEONARD-2005` | Leonard (2005). "Mistaking Eugenics for Social Darwinism: Why Eugenics Is Missing from the History of American Economics". *History of Political Economy* 37, 200-233. | doi:10.1215/00182702-37-suppl_1-200 | C017 |
 | ☐ | `S-PASTEUR-HIST` | Farley, J., & Geison, G. L. (1974). Science, politics and spontaneous generation in nineteenth-century France: the Pasteur-Pouchet debate. Bulletin of the History of Medicine, 48(2), 161-198. | PMID 4618119 | C015 |
@@ -259,6 +261,8 @@
 
 - **`S-WEIKART-2013`** — 다윈주의와 나치 인종사상의 연결을 주장하는 쪽의 가장 진지한 학술 문헌. 편집 정책 §2 3단계('상대 주장의 가장 강한 버전을 반박한다')에 따라 반드시 이 논문을 읽고 그 논지를 정확히 대변한 뒤 반박할 것. 약한 버전을 때리면 역공당한다
 - **`S-LEONARD-2005`** — 우생학과 사회다윈주의는 별개라는 역사학적 논변. C017의 주 근거
+- **`S-KOREA-2012`** — 2012년 한국 교과서 시조새·말 진화 삭제 시도 보도. 한국창조과학회 산하 교과서진화론개정추진위원회 청원을 교과부가 출판사에 전달, 출판사들이 삭제 동의. 채널의 국내 소재 중 가장 강력한 실화
+- **`S-KOREA-2012-OUT`** — 위 사건의 결말. 2012년 9월 한국과학기술한림원 주도 11인 패널이 청원 기각, 시조새 존치 결정. 말 진화 예시는 단순화 인정해 고래 진화로 대체 권고
 
 </details>
 
@@ -270,7 +274,7 @@
 
 | 주장 | 내용 | 출처 |
 |---|---|---|
-| `C001` | 진화는 '이론'일 뿐이다 | `S-DEBUNK-2020`, `S-ECKER-2019`, `S-NAS-2008`, `S-PAYNTER-2019`, `S-ROOZENBEEK-2020`, `S-SWIRE-2021`, `S-VANDERLINDEN-2024` |
+| `C001` | 진화는 '이론'일 뿐이다 | `S-DEBUNK-2020`, `S-ECKER-2019`, `S-KOREA-2012`, `S-KOREA-2012-OUT`, `S-NAS-2008`, `S-PAYNTER-2019`, `S-ROOZENBEEK-2020`, `S-SWIRE-2021`, `S-VANDERLINDEN-2024` |
 | `C002` | 열역학 제2법칙이 진화를 반증한다 | `S-NASA-SOLAR` |
 | `C003` | 중간 화석(전이 화석)이 존재하지 않는다 | `S-POLAND-TRACKS-2010`, `S-THEWISSEN-2001`, `S-THEWISSEN-2009`, `S-TIKTAALIK-2006`, `S-TIKTAALIK-FIN-2006`, `S-TIKTAALIK-PELVIS-2014` |
 | `C004` | 방사성 연대측정은 가정에 의존하므로 믿을 수 없다 | `S-DALRYMPLE-2004`, `S-EPICA-2004`, `S-JOUZEL-2007`, `S-PATTERSON-1956`, `S-SUIGETSU-2012` |
@@ -283,7 +287,7 @@
 | `C011` | 돌연변이는 항상 해롭다 / 유익한 돌연변이는 없다 | `S-BERSAGLIERI-2004`, `S-CHEN-1997`, `S-LENSKI-2008`, `S-TISHKOFF-2006`, `S-YI-2010` |
 | `C012` | 소진화는 인정하지만 대진화(종의 경계를 넘는 변화)는 관찰된… | `S-BYRNE-1999`, `S-FEDER-1988`, `S-HERREL-2008`, `S-LAMICHHANEY-2018` |
 | `C013` | 캄브리아기 대폭발은 생물이 갑자기 창조되었음을 보여준다 | `S-ERWIN-2011`, `S-NARBONNE-2005` |
-| `C014` | 창조과학도 과학이므로 학교에서 함께 가르쳐야 한다 | `S-EDWARDS-1987`, `S-KITZMILLER-2005`, `S-MCLEAN-1982` |
+| `C014` | 창조과학도 과학이므로 학교에서 함께 가르쳐야 한다 | `S-EDWARDS-1987`, `S-KITZMILLER-2005`, `S-KOREA-2012`, `S-KOREA-2012-OUT`, `S-MCLEAN-1982` |
 | `C015` | 파스퇴르가 자연발생설을 반증했으므로 생명이 저절로 생길 수 … | `S-PASTEUR-HIST` |
 | `C016` | 다윈은 임종 직전에 진화론을 철회하고 회개했다 | `S-LADYHOPE` |
 | `C017` | 진화론이 나치즘과 우생학, 인종주의의 원인이다 | `S-LEONARD-2005`, `S-WEIKART-2013` |

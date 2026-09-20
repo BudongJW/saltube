@@ -26,12 +26,16 @@ FALLACIES = ROOT / "content" / "fallacies.yaml"
 SOURCES = ROOT / "content" / "sources.md"
 SCRIPTS = ROOT / "content" / "scripts"
 
-# 한국어 발화 속도 (음절/분).
-# 355 는 추정치였고, edge-tts(ko-KR-InJoonNeural, rate +15%)로 5편을 실제 합성해
-# 측정한 값은 264~282, 평균 275 였습니다. 추정이 29% 낙관적이었고 그 결과
-# 5편 전부 60초를 넘겼습니다. 아래 값은 실측입니다 — 엔진이나 rate 를 바꾸면
-# `tools/tts.py --all` 로 다시 재서 갱신하세요.
-SYLLABLES_PER_MIN = 275
+# 발화 속도 (음절/분) — 합성된 mp3 길이를 실제로 재서 얻은 값입니다.
+#
+#   355  최초 추정치. 29% 낙관적이어서 5편 전부 60초를 넘겼습니다.
+#   275  edge-tts rate +15% 로 실측.
+#   302  edge-tts rate +30% 로 실측 (EP001 301.7 / CN01 307.9).  ← 현재
+#
+# tts.py 의 RATE 를 바꾸면 이 값도 같이 바꿔야 합니다. 안 바꾸면 추정이
+# 조용히 어긋나서, 대본이 목표보다 길다고 착각하고 멀쩡한 문장을 잘라냅니다.
+# 재측정: mp3 길이 대비 SRT 대사의 음절 수.
+SYLLABLES_PER_MIN = 302
 DURATION_MIN, DURATION_MAX = 40, 62   # 경고 범위(초)
 DURATION_HARD_MAX = 70                # 초과 시 오류 — 채널 편집 기준(플랫폼 한도 아님)
 
@@ -47,6 +51,8 @@ VALID_STATUS = {"backlog", "drafted", "recorded", "published"}
 SOURCE_MARKER = re.compile(r"\[(S-[A-Z0-9\-]+)\]")
 FRONT_MATTER = re.compile(r"\A---\s*\n(.*?)\n---\s*\n(.*)\Z", re.S)
 HANGUL = re.compile(r"[가-힣]")
+# 중국어 편(front matter 의 lang: zh-CN)용. 한자 1자 = 1음절로 셉니다.
+HANZI = re.compile(r"[\u4e00-\u9fff]")
 DIGIT = re.compile(r"[0-9]")
 
 # docs/03-editorial-policy.md §4 — 우리가 자주 저지르는 부정확한 서술.
@@ -67,6 +73,15 @@ MOTIVE_LINT = [
     (re.compile(r"(속이|기만하)[고는려]"), "고의 추정"),
 ]
 # docs/03-editorial-policy.md §1 — 레드라인.
+# 사건을 다루면 결말 출처도 같이 실어야 합니다 — 편집 정책 §1-8.
+# 앞부분만 쓰면 실제로 일어나지 않은 일을 주장하게 됩니다.
+# 2012년 교과서 청원은 기각됐고 시조새는 남았습니다. 그 결말을 빼면 허위입니다.
+OUTCOME_REQUIRED = {
+    "S-KOREA-2012": ("S-KOREA-2012-OUT",
+                     "2012년 교과서 청원은 기각됐습니다 — 결말을 빼면 "
+                     "'교과서가 바뀌었다'는 허위 주장이 됩니다"),
+}
+
 REDLINE_LINT = [
     (re.compile(r"(무지|멍청|한심|어리석)[한하]"), "인신·집단 비하 표현 (레드라인 §1)"),
     (re.compile(r"거짓말쟁이"), "사람이 아니라 주장을 비판할 것 (레드라인 §1)"),
@@ -119,7 +134,8 @@ def narration_of(body: str) -> str:
 
 def estimate_seconds(narration: str) -> float:
     """한글 음절 수 기반 낭독 시간 추정. 숫자는 음절 1.5개로 환산."""
-    syl = len(HANGUL.findall(narration)) + 1.5 * len(DIGIT.findall(narration))
+    syl = (len(HANGUL.findall(narration)) + len(HANZI.findall(narration))
+           + 1.5 * len(DIGIT.findall(narration)))
     return round(syl / SYLLABLES_PER_MIN * 60, 1)
 
 
@@ -213,6 +229,12 @@ def cmd_validate(args) -> int:
         for pattern, msg in REDLINE_LINT:
             if pattern.search(narration):
                 err(f"레드라인 위반 가능성: {msg}")
+        # 6-1. 결말 생략 — 편집 정책 §1-8
+        srcs = set(fm.get("sources") or [])
+        for ev, (outcome, why) in OUTCOME_REQUIRED.items():
+            if ev in srcs and outcome not in srcs:
+                err(f"결말 출처 누락: {ev} 를 쓰면 {outcome} 도 함께 — {why}")
+
         for pattern, msg in MOTIVE_LINT:
             if pattern.search(narration):
                 (err if fm.get("named_target") else warn)(

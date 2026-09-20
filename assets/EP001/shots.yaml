@@ -11,31 +11,99 @@ episode: EP001
 shots:
 - cue: 1
   at: 0.0
-  until: 2.7
-  screen: '"충분히 입증된 설명" — `--evidence` 색, 전체 화면'
-  file: assets/shared/ep001-theory-def.png
+  until: 3.6
+  line: 2012년, 한국 고등학교 교과서에서
+  screen: 시조새 화석 — `--claim` 색 경고 테두리
+  file: assets/shared/ep001-archaeopteryx.png
+  fit: cover
+- cue: 2
+  at: 3.65
+  until: 6.22
+  line: 시조새가 지워질 뻔했습니다.
+  screen: 시조새 화석 — `--claim` 색 경고 테두리
+  file: assets/shared/ep001-archaeopteryx.png
+  fit: cover
+- cue: 3
+  at: 6.27
+  until: 9.34
+  line: 한국창조과학회 산하 단체가 낸 청원.
+  screen: 청원 → 교과부 → 출판사 3단 도식
+  file: assets/shared/ep001-pipeline.png
   fit: cover
 - cue: 4
-  at: 9.0
-  until: 10.9
-  screen: 주장 인용 — `--claim` 색. **이 편에서 단 한 번만 노출**
-  file: ''
+  at: 9.39
+  until: 13.11
+  line: 교육과학기술부는 그걸 출판사에 그대로 넘겼고,
+  screen: 청원 → 교과부 → 출판사 3단 도식
+  file: assets/shared/ep001-pipeline.png
   fit: cover
 - cue: 5
-  at: 10.9
-  until: 15.3
-  screen: '"다의어 오류" 크게'
-  file: assets/shared/ep001-fallacy.png
+  at: 13.16
+  until: 16.06
+  line: 출판사들은 삭제에 동의했습니다.
+  screen: 청원 → 교과부 → 출판사 3단 도식
+  file: assets/shared/ep001-pipeline.png
+  fit: cover
+- cue: 7
+  at: 19.52
+  until: 22.07
+  line: '"진화는 이론일 뿐이잖아요."'
+  screen: 주장 인용 — `--claim` 색
+  file: assets/shared/ep001-claim.png
   fit: cover
 - cue: 8
-  at: 20.7
-  until: 22.9
-  screen: '"가설 → 이론 → 사실" 사다리에 큰 X'
+  at: 22.12
+  until: 24.23
+  line: 다의어 오류입니다.
+  screen: '"다의어 오류" + 일상어/과학용어 대비'
+  file: assets/shared/ep001-fallacy.png
+  fit: cover
+- cue: 9
+  at: 24.28
+  until: 27.64
+  line: 일상에서 "그건 네 이론이지"의 이론은 추측.
+  screen: '"다의어 오류" + 일상어/과학용어 대비'
+  file: assets/shared/ep001-fallacy.png
+  fit: cover
+- cue: 10
+  at: 27.69
+  until: 31.15
+  line: 과학에서 이론은 충분히 입증된 설명입니다.
+  screen: 과학에서 이론 = 충분히 입증된 설명
+  file: assets/shared/ep001-theory-def.png
+  fit: cover
+- cue: 11
+  at: 31.2
+  until: 35.3
+  line: 가설이 자라 이론이 되고 이론이 자라 사실이 되는 사다리,
+  screen: '"가설 → 이론 → 사실" 사다리에 X'
+  file: assets/shared/ep001-ladder.png
+  fit: cover
+- cue: 12
+  at: 35.35
+  until: 37.34
+  line: 그런 건 없습니다.
+  screen: '"가설 → 이론 → 사실" 사다리에 X'
   file: assets/shared/ep001-ladder.png
   fit: cover
 - cue: 13
-  at: 36.8
-  until: 38.7
-  screen: 중력
-  file: ''
+  at: 37.39
+  until: 41.57
+  line: 사실은 관측된 것, 이론은 그걸 설명하는 틀이니까요.
+  screen: '"가설 → 이론 → 사실" 사다리에 X'
+  file: assets/shared/ep001-ladder.png
+  fit: cover
+- cue: 14
+  at: 41.62
+  until: 46.9
+  line: 2012년 9월, 한국과학기술한림원 11인 패널이 청원을 기각했습니다.
+  screen: 한국과학기술한림원 패널 결정
+  file: assets/shared/ep001-panel.png
+  fit: cover
+- cue: 15
+  at: 46.95
+  until: 49.76
+  line: 시조새는 교과서에 남았습니다.
+  screen: 한국과학기술한림원 패널 결정
+  file: assets/shared/ep001-panel.png
   fit: cover
