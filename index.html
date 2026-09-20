@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>1min_scientist uploader</title>
+<meta name="description" content="An open-source command-line tool that uploads its operator's own short science videos to their own TikTok drafts.">
+<link rel="stylesheet" href="legal/_style.css">
+<main>
+<h1>1min_scientist uploader</h1>
+<p class="sub">An open-source command-line tool &middot; GPL-3.0</p>
+
+<p>A personal tool that uploads short-form science videos, produced by its
+operator, to that operator's own TikTok drafts.</p>
+
+<p><strong>It does not publish posts.</strong> Videos are sent to the account
+holder's TikTok inbox using the Content Posting API with the
+<code>video.upload</code> scope. The account holder then reviews, completes and
+publishes each post inside the TikTok app.</p>
+
+<h2>How it works</h2>
+<table>
+<tr><th>Step</th><th>What happens</th></tr>
+<tr><td>1. Authenticate</td><td>The operator signs in through TikTok's own OAuth flow. The resulting token is stored only on the operator's computer.</td></tr>
+<tr><td>2. Check</td><td>The video is validated locally against TikTok's format requirements before anything is sent.</td></tr>
+<tr><td>3. Upload</td><td>The file is transferred to the operator's own TikTok inbox as a draft.</td></tr>
+<tr><td>4. Publish</td><td>The operator finishes and publishes the post themselves, in the TikTok app.</td></tr>
+</table>
+
+<h2>Scope of access</h2>
+<p>The tool requests one scope, <code>video.upload</code>. It cannot read the
+operator's videos, followers, analytics or messages, and it cannot publish
+anything on its own.</p>
+
+<h2>Privacy</h2>
+<p>There is no server, no database and no analytics. Nothing is collected from
+anyone other than the operator, and nothing is shared with any third party.
+See the <a href="legal/privacy.html">Privacy Policy</a> for detail.</p>
+
+<h2>Source</h2>
+<p><a href="https://github.com/BudongJW/saltube">github.com/BudongJW/saltube</a></p>
+
+<p>Not affiliated with, endorsed by, or sponsored by TikTok or ByteDance.</p>
+
+<footer>
+<a href="https://github.com/BudongJW/saltube">Source code</a> &middot;
+<a href="legal/terms.html">Terms of Service</a> &middot;
+<a href="legal/privacy.html">Privacy Policy</a>
+</footer>
+</main>
