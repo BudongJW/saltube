@@ -13,7 +13,7 @@ shots:
   at: 0.0
   until: 2.7
   screen: '"충분히 입증된 설명" — `--evidence` 색, 전체 화면'
-  file: ''
+  file: assets/shared/ep001-theory-def.png
   fit: cover
 - cue: 4
   at: 9.0
@@ -25,13 +25,13 @@ shots:
   at: 10.9
   until: 15.3
   screen: '"다의어 오류" 크게'
-  file: ''
+  file: assets/shared/ep001-fallacy.png
   fit: cover
 - cue: 8
   at: 20.7
   until: 22.9
   screen: '"가설 → 이론 → 사실" 사다리에 큰 X'
-  file: ''
+  file: assets/shared/ep001-ladder.png
   fit: cover
 - cue: 13
   at: 36.8

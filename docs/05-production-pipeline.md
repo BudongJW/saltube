@@ -103,6 +103,10 @@ python3 tools/render.py EP0XX --audio build/EP0XX/EP0XX.mp3   # TTS 얹기
 - 자막은 0.18초 **페이드인**. 툭 나타나면 싸구려로 보입니다
 - 글자 위치는 폰트 메트릭(advance width)으로 계산합니다. 추정값을 쓰면 강조 구간에서 간격이 벌어집니다
 
+> **렌더 시간**: 켄번스는 1080×1920 프레임을 매 장 재계산하므로 비쌉니다.
+> 자료 화면이 3컷 들어간 편은 **편당 수 분**이 걸리고 파일도 2MB → 10MB로 커집니다.
+> 급할 때는 `shots.yaml` 에 `kenburns: false` 로 끄세요.
+
 ## ⑨ 게이트 4 — 최종 검수
 ```bash
 python3 tools/claimctl.py meta EP0XX   # 체크리스트 출력

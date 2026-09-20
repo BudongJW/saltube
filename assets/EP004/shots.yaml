@@ -13,7 +13,7 @@ shots:
   at: 0.0
   until: 3.5
   screen: 나이테·호상점토·빙하코어 3분할 — `--evidence` 색
-  file: ''
+  file: assets/shared/ep004-count3.png
   fit: cover
 - cue: 5
   at: 11.9
@@ -25,11 +25,11 @@ shots:
   at: 17.1
   until: 18.5
   screen: '"선택적 회의" 크게'
-  file: ''
+  file: assets/shared/ep004-skepticism.png
   fit: cover
 - cue: 11
   at: 36.1
   until: 41.2
   screen: 스이게쓰호 연층 계수 vs 탄소-14 일치 그래프
-  file: ''
+  file: assets/shared/ep004-agree.png
   fit: cover

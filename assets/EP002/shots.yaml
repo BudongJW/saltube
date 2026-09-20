@@ -13,7 +13,7 @@ shots:
   at: 0.0
   until: 3.1
   screen: '"**고립계**의 엔트로피는 감소하지 않는다" — `--evidence` 색, ''고립계''만 강조'
-  file: ''
+  file: assets/shared/ep002-isolated.png
   fit: cover
 - cue: 4
   at: 9.3
@@ -25,13 +25,13 @@ shots:
   at: 14.0
   until: 18.2
   screen: '"조건 생략 인용" 크게'
-  file: ''
+  file: assets/shared/ep002-condition.png
   fit: cover
 - cue: 9
   at: 27.4
   until: 30.9
   screen: 태양 → 지구 에너지 유입
-  file: ''
+  file: assets/shared/ep002-energy.png
   fit: cover
 - cue: 11
   at: 37.3

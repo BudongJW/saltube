@@ -43,6 +43,7 @@ tools/produce.py             검증된 대본 → 제작 패키지 (build/)
 tools/ttscheck.py            TTS 발음 시험 목록 생성
 tools/tts.py                 대본 → 음성 합성 (edge-tts)
 tools/render.py              자막 영상 초안 렌더 (ffmpeg)
+tools/makediagram.py         자료 화면 도식 생성 (assets/shared/)
 tools/makelogo.py            브랜드 로고 생성 (brand/)
 brand/                       로고 파일 + AI 이미지 프롬프트
 assets/                      자료 화면 + 편별 샷 배정표
