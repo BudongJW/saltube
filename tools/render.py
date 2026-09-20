@@ -47,6 +47,19 @@ FADE_IN = 0.18        # 자막 페이드인 시간(초)
 LOUDNESS_I, LOUDNESS_TP, LOUDNESS_LRA = -14, -1, 11
 
 
+def measured_loudness(video: Path) -> float | None:
+    """완성된 파일의 실제 라우드니스. 지정값과 결과는 자주 어긋납니다."""
+    try:
+        r = subprocess.run(
+            ["ffmpeg", "-nostdin", "-i", str(video),
+             "-af", "ebur128=framelog=quiet", "-f", "null", "-"],
+            capture_output=True, text=True, timeout=300)
+        m = re.search(r"I:\s*(-?[\d.]+)\s*LUFS", r.stderr)
+        return float(m.group(1)) if m else None
+    except Exception:
+        return None
+
+
 def loudnorm_filter(audio: Path, quiet: bool = False) -> str:
     """loudnorm 을 2패스로 씁니다 — 1패스로 재고, 그 측정값을 넣어 보정합니다.
 
@@ -57,7 +70,14 @@ def loudnorm_filter(audio: Path, quiet: bool = False) -> str:
 
     측정에 실패하면 1패스 필터로 조용히 되돌아갑니다 (없는 것보단 낫습니다).
     """
-    base = f"loudnorm=I={LOUDNESS_I}:TP={LOUDNESS_TP}:LRA={LOUDNESS_LRA}"
+    # 크레스트 팩터를 먼저 낮춥니다.
+    # 진성 피크가 -1 dBTP 로 묶여 있으면 도달 가능한 최대 라우드니스는
+    # (피크 - 크레스트) 입니다. CN01 원본은 -26.08 LUFS 에 피크 -2.41 dBTP,
+    # 크레스트가 23.7dB 라서 아무리 올려도 -24.7 LUFS 가 한계였습니다.
+    # 임계값은 신호 본체(-26 LUFS 근처)보다 아래에 둬야 실제로 걸립니다 —
+    # -20dB 로 잡았더니 본체가 임계 아래라 컴프레서가 거의 동작하지 않았습니다.
+    comp = "acompressor=threshold=-30dB:ratio=4:attack=5:release=80"
+    base = f"{comp},loudnorm=I={LOUDNESS_I}:TP={LOUDNESS_TP}:LRA={LOUDNESS_LRA}"
     try:
         r = subprocess.run(
             ["ffmpeg", "-nostdin", "-i", str(audio),
@@ -68,7 +88,8 @@ def loudnorm_filter(audio: Path, quiet: bool = False) -> str:
         measured = ":".join(
             f"measured_{k}={m[f'input_{k}']}" for k in ("i", "tp", "lra", "thresh"))
         if not quiet:
-            print(f"  음량: {m['input_i']} LUFS → {LOUDNESS_I} LUFS (2패스)")
+            print(f"  음량: {m['input_i']} LUFS → 목표 {LOUDNESS_I} LUFS "
+                  f"(2패스, 피크 {m['input_tp']} dBTP)")
         # linear=true 로 전체를 같은 양만큼 올립니다. 목표에 못 미치면
         # ffmpeg 가 알아서 동적 모드로 내려갑니다.
         return f"{base}:{measured}:offset={m['target_offset']}:linear=true"
@@ -528,15 +549,15 @@ def render(ep: str, audio: Path | None, quiet: bool = False) -> int:
     shots = load_shots(ep, cues)
     shot_inputs, overlay_chain, last = build_overlays(shots)
 
-    # 어둠막은 **자료 화면이 깔린 구간에만** 적용합니다.
-    # 자료 없는 컷은 단색 배경이라 어둠막이 불필요하고, 브랜드 색을 흐립니다.
-    scrim = ""
-    if shots:
-        cond = "+".join(f"between(t,{float(s['at']):.2f},{float(s['until']):.2f})"
-                        for s in shots)
-        scrim = (f";{last}drawbox=0:{int(H * SCRIM_TOP)}:{W}:{H - int(H * SCRIM_TOP)}:"
-                 f"{INK}@0.6:t=fill:enable='{cond}'[s]")
-        last = "[s]"
+    # 어둠막은 **항상** 깝니다. 예전엔 자료 화면이 있는 구간에만 깔았는데,
+    # 두 가지가 깨졌습니다:
+    #  1) MYTH 컷의 `--claim` 빨강이 브랜드 초록 위에 얹히면 거의 안 읽힙니다.
+    #     (EP001 17초 "이런 요구를 떠받치는…" — 빨강 #B4472F 에 초록 #2E7D6B)
+    #  2) 자막 배경이 컷마다 초록↔어두움으로 깜빡여 싸구려로 보입니다.
+    # 자료 화면은 어차피 어둠막 윗쪽(SCRIM_TOP 위)에 있으므로 가려지지 않습니다.
+    scrim = (f";{last}drawbox=0:{int(H * SCRIM_TOP)}:{W}:{H - int(H * SCRIM_TOP)}:"
+             f"{INK}@0.6:t=fill[s]")
+    last = "[s]"
 
     vf = (f"[0:v]null[bg]"
           + (f";{overlay_chain}" if overlay_chain else "")
@@ -576,11 +597,22 @@ def render(ep: str, audio: Path | None, quiet: bool = False) -> int:
         return 1
     shutil.rmtree(store.dir, ignore_errors=True)
     vf_file.unlink(missing_ok=True)
+    # 지정한 라우드니스와 실제 결과는 어긋납니다 — 반드시 재서 확인합니다.
+    # 진성 피크 상한에 걸리면 loudnorm 은 조용히 목표에 못 미친 채 끝납니다.
+    loud = measured_loudness(dst) if audio else None
     if not quiet:
         mb = dst.stat().st_size / 1024 / 1024
+        tail = "  (무음)"
+        if audio:
+            tail = f"  음량 {loud:.1f} LUFS" if loud is not None else "  (음성 포함)"
         print(f"  {ep}-draft.mp4  {dur:.1f}초  {mb:.1f}MB  큐 {len(cues)}개"
-              f"  자료화면 {len(shots)}컷  출처자막 {len(sources)}컷"
-              + ("  (음성 포함)" if audio else "  (무음)"))
+              f"  자료화면 {len(shots)}컷  출처자막 {len(sources)}컷" + tail)
+    if loud is not None and loud < LOUDNESS_I - 2:
+        print(f"  ! 음량이 목표보다 {LOUDNESS_I - loud:.1f}dB 낮습니다 "
+              f"({loud:.1f} vs {LOUDNESS_I} LUFS).\n"
+              f"    원본의 크레스트(피크 - 본체)가 커서 진성 피크 상한에 먼저 걸립니다.\n"
+              f"    단순히 볼륨을 올려도 피크가 같이 올라가 소용없습니다 — "
+              f"압축을 더 걸거나 목표를 낮추세요.", file=sys.stderr)
     return 0
 
 
