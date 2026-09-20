@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy Policy — 1min_scientist uploader</title>
+<meta name="description" content="Privacy policy for the 1min_scientist uploader, a personal tool that uploads its operator&#x27;s own videos to their own TikTok drafts.">
+<link rel="stylesheet" href="_style.css">
+<main>
+<h1>Privacy Policy</h1>
+<p class="sub">1min_scientist uploader &middot; Last updated 2026-09-20</p>
+<p><code>1min_scientist uploader</code> is a personal command-line tool used by a single person to upload their own short-form videos to their own TikTok account. It is not a product offered to other people and has no users other than its operator.</p>
+<p>Source code: <a href="https://github.com/BudongJW/saltube">https://github.com/BudongJW/saltube</a></p>
+<h2>What this tool does</h2>
+<p>It sends video files that the operator produced to the operator&#x27;s own TikTok inbox (drafts), using TikTok&#x27;s Content Posting API with the <code>video.upload</code> scope. The operator then finishes and publishes the post inside the TikTok app.</p>
+<h2>What data is collected</h2>
+<p><strong>None from anyone other than the operator.</strong></p>
+<p>The tool has no server, no database, no analytics, no telemetry, and no third-party services. It does not collect, receive, or process data about TikTok users, viewers, or any other person.</p>
+<h2>What is stored, and where</h2>
+<table>
+<tr><th>Data</th><th>Where</th><th>Why</th></tr>
+<tr><td>TikTok OAuth access token</td><td>On the operator&#x27;s own computer, in a local file (<code>.tiktok_token.json</code>, permissions <code>0600</code>)</td><td>To authenticate uploads to the operator&#x27;s own account</td></tr>
+<tr><td>TikTok OAuth refresh token</td><td>Same file</td><td>To renew the access token when it expires</td></tr>
+</table>
+<p>Nothing is transmitted anywhere except directly to TikTok&#x27;s own API endpoints (<code>open.tiktokapis.com</code>). No copy of the token or of any uploaded video is sent to the developer or to any third party, because there is no such destination — the tool runs entirely on the operator&#x27;s machine.</p>
+<p>The token file is excluded from version control and is never published.</p>
+<h2>Video content</h2>
+<p>Videos uploaded through this tool are created by the operator. They are sent to TikTok and are then subject to TikTok&#x27;s own Privacy Policy and Terms of Service. This tool retains no copy beyond the operator&#x27;s local build output.</p>
+<h2>Sharing</h2>
+<p>No data is shared with anyone. There are no third-party recipients, no advertising, no data sales, and no cross-service tracking.</p>
+<h2>Retention and deletion</h2>
+<p>The token file lives on the operator&#x27;s computer until deleted. Deleting the file removes all stored data. The operator can additionally revoke this application&#x27;s access at any time from TikTok&#x27;s account settings, which invalidates the tokens regardless of whether the file still exists.</p>
+<h2>Children</h2>
+<p>This tool is not directed at children and is not used by anyone but its operator.</p>
+<h2>Changes</h2>
+<p>Any change to this policy will be committed to the repository linked above, where the full revision history is publicly visible.</p>
+<h2>Contact</h2>
+<p>Open an issue at <a href="https://github.com/BudongJW/saltube/issues">https://github.com/BudongJW/saltube/issues</a>.</p><footer>
+<a href="https://github.com/BudongJW/saltube">Source code</a> &middot;
+<a href="./terms.html">Terms of Service</a> &middot;
+<a href="./privacy.html">Privacy Policy</a>
+</footer>
+</main>
