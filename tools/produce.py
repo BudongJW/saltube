@@ -72,7 +72,9 @@ def strip_md(s: str) -> str:
     s = re.sub(r"\*\*(.+?)\*\*", r"\1", s)
     s = re.sub(r"\*(.+?)\*", r"\1", s)
     s = re.sub(r"`(.+?)`", r"\1", s)
-    return re.sub(r"\s+", " ", s).strip()
+    s = re.sub(r"\s+", " ", s).strip()
+    # 출처 마커를 지운 자리에 남는 공백 정리 ("틱타알릭 ." -> "틱타알릭.")
+    return re.sub(r"\s+([.,!?%）\)])", r"\1", s)
 
 
 def build_one(ep_id: str, quiet: bool = False) -> int:

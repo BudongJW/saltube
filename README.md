@@ -41,6 +41,7 @@ tools/harvest.py             신규 레퍼런스 정기 수집 (월 1회 자동 
 tools/attest.py              근거 대조 — 인용이 실제 출처에 존재하는지
 tools/produce.py             검증된 대본 → 제작 패키지 (build/)
 tools/ttscheck.py            TTS 발음 시험 목록 생성
+tools/render.py              자막 영상 초안 렌더 (ffmpeg)
 tools/makelogo.py            브랜드 로고 생성 (brand/)
 brand/                       로고 파일 + AI 이미지 프롬프트
 ```
@@ -61,6 +62,7 @@ python3 tools/refcheck.py render            # sources.md 재생성
 python3 tools/harvest.py run                # Crossref에서 신규 후보 수집
 python3 tools/harvest.py inbox              # 미처리 후보 확인
 python3 tools/produce.py --all              # 제작 패키지 빌드 → build/
+python3 tools/render.py --all               # 자막 영상 초안 → build/*/…-draft.mp4
 
 python3 tools/attest.py fetch               # 초록 캐시 (Crossref→EuropePMC→S2)
 python3 tools/attest.py init EP001          # 근거 항목 뼈대 생성

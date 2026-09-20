@@ -14,3 +14,6 @@ __pycache__/
 # 제작 패키지는 대본에서 생성되는 파생물 — 커밋하지 않습니다.
 # CI가 빌드해 워크플로 아티팩트로 올립니다 (.github/workflows/produce.yml)
 build/
+
+# 렌더 산출물 (build/ 에 생성)
+*-draft.mp4

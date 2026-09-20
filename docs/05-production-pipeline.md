@@ -5,6 +5,8 @@
 ```
 ① 선정 → ② 조사 → ③ 대본 → ④ [게이트1: validate] → ⑤ [게이트2: 원문대조]
    → ⑥ [게이트3: 반대심문] → ⑦ 녹음 → ⑧ 편집 → ⑨ [게이트4: 최종검수] → ⑩ 발행
+                                  ↑
+                        ⑧.5 render.py 자막 영상 초안
 ```
 
 ## ① 선정
@@ -66,6 +68,19 @@ python3 tools/produce.py EP0XX
 `build/EP0XX/` 에 낭독 원고·SRT 자막·샷 리스트·메타데이터·고정 댓글·체크리스트가 생성됩니다.
 **⑦ 녹음 전에 빌드하세요** — `narration.txt` 가 녹음 원고이고,
 `shotlist.md` 가 편집 작업 문서입니다. → [12 파이프라인](12-pipeline.md) §B
+
+## ⑧.6 자막 영상 초안 렌더
+```bash
+python3 tools/render.py EP0XX                    # 무음 자막 영상
+python3 tools/render.py EP0XX --audio 녹음.wav   # 녹음 얹기
+```
+`build/EP0XX/EP0XX-draft.mp4` 생성. **완성본이 아니라 초안입니다** —
+자료 화면(화석 사진·그래프)은 편집자가 얹어야 합니다.
+
+이 도구가 보장하는 것은 **브랜드 규격**입니다:
+1080×1920 / H.264 High / yuv420p / 30fps / AAC 48kHz —
+[04 플랫폼](04-platform-playbook.md) §2 의 유튜브 공식 권장값과 일치.
+자막 62px·줄바꿈·안전영역(상 12% 하 20%)·출처 하단바·MYTH 컷 `--claim` 색 자동 적용.
 
 ## ⑨ 게이트 4 — 최종 검수
 ```bash
