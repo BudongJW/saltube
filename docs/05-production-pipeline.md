@@ -76,7 +76,11 @@ python3 tools/tts.py --voices     # 한국어 음성 목록
 ```
 음성과 속도는 `tools/tts.py` 상단에 고정돼 있습니다. **회차마다 바꾸지 마세요.**
 대본 front matter 의 `lang` 으로 언어별 고정 음성이 자동 선택됩니다
-(`ko-KR` → InJoon, `zh-CN` → Yunyang).
+(`ko-KR` → InJoon, `zh-CN` → Yunyang, `zh-TW` → YunJhe).
+
+**합성은 실패하면 재시도합니다.** 서비스가 가끔 빈 응답을 돌려주는데
+("No audio was received"), 재시도가 없으면 큐 하나가 흔들려서 한 편이 통째로
+날아갑니다. TW01 은 16개 중 6개가 재시도로 살아났습니다.
 합성 후 실제 길이가 출력되므로 60초 초과 여부를 여기서 확인합니다.
 
 **`RATE` 를 바꾸면 `claimctl.py` 의 `SYLLABLES_PER_MIN` 도 같이 바꿔야 합니다.**

@@ -1,0 +1,118 @@
+# 자료 화면 배정표 — 이 파일은 자동으로 덮어쓰지 않습니다.
+#
+# file 에 이미지(png/jpg) 또는 영상(mp4) 경로를 넣으면
+# render.py 가 해당 구간 배경으로 깝니다. 경로는 리포 루트 기준.
+# fit: cover(가득 채우고 잘라냄) | contain(전체를 보이게, 여백은 배경색)
+#
+# 비워두면 그 구간은 단색 배경입니다. 전부 채울 필요 없습니다.
+# 출처 표기 의무를 잊지 마세요 — docs/09-risk-and-compliance.md §1
+
+# CN01(간체)과 같은 배정입니다 — 구조가 같으므로 도식만 번체판으로 바꿉니다.
+
+episode: TW01
+shots:
+- cue: 1
+  at: 0.0
+  until: 3.12
+  line: 2012年，韓國高中生物教科書裡，
+  screen: 시조새 삭제 요구 — 교과서에 줄
+  file: assets/shared/tw01-textbook.png
+  fit: cover
+- cue: 2
+  at: 3.17
+  until: 5.33
+  line: 始祖鳥差點被刪掉 。
+  screen: 시조새 삭제 요구 — 교과서에 줄
+  file: assets/shared/tw01-textbook.png
+  fit: cover
+- cue: 3
+  at: 5.38
+  until: 8.55
+  line: 請願來自韓國創造科學會旗下的一個團體。
+  screen: '청원 주체: 창조과학회 산하 단체 (개신교 전체 아님)'
+  file: assets/shared/tw01-who.png
+  fit: cover
+- cue: 4
+  at: 8.6
+  until: 12.01
+  line: 他們要求刪掉始祖鳥，也要求刪掉馬的演化。
+  screen: 삭제 요구 2건 — 시조새 / 말의 진화
+  file: assets/shared/tw01-demands.png
+  fit: cover
+- cue: 6
+  at: 13.98
+  until: 18.2
+  line: 教育科學技術部沒有做任何審查，直接把請願轉給了出版社。
+  screen: 청원 → 교육부(심사 없음) → 출판사 3단 도식
+  file: assets/shared/tw01-pipeline.png
+  fit: cover
+- cue: 7
+  at: 18.25
+  until: 20.2
+  line: 出版社也同意了。
+  screen: 청원 → 교육부(심사 없음) → 출판사 3단 도식
+  file: assets/shared/tw01-pipeline.png
+  fit: cover
+- cue: 8
+  at: 20.25
+  until: 22.77
+  line: 《自然》期刊報導了這件事。
+  screen: Nature 보도
+  file: assets/shared/tw01-nature.png
+  fit: cover
+- cue: 9
+  at: 22.82
+  until: 26.39
+  line: 韓國的生物學家說，他們事先完全沒有被諮詢過。
+  screen: 생물학자들 사전 자문 없음
+  file: assets/shared/tw01-notconsulted.png
+  fit: cover
+- cue: 10
+  at: 26.44
+  until: 29.47
+  line: 同年9月，韓國科學技術翰林院
+  screen: 한림원 11인 패널 — 청원 기각
+  file: assets/shared/tw01-panel.png
+  fit: cover
+- cue: 11
+  at: 29.52
+  until: 32.8
+  line: 找來11位專家重新審議，駁回了請願 。
+  screen: 한림원 11인 패널 — 청원 기각
+  file: assets/shared/tw01-panel.png
+  fit: cover
+- cue: 12
+  at: 32.85
+  until: 35.11
+  line: 始祖鳥留在教科書裡。
+  screen: 한림원 11인 패널 — 청원 기각
+  file: assets/shared/tw01-panel.png
+  fit: cover
+- cue: 13
+  at: 35.16
+  until: 38.06
+  line: 擋下它的不是輿論，是專家審議。
+  screen: 막은 것은 여론이 아니라 전문가 심의
+  file: assets/shared/tw01-verdict.png
+  fit: cover
+- cue: 14
+  at: 38.11
+  until: 40.61
+  line: 科學結論不由請願書決定，
+  screen: 科学不靠投票 — 증거가 결정한다
+  file: assets/shared/tw01-conclusion.png
+  fit: cover
+- cue: 15
+  at: 40.66
+  until: 42.96
+  line: 也不由多數人的投票決定。
+  screen: 科学不靠投票 — 증거가 결정한다
+  file: assets/shared/tw01-conclusion.png
+  fit: cover
+- cue: 16
+  at: 43.01
+  until: 44.91
+  line: 它由證據決定。
+  screen: 科学不靠投票 — 증거가 결정한다
+  file: assets/shared/tw01-conclusion.png
+  fit: cover

@@ -24,6 +24,7 @@ TOP, BOT = 230, 1100          # 실질 작업 영역
 INK, PAPER, EVID, CLAIM, ACCENT = "#12151A", "#F5F3EE", "#2E7D6B", "#B4472F", "#E0A800"
 F = "Pretendard, Helvetica, Arial, sans-serif"
 FCN = "Noto Sans CJK SC, sans-serif"   # fc-query 로 확인한 실제 패밀리명
+FTW = "Noto Sans TC, sans-serif"       # 번체 — SC 와 자형이 다릅니다
 
 
 def svg(inner: str, bg: str = EVID) -> str:
@@ -280,80 +281,11 @@ def ep004_skepticism():
 
 # ─────────────────────── CN01 — 중국어판 ───────────────────────
 
-def _cn(x, y, s, size=56, fill=PAPER, weight=700, anchor="middle", opacity=1):
-    return (f'<text x="{x}" y="{y}" font-family="{FCN}" font-size="{size}" '
+def _cn(x, y, s, size=56, fill=PAPER, weight=700, anchor="middle", opacity=1,
+        family=None):
+    return (f'<text x="{x}" y="{y}" font-family="{family or FCN}" font-size="{size}" '
             f'font-weight="{weight}" fill="{fill}" text-anchor="{anchor}" '
             f'opacity="{opacity}">{s}</text>')
-
-
-def cn01_textbook():
-    """始祖鸟差点被删掉 — 교과서에 줄."""
-    return svg(
-        f'<rect x="90" y="310" width="900" height="600" rx="20" fill="{PAPER}"/>'
-        + f'<rect x="90" y="310" width="900" height="600" rx="20" fill="none" '
-          f'stroke="{CLAIM}" stroke-width="16"/>'
-        + _cn(540, 420, "高中生物教科书", 46, INK, opacity=0.5)
-        + _cn(540, 580, "始祖鸟", 150, INK)
-        + f'<path d="M 250 480 L 830 700" stroke="{CLAIM}" stroke-width="24" '
-          f'stroke-linecap="round"/>'
-        + _cn(540, 740, "马的进化", 72, INK, opacity=0.45)
-        + f'<path d="M 300 710 L 780 810" stroke="{CLAIM}" stroke-width="18" '
-          f'stroke-linecap="round" opacity="0.8"/>'
-        + _cn(540, 870, "要求删除", 50, CLAIM)
-        + _cn(540, 1030, "2012年 · 韩国", 46, PAPER, opacity=0.8))
-
-
-def cn01_pipeline():
-    """请愿 → 教育部 → 出版社."""
-    steps = []
-    for i, (label, sub, col) in enumerate([
-            ("创造科学会下属团体", "提交请愿", CLAIM),
-            ("教育科学技术部", "未经审查，直接转交", ACCENT),
-            ("出版社", "同意删除", PAPER)]):
-        y = 330 + i * 230
-        steps.append(f'<rect x="110" y="{y}" width="860" height="150" rx="16" '
-                     f'fill="{col}" opacity="{0.9 if col != PAPER else 0.18}"/>')
-        steps.append(_cn(540, y + 62, label, 46, INK if col != PAPER else PAPER))
-        steps.append(_cn(540, y + 118, sub, 34, INK if col != PAPER else PAPER,
-                         opacity=0.75))
-        if i < 2:
-            steps.append(f'<path d="M 540 {y + 158} L 540 {y + 214} M 512 {y + 186} '
-                         f'L 540 {y + 214} L 568 {y + 186}" stroke="{PAPER}" '
-                         f'stroke-width="9" fill="none" stroke-linecap="round" opacity="0.6"/>')
-    return svg("".join(steps))
-
-
-def cn01_nature():
-    """《自然》 보도 — 국제적 파장."""
-    return svg(
-        f'<rect x="150" y="420" width="780" height="260" rx="18" fill="{PAPER}"/>'
-        + f'<text x="540" y="560" font-family="Helvetica, Arial, sans-serif" '
-          f'font-size="110" font-weight="700" fill="{INK}" text-anchor="middle">nature</text>'
-        + _cn(540, 640, "2012年6月", 40, INK, opacity=0.55)
-        + _cn(540, 790, "全球科学界哗然", 62, PAPER)
-        + _cn(540, 900, "doi:10.1038/486014a", 32, PAPER, opacity=0.5))
-
-
-def cn01_panel():
-    """翰林院 11人 专家 驳回."""
-    return svg(
-        _cn(540, 350, "同年 9月", 48, PAPER, opacity=0.6)
-        + _cn(540, 450, "韩国科学技术翰林院", 56, PAPER)
-        + f'<rect x="270" y="520" width="540" height="110" rx="55" fill="{PAPER}" opacity="0.14"/>'
-        + _cn(540, 592, "11位专家", 56, PAPER)
-        + f'<rect x="230" y="700" width="620" height="150" rx="20" fill="{EVID}" '
-          f'stroke="{ACCENT}" stroke-width="10"/>'
-        + _cn(540, 800, "驳回请愿", 88, ACCENT)
-        + _cn(540, 950, "始祖鸟留在了教科书里", 48, PAPER))
-
-
-def cn01_conclusion():
-    """科学不靠投票."""
-    return svg(
-        _cn(540, 480, "科学结论", 72, PAPER, opacity=0.7)
-        + _cn(540, 620, "不由请愿书决定", 72, PAPER, opacity=0.7)
-        + f'<rect x="240" y="700" width="600" height="8" rx="4" fill="{PAPER}" opacity="0.25"/>'
-        + _cn(540, 860, "由证据决定", 104, ACCENT))
 
 
 def _cross(cx, cy, r=42, w=16, fill=CLAIM):
@@ -371,73 +303,206 @@ def _tick(cx, cy, r=42, w=16, fill=ACCENT):
             f'stroke-width="{w}" stroke-linecap="round" stroke-linejoin="round"/>')
 
 
-def cn01_who():
-    """청원 주체 — 창조과학회 산하 단체. 개신교 전체로 번지지 않게 이름을 못 박습니다."""
+# ───────────────── 2012 교과서 사건 — 중국어 도식 ─────────────────
+#
+# 간체(CN01)와 번체(TW01)는 **같은 레이아웃**을 씁니다.
+# 따로 그리면 한쪽만 고치는 실수가 납니다 — 문구만 아래 표에서 갈라집니다.
+#
+# 번체는 글자만 바꾸는 게 아닙니다:
+#   進化 → 演化   대만 교과서·학계 표준 용어. 進化 는 "향상" 뉘앙스라 학술 맥락에 안 씁니다
+#   報道 → 報導   /  咨询 → 諮詢  /  里 → 裡  /  下属 → 旗下
+#   《自然》은 期刊(학술지)이지 雜誌 가 아닙니다
+ZH = {
+    "zh-CN": {
+        "font": FCN,
+        "tb_sub": "高中生物教科书", "tb_main": "始祖鸟", "tb_second": "马的进化",
+        "tb_tag": "要求删除", "tb_when": "2012年 · 韩国",
+        "pl": [("创造科学会下属团体", "提交请愿"),
+               ("教育科学技术部", "未经审查，直接转交"),
+               ("出版社", "同意删除")],
+        "nt_when": "2012年6月", "nt_impact": "全球科学界哗然",
+        "pn_when": "同年 9月", "pn_org": "韩国科学技术翰林院",
+        "pn_count": "11位专家", "pn_verdict": "驳回请愿",
+        "pn_after": "始祖鸟留在了教科书里",
+        "cc_top": "科学结论", "cc_mid": "不由请愿书决定", "cc_bot": "由证据决定",
+        "wh_label": "请愿方", "wh_org": "韩国创造科学会", "wh_sub": "下属团体",
+        "wh_name": "教科书进化论改正推进委员会", "wh_note": "不代表韩国基督教整体",
+        "dm_title": "要求删除的内容", "dm_rows": ["始祖鸟", "马的进化"],
+        "dm_count": "共 2 项", "dm_note": "请愿书直接送到了教育部",
+        "nc_who": "韩国的生物学家", "nc_what": "事先完全没有被咨询",
+        "nc_note": "教科书要改，却没问研究者",
+        "vd_q": "挡住请愿的是什么？", "vd_no": "舆论", "vd_yes": "专家审议",
+        "vd_note": "不是吵赢的，是审出来的",
+    },
+    "zh-TW": {
+        "font": FTW,
+        "tb_sub": "高中生物教科書", "tb_main": "始祖鳥", "tb_second": "馬的演化",
+        "tb_tag": "要求刪除", "tb_when": "2012年 · 韓國",
+        "pl": [("創造科學會旗下團體", "提交請願"),
+               ("教育科學技術部", "未經審查，直接轉交"),
+               ("出版社", "同意刪除")],
+        "nt_when": "2012年6月", "nt_impact": "全球科學界譁然",
+        "pn_when": "同年 9月", "pn_org": "韓國科學技術翰林院",
+        "pn_count": "11位專家", "pn_verdict": "駁回請願",
+        "pn_after": "始祖鳥留在教科書裡",
+        "cc_top": "科學結論", "cc_mid": "不由請願書決定", "cc_bot": "由證據決定",
+        "wh_label": "請願方", "wh_org": "韓國創造科學會", "wh_sub": "旗下團體",
+        "wh_name": "教科書演化論改正推進委員會", "wh_note": "不代表韓國基督教整體",
+        "dm_title": "要求刪除的內容", "dm_rows": ["始祖鳥", "馬的演化"],
+        "dm_count": "共 2 項", "dm_note": "請願書直接送到了教育部",
+        "nc_who": "韓國的生物學家", "nc_what": "事先完全沒有被諮詢",
+        "nc_note": "教科書要改，卻沒問研究者",
+        "vd_q": "擋下請願的是什麼？", "vd_no": "輿論", "vd_yes": "專家審議",
+        "vd_note": "不是吵贏的，是審出來的",
+    },
+}
+
+
+def zh_textbook(t):
+    """始祖鳥 삭제 요구 — 교과서에 줄."""
+    f = lambda *a, **k: _cn(*a, family=t["font"], **k)
     return svg(
-        _cn(540, 330, "请愿方", 44, PAPER, opacity=0.6)
+        f'<rect x="90" y="310" width="900" height="600" rx="20" fill="{PAPER}"/>'
+        + f'<rect x="90" y="310" width="900" height="600" rx="20" fill="none" '
+          f'stroke="{CLAIM}" stroke-width="16"/>'
+        + f(540, 420, t["tb_sub"], 46, INK, opacity=0.5)
+        + f(540, 580, t["tb_main"], 150, INK)
+        + f'<path d="M 250 480 L 830 700" stroke="{CLAIM}" stroke-width="24" '
+          f'stroke-linecap="round"/>'
+        + f(540, 740, t["tb_second"], 72, INK, opacity=0.45)
+        + f'<path d="M 300 710 L 780 810" stroke="{CLAIM}" stroke-width="18" '
+          f'stroke-linecap="round" opacity="0.8"/>'
+        + f(540, 870, t["tb_tag"], 50, CLAIM)
+        + f(540, 1030, t["tb_when"], 46, PAPER, opacity=0.8))
+
+
+def zh_pipeline(t):
+    """請願 → 教育部 → 出版社."""
+    f = lambda *a, **k: _cn(*a, family=t["font"], **k)
+    steps = []
+    for i, ((label, sub), col) in enumerate(zip(t["pl"], (CLAIM, ACCENT, PAPER))):
+        y = 330 + i * 230
+        steps.append(f'<rect x="110" y="{y}" width="860" height="150" rx="16" '
+                     f'fill="{col}" opacity="{0.9 if col != PAPER else 0.18}"/>')
+        steps.append(f(540, y + 62, label, 46, INK if col != PAPER else PAPER))
+        steps.append(f(540, y + 118, sub, 34, INK if col != PAPER else PAPER,
+                       opacity=0.75))
+        if i < 2:
+            steps.append(f'<path d="M 540 {y + 158} L 540 {y + 214} M 512 {y + 186} '
+                         f'L 540 {y + 214} L 568 {y + 186}" stroke="{PAPER}" '
+                         f'stroke-width="9" fill="none" stroke-linecap="round" opacity="0.6"/>')
+    return svg("".join(steps))
+
+
+def zh_nature(t):
+    """《自然》 보도 — 국제적 파장."""
+    f = lambda *a, **k: _cn(*a, family=t["font"], **k)
+    return svg(
+        f'<rect x="150" y="420" width="780" height="260" rx="18" fill="{PAPER}"/>'
+        + f'<text x="540" y="560" font-family="Helvetica, Arial, sans-serif" '
+          f'font-size="110" font-weight="700" fill="{INK}" text-anchor="middle">nature</text>'
+        + f(540, 640, t["nt_when"], 40, INK, opacity=0.55)
+        + f(540, 790, t["nt_impact"], 62, PAPER)
+        + f(540, 900, "doi:10.1038/486014a", 32, PAPER, opacity=0.5))
+
+
+def zh_panel(t):
+    """翰林院 11인 전문가 기각."""
+    f = lambda *a, **k: _cn(*a, family=t["font"], **k)
+    return svg(
+        f(540, 350, t["pn_when"], 48, PAPER, opacity=0.6)
+        + f(540, 450, t["pn_org"], 56, PAPER)
+        + f'<rect x="270" y="520" width="540" height="110" rx="55" fill="{PAPER}" opacity="0.14"/>'
+        + f(540, 592, t["pn_count"], 56, PAPER)
+        + f'<rect x="230" y="700" width="620" height="150" rx="20" fill="{EVID}" '
+          f'stroke="{ACCENT}" stroke-width="10"/>'
+        + f(540, 800, t["pn_verdict"], 88, ACCENT)
+        + f(540, 950, t["pn_after"], 48, PAPER))
+
+
+def zh_conclusion(t):
+    """科學不靠投票."""
+    f = lambda *a, **k: _cn(*a, family=t["font"], **k)
+    return svg(
+        f(540, 480, t["cc_top"], 72, PAPER, opacity=0.7)
+        + f(540, 620, t["cc_mid"], 72, PAPER, opacity=0.7)
+        + f'<rect x="240" y="700" width="600" height="8" rx="4" fill="{PAPER}" opacity="0.25"/>'
+        + f(540, 860, t["cc_bot"], 104, ACCENT))
+
+
+def zh_who(t):
+    """청원 주체 — 창조과학회 산하 단체. 개신교 전체로 번지지 않게 이름을 못 박습니다."""
+    f = lambda *a, **k: _cn(*a, family=t["font"], **k)
+    return svg(
+        f(540, 330, t["wh_label"], 44, PAPER, opacity=0.6)
         + f'<rect x="150" y="380" width="780" height="130" rx="18" fill="{CLAIM}"/>'
-        + _cn(540, 465, "韩国创造科学会", 60, PAPER)
+        + f(540, 465, t["wh_org"], 60, PAPER)
         + f'<line x1="540" y1="530" x2="540" y2="600" stroke="{PAPER}" '
           f'stroke-width="10" opacity="0.55"/>'
         + f'<polygon points="540,630 518,596 562,596" fill="{PAPER}" opacity="0.55"/>'
         + f'<rect x="150" y="660" width="780" height="200" rx="18" '
           f'fill="{PAPER}" opacity="0.13"/>'
-        + _cn(540, 730, "下属团体", 44, PAPER, opacity=0.7)
-        + _cn(540, 805, "教科书进化论改正推进委员会", 46, PAPER)
-        + _cn(540, 960, "不代表韩国基督教整体", 42, ACCENT))
+        + f(540, 730, t["wh_sub"], 44, PAPER, opacity=0.7)
+        + f(540, 805, t["wh_name"], 46, PAPER)
+        + f(540, 960, t["wh_note"], 42, ACCENT))
 
 
-def cn01_demands():
+def zh_demands(t):
     """삭제 요구 2건."""
+    f = lambda *a, **k: _cn(*a, family=t["font"], **k)
     rows = ""
-    for i, (label, y) in enumerate((("始祖鸟", 400), ("马的进化", 560))):
+    for label, y in zip(t["dm_rows"], (400, 560)):
         rows += (f'<rect x="170" y="{y}" width="740" height="120" rx="14" fill="{PAPER}"/>'
-                 + _cn(540, y + 82, label, 68, INK)
+                 + f(540, y + 82, label, 68, INK)
                  + f'<line x1="215" y1="{y + 92}" x2="865" y2="{y + 30}" '
                    f'stroke="{CLAIM}" stroke-width="14" stroke-linecap="round"/>')
     return svg(
-        _cn(540, 330, "要求删除的内容", 46, PAPER, opacity=0.65)
+        f(540, 330, t["dm_title"], 46, PAPER, opacity=0.65)
         + rows
-        + _cn(540, 800, "共 2 项", 56, ACCENT)
-        + _cn(540, 900, "请愿书直接送到了教育部", 42, PAPER, opacity=0.8))
+        + f(540, 800, t["dm_count"], 56, ACCENT)
+        + f(540, 900, t["dm_note"], 42, PAPER, opacity=0.8))
 
 
-def cn01_notconsulted():
+def zh_notconsulted(t):
     """생물학자들이 사전에 자문받지 못했다는 Nature 보도 내용."""
+    f = lambda *a, **k: _cn(*a, family=t["font"], **k)
     return svg(
-        _cn(540, 350, "韩国的生物学家", 56, PAPER)
+        f(540, 350, t["nc_who"], 56, PAPER)
         + f'<rect x="150" y="410" width="780" height="170" rx="18" '
           f'fill="{PAPER}" opacity="0.13" stroke="{CLAIM}" stroke-width="8"/>'
-        + _cn(540, 515, "事先完全没有被咨询", 60, PAPER)
+        + f(540, 515, t["nc_what"], 60, PAPER)
         + _cross(540, 700, r=54, w=20)
-        + _cn(540, 870, "教科书要改，却没问研究者", 44, PAPER, opacity=0.8))
+        + f(540, 870, t["nc_note"], 44, PAPER, opacity=0.8))
 
 
-def cn01_verdict():
+def zh_verdict(t):
     """막은 것은 여론이 아니라 전문가 심의 — 이 편의 요점."""
+    f = lambda *a, **k: _cn(*a, family=t["font"], **k)
     return svg(
-        _cn(540, 330, "挡住请愿的是什么？", 48, PAPER, opacity=0.65)
+        f(540, 330, t["vd_q"], 48, PAPER, opacity=0.65)
         + f'<rect x="140" y="400" width="800" height="150" rx="18" '
           f'fill="{PAPER}" opacity="0.08"/>'
         + _cross(250, 475, r=38, w=14)
-        + _cn(600, 495, "舆论", 60, PAPER, opacity=0.62)
+        + f(600, 495, t["vd_no"], 60, PAPER, opacity=0.62)
         + f'<rect x="140" y="600" width="800" height="150" rx="18" '
           f'fill="{ACCENT}" opacity="0.18" stroke="{ACCENT}" stroke-width="6"/>'
         + _tick(250, 675, r=38, w=14)
-        + _cn(600, 695, "专家审议", 60, ACCENT)
-        + _cn(540, 890, "不是吵赢的，是审出来的", 44, PAPER))
+        + f(600, 695, t["vd_yes"], 60, ACCENT)
+        + f(540, 890, t["vd_note"], 44, PAPER))
+
+
+ZH_DIAGRAMS = {
+    "textbook": zh_textbook, "who": zh_who, "demands": zh_demands,
+    "pipeline": zh_pipeline, "nature": zh_nature, "notconsulted": zh_notconsulted,
+    "panel": zh_panel, "verdict": zh_verdict, "conclusion": zh_conclusion,
+}
 
 
 DIAGRAMS = {
-    "cn01-textbook": cn01_textbook,
-    "cn01-who": cn01_who,
-    "cn01-demands": cn01_demands,
-    "cn01-notconsulted": cn01_notconsulted,
-    "cn01-verdict": cn01_verdict,
-    "cn01-pipeline": cn01_pipeline,
-    "cn01-nature": cn01_nature,
-    "cn01-panel": cn01_panel,
-    "cn01-conclusion": cn01_conclusion,
+    # 2012 교과서 사건 — 간체/번체는 같은 레이아웃에서 생성됩니다 (ZH).
+    **{f"{pfx}01-{k}": (lambda fn=fn, t=ZH[lg]: fn(t))
+       for lg, pfx in (("zh-CN", "cn"), ("zh-TW", "tw"))
+       for k, fn in ZH_DIAGRAMS.items()},
     "ep001-archaeopteryx": ep001_archaeopteryx,
     "ep001-pipeline": ep001_pipeline,
     "ep001-panel": ep001_panel,

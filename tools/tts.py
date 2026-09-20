@@ -37,6 +37,7 @@ VOICE = "ko-KR-InJoonNeural"
 VOICE_BY_LANG = {
     "ko-KR": "ko-KR-InJoonNeural",
     "zh-CN": "zh-CN-YunyangNeural",   # News / Professional·Reliable — 채널 톤에 맞음
+    "zh-TW": "zh-TW-YunJheNeural",    # 대만 표준 중국어 남성
 }
 RATE = "+30%"     # 기본 246음절/분은 너무 느림. +30% 로 약 320음절/분
 VOLUME = "+0%"
@@ -69,9 +70,29 @@ def narration_text(ep: str) -> tuple[str, dict]:
     return "\n".join(l for l in lines if l), fm
 
 
+# 합성 서비스는 가끔 빈 응답을 돌려줍니다 ("No audio was received").
+# 큐 하나가 흔들려서 16개짜리 한 편이 통째로 실패하면 안 됩니다.
+RETRIES, BACKOFF = 4, 2.0
+
+
 async def synth(text: str, dst: Path, voice: str, rate: str) -> None:
     import edge_tts
-    await edge_tts.Communicate(text, voice, rate=rate, volume=VOLUME).save(str(dst))
+    last = None
+    for attempt in range(1, RETRIES + 1):
+        try:
+            await edge_tts.Communicate(
+                text, voice, rate=rate, volume=VOLUME).save(str(dst))
+            if dst.exists() and dst.stat().st_size > 0:
+                return
+            last = RuntimeError("빈 오디오")
+        except Exception as e:      # noqa: BLE001 — 재시도 후 그대로 올립니다
+            last = e
+            if "CERTIFICATE" in str(e).upper():
+                raise               # 인증서 문제는 재시도해도 소용없습니다
+        if attempt < RETRIES:
+            await asyncio.sleep(BACKOFF ** attempt)
+            print(f"    재시도 {attempt}/{RETRIES - 1}: {text[:16]}…", file=sys.stderr)
+    raise RuntimeError(f"{RETRIES}회 시도 실패 — {last}")
 
 
 def duration(p: Path) -> float:

@@ -145,6 +145,9 @@ def load_shots(ep: str, cues: list[dict]) -> list[dict]:
 FONT_BY_LANG = {
     "ko-KR": ["Pretendard-Bold.otf"],
     "zh-CN": ["NotoSansSC-Bold.otf"],
+    # 번체는 SC 폰트로도 글리프가 나오지만 자형이 본토식이라
+    # 대만 시청자에게는 어색합니다. TC 를 따로 씁니다.
+    "zh-TW": ["NotoSansTC-Bold.otf"],
 }
 
 
